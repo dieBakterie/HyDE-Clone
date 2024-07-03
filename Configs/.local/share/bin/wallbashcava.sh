@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-scrDir=$(dirname "$(realpath "$0")")
+scrDir="$(dirname "$(realpath "$0")")"
 source "$scrDir/globalcontrol.sh"
 cvaDir="${confDir}/cava"
 CAVA_CONF="${cvaDir}/config"

@@ -3,7 +3,7 @@
 
 #// set variables
 
-scrDir=$(dirname "$(realpath "$0")")
+scrDir="$(dirname "$(realpath "$0")")"
 source "${scrDir}/globalcontrol.sh"
 [ -z "${hydeTheme}" ] && echo "ERROR: unable to detect theme" && exit 1
 get_themes

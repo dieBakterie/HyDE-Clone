@@ -43,7 +43,7 @@ Wall_Change()
 
 #// set variables
 
-scrDir=$(dirname "$(realpath "$0")")
+scrDir="$(dirname "$(realpath "$0")")"
 source "${scrDir}/globalcontrol.sh"
 wallSet="${hydeThemeDir}/wall.set"
 wallCur="${cacheDir}/wall.set"

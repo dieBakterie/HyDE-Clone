@@ -3,7 +3,7 @@
 # shellcheck disable=SC1091
 
 # Set variables
-scrDir=$(dirname "$(realpath "$0")")
+scrDir="$(dirname "$(realpath "$0")")"
 source "$scrDir/globalcontrol.sh"
 export scrDir
 

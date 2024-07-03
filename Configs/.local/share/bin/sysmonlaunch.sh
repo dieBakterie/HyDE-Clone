@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-scrDir=$(dirname "$(realpath "$0")")
+scrDir="$(dirname "$(realpath "$0")")"
 source "${scrDir}/globalcontrol.sh"
 pkgChk=("io.missioncenter.MissionCenter" "htop" "btop" "top")
 

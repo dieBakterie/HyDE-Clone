@@ -8,7 +8,7 @@
 #* Khing 🦆
 
 pkill -x rofi && exit
-scrDir=$(dirname "$(realpath "$0")")
+scrDir="$(dirname "$(realpath "$0")")"
 source "$scrDir/globalcontrol.sh"
 
 keyconfDir="$confDir/hypr"

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 undock=false
-scrDir=$(dirname "$(realpath "$0")")
+scrDir="$(dirname "$(realpath "$0")")"
 source "$scrDir/globalcontrol.sh"
 batterynotify_conf="${hydeConfDir}/hyde.conf" # Shared with hyde configuration
 config_info() {

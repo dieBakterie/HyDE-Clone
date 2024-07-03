@@ -20,7 +20,7 @@ if [ -z "$XDG_PICTURES_DIR" ]; then
 	XDG_PICTURES_DIR="$HOME/Pictures"
 fi
 
-scrDir=$(dirname "$(realpath "$0")")
+scrDir="$(dirname "$(realpath "$0")")"
 source $scrDir/globalcontrol.sh
 swpy_dir="${confDir}/swappy"
 save_dir="${2:-$XDG_PICTURES_DIR/Screenshots}"

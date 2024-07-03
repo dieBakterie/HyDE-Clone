@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2312
 # shellcheck disable=SC1090
-scrDir=$(dirname "$(realpath "$0")")
+scrDir="$(dirname "$(realpath "$0")")"
 gpuQ="/tmp/hyprdots-${UID}-gpuinfo-query"
 
 tired=false

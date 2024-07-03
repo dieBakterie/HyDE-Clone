@@ -3,7 +3,7 @@
 # shellcheck disable=SC2154
 
 # source variables
-scrDir=$(dirname "$(realpath "$0")")
+scrDir="$(dirname "$(realpath "$0")")"
 source "$scrDir/globalcontrol.sh"
 
 fn_hyprlock() {

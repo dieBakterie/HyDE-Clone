@@ -3,7 +3,7 @@
 
 #// set variables
 
-export scrDir=$(dirname "$(realpath "$0")")
+export scrDir="$(dirname "$(realpath "$0")")"
 source "${scrDir}/globalcontrol.sh"
 wallbashImg="${1}"
 

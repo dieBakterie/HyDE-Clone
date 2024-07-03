@@ -3,7 +3,7 @@
 
 #// source variables
 
-scrDir=$(dirname "$(realpath "$0")")
+scrDir="$(dirname "$(realpath "$0")")"
 source "${scrDir}/globalcontrol.sh"
 discord_col="${cacheDir}/landing/discord.css"
 declare -a client_list=()

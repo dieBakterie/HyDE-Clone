@@ -3,7 +3,7 @@
 
 #// set variables
 
-scrDir=$(dirname "$(realpath "$0")")
+scrDir="$(dirname "$(realpath "$0")")"
 source "${scrDir}/globalcontrol.sh"
 roconf="${confDir}/rofi/styles/style_${rofiStyle}.rasi"
 

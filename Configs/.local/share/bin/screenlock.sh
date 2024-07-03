@@ -2,7 +2,7 @@
 # shellcheck disable=SC1091
 # shellcheck disable=SC2154
 
-scrDir=$(dirname "$(realpath "$0")")
+scrDir="$(dirname "$(realpath "$0")")"
 source "$scrDir/globalcontrol.sh"
 export -f pkg_installed
 

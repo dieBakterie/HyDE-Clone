@@ -3,7 +3,7 @@
 
 # detect hypr theme and initialize variables
 
-scrDir=$(dirname "$(realpath "$0")")
+scrDir="$(dirname "$(realpath "$0")")"
 source "$scrDir/globalcontrol.sh"
 waybar_dir="${confDir}/waybar"
 modules_dir="$waybar_dir/modules"

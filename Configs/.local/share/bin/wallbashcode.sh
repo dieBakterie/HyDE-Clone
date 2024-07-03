@@ -3,7 +3,7 @@
 
 #// set variables
 
-scrDir=$(dirname "$(realpath "$0")")
+scrDir="$(dirname "$(realpath "$0")")"
 source "${scrDir}/globalcontrol.sh"
 readarray -t codeConf < <(find "${confDir}" -mindepth 1 -maxdepth 1 -type d -name "Code*" | sort)
 readarray -t codeVsix < <(find "$HOME" -mindepth 1 -maxdepth 1 -type d -name ".vscode*" | sort)
