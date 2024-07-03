@@ -2,7 +2,7 @@
         "format": "{icon} {windows}",
         "format-icons": {
             //"active": " ",
-            "empty": ""
+            //"empty": ""
         },
         "format-window-separator": " | ",
         "rotate": ${r_deg},
