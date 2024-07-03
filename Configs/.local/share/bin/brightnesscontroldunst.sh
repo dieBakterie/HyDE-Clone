@@ -1,10 +1,9 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
+# shellcheck disable=SC1091
+scrDir=$(dirname "$(realpath "$0")")
+source "$scrDir/globalcontrol.sh"
 
-scrDir="$(dirname "$(realpath "$0")")"
-source $scrDir/globalcontrol.sh
-
-function print_error
-{
+print_error() {
 cat << "EOF"
     ./brightnesscontrol.sh <action>
     ...valid actions are...
@@ -13,16 +12,16 @@ cat << "EOF"
 EOF
 }
 
-function send_notification {
+send_notification() {
     brightness=$(brightnessctl info | grep -oP "(?<=\()\d+(?=%)" | cat)
     brightinfo=$(brightnessctl info | awk -F "'" '/Device/ {print $2}')
-    angle="$(((($brightness + 2) / 5) * 5))"
-    ico="$HOME/.config/swaync/icons/vol/vol-${angle}.svg"
-    bar=$(seq -s "." $(($brightness / 15)) | sed 's/[0-9]//g')
-    notify-send -a "t2" -r 91190 -t 800 -i "${ico}" "${brightness}${bar}" "${brightinfo}" -h string:x-canonical-private-synchronous:test
+    angle=$((((brightness + 2) / 5) * 5))
+    ico="$HOME/.config/dunst/icons/vol/vol-${angle}.svg"
+    bar=$(seq -s "." $((brightness / 15)) | sed 's/[0-9]//g')
+    notify-send -a "t2" -r 91190 -t 800 -i "${ico}" "${brightness}${bar}" "${brightinfo}"
 }
 
-function get_brightness {
+get_brightness() {
     brightnessctl -m | grep -o '[0-9]\+%' | head -c-2
 }
 

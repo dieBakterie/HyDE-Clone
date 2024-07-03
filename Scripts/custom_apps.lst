@@ -3,7 +3,6 @@ downgrade                                              # downgrade packages
 # trash-cli-git                                        # cli to manage trash files
 # libinput-gestures                                    # actions touchpad gestures using libinput
 # gestures                                             # gui for libinput-gestures
-hypridle-git                                           # idle manager
 
 # --------------------------------------------------- // Dependencies
 # xdg-desktop-portal-gtk                               # xdg desktop portal using gtk

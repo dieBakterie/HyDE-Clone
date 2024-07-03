@@ -12,8 +12,8 @@ confDir="${XDG_CONFIG_HOME:-$HOME/.config}"
 cacheDir="$HOME/.cache/hyde"
 aurList=(yay paru)
 shlList=(zsh fish)
-lckList=(swaylock hyprlock)
-NotdList=(dunst swaync)
+lckList=(swaylock hyprlock-git)
+notdList=(dunst swaync)
 
 pkg_installed() {
     local PkgIn=$1
@@ -31,7 +31,7 @@ chk_list() {
     for pkg in "${inList[@]}"; do
         if pkg_installed "${pkg}"; then
             printf -v "${vrType}" "%s" "${pkg}"
-            export "vrType"
+            export "${vrType}"
             return 0
         fi
     done

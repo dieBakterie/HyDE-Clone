@@ -21,7 +21,7 @@ EOF
 #--------------------------------#
 # import variables and functions #
 #--------------------------------#
-scrDir="$(dirname "$(realpath "$0")")"
+scrDir=$(dirname "$(realpath "$0")")
 source "${scrDir}/global_fn.sh"
 if [ $? -ne 0 ]; then
     echo "Error: unable to source global_fn.sh..."
@@ -93,7 +93,7 @@ EOF
     cust_pkg=$1
     cp "${scrDir}/custom_hypr.lst" "${scrDir}/install_pkg.lst"
 
-    if [ -f "${cust_pkg}" ] && [ -n "${cust_pkg}" ]; then
+    if [ -f "${cust_pkg}" ] && [ ! -z "${cust_pkg}" ]; then
         cat "${cust_pkg}" >> "${scrDir}/install_pkg.lst"
     fi
 
@@ -123,18 +123,6 @@ EOF
         esac
     fi
 
-    if ! chk_list "myShell" "${shlList[@]}"; then
-        echo -e "Select shell:\n[1] zsh\n[2] fish"
-        prompt_timer 120 "Enter option number"
-
-        case "${promptIn}" in
-            1) export myShell="zsh" ;;
-            2) export myShell="fish" ;;
-            *) echo -e "...Invalid option selected..." ; exit 1 ;;
-        esac
-        echo "${myShell}" >> "${scrDir}/install_pkg.lst"
-    fi
-
     if ! chk_list "myLock" "${lckList[@]}"; then
         echo -e "Select lock screen:\n[1] swaylock\n[2] hyprlock"
         prompt_timer 120 "Enter option number"
@@ -144,11 +132,12 @@ EOF
             2) export myLock="hyprlock" ;;
             *) echo -e "...Invalid option selected..." ; exit 1 ;;
         esac
+        # echo "Lockscreen: ${myLock}"
         echo "${myLock}" >> "${scrDir}/install_pkg.lst"
     fi
 
-    if ! chk_list "myNotd" "${NotdList[@]}"; then
-        echo -e "Select lock screen:\n[1] swaylock\n[2] hyprlock"
+    if ! chk_list "myNotd" "${notdList[@]}"; then
+        echo -e "Select notification daemon:\n[1] dunst\n[2] swaync"
         prompt_timer 120 "Enter option number"
 
         case "${promptIn}" in
@@ -156,7 +145,22 @@ EOF
             2) export myNotd="swaync" ;;
             *) echo -e "...Invalid option selected..." ; exit 1 ;;
         esac
+        # echo "Notification daemon: ${myNotd}"
         echo "${myNotd}" >> "${scrDir}/install_pkg.lst"
+        exit 0
+    fi
+
+    if ! chk_list "myShell" "${shlList[@]}"; then
+        echo -e "Select shell:\n[1] zsh\n[2] fish"
+        prompt_timer 120 "Enter option number"
+
+        case "${promptIn}" in
+            1) export myShell="zsh" ;;
+            2) export myShell="fish" ;;
+            *) echo -e "...Invalid option selected..." ; exit 1 ;;
+        esac
+        # echo "Shell: ${myShell}"
+        echo "${myShell}" >> "${scrDir}/install_pkg.lst"
     fi
 
     #--------------------------------#

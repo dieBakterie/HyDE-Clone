@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC1091
+# shellcheck disable=SC2154
 
 undock=false
-scrDir="$(dirname "$(realpath "$0")")"
+scrDir=$(dirname "$(realpath "$0")")
 source "$scrDir/globalcontrol.sh"
 batterynotify_conf="${hydeConfDir}/hyde.conf" # Shared with hyde configuration
 config_info() {
@@ -44,7 +46,7 @@ fn_notify() { # Send notification
     notify-send -a "Power" "$1" -u "$2" "$3" "$4" -p # Call the notify-send command with the provided arguments \$1 is the flags \$2 is the urgency \$3 is the title \$4 is the message
 }
 fn_percentage() {
-    if [[ "$battery_percentage" -ge "$unplug_charger_threshold" ]] && [[ "$battery_status" != "Discharging" ]] && [[ "$battery_status" != "Full" ]] && (((battery_percentage - last_notified_percentage) >= $interval)); then
+    if [[ "$battery_percentage" -ge "$unplug_charger_threshold" ]] && [[ "$battery_status" != "Discharging" ]] && [[ "$battery_status" != "Full" ]] && (((battery_percentage - last_notified_percentage) >= interval)); then
         if $verbose; then echo "Prompt:UNPLUG: $battery_unplug_threshold $battery_status $battery_percentage"; fi
         fn_notify "-t 5000 " "CRITICAL" "Battery Charged" "Battery is at $battery_percentage%. You can unplug the charger!"
         last_notified_percentage=$battery_percentage
@@ -58,13 +60,13 @@ fn_percentage() {
             sleep 1
         done
         [ $count -eq 0 ] && fn_action
-    elif [[ "$battery_percentage" -le "$battery_low_threshold" ]] && [[ "$battery_status" == "Discharging" ]] && (((last_notified_percentage - battery_percentage) >= $interval)); then
+    elif [[ "$battery_percentage" -le "$battery_low_threshold" ]] && [[ "$battery_status" == "Discharging" ]] && (((last_notified_percentage - battery_percentage) >= interval)); then
         if $verbose; then echo "Prompt:LOW: $battery_low_threshold $battery_status $battery_percentage"; fi
         fn_notify "-t 5000 " "CRITICAL" "Battery Low" "Battery is at $battery_percentage%. Connect the charger."
         last_notified_percentage=$battery_percentage
     fi
 }
-fn_action() {                              #handles the $execute_critical command #? This is special as it will try to execute always
+fn_action() { # handles the $execute_critical command #? This is special as it will try to execute always
     count=$((timer > mnt ? timer : mnt)) # reset count
     nohup "$execute_critical"
 }
@@ -178,6 +180,7 @@ main() {                                # Main function
     get_battery_info # initiate the function
     last_notified_percentage=$battery_percentage
     prev_status=$battery_status
+    # shellcheck disable=SC2034
     dbus-monitor --system "type='signal',interface='org.freedesktop.DBus.Properties',path='$(upower -e | grep battery)'" 2>/dev/null | while read -r battery_status_change; do fn_status_change; done
 }
 
@@ -187,7 +190,7 @@ case "$1" in
     EDITOR="${EDITOR:-code}" #* Use VS Code as the default editor
     echo -e "[Editor]: $EDITOR \n To change editor, run 'export EDITOR=preferred-editor'  \n[Modifying]: $batterynotify_conf \nPress Any Key if done editing"
     #kitty -o allow_remote_control=yes -o listen_on=unix:/tmp/mykitty $(which $EDITOR) "$batterynotify_conf" > /dev/null 2>&1 &
-    kitty "$(which $EDITOR)" "$batterynotify_conf" >/dev/null 2>&1 &
+    kitty "$(which "$EDITOR")" "$batterynotify_conf" >/dev/null 2>&1 &
     LAST_MD5SUM=$(md5sum "$batterynotify_conf")
     while true; do
         CURRENT_MD5SUM=$(md5sum "$batterynotify_conf")
@@ -195,7 +198,7 @@ case "$1" in
             notify-send "Config Changed: Needs reboot or restart $0"
             LAST_MD5SUM="$CURRENT_MD5SUM"
         fi
-        read -t 2 -n 1 >/dev/null && break #? loop every 2 seconds
+        read -r -t 2 -n 1 >/dev/null && break #? loop every 2 seconds
     done
     exit 0
     ;;
@@ -210,10 +213,10 @@ case "$1" in
     cat <<HELP
 Usage: $0 [options]
 
-[-m|--modify]                  Modify configuration file
-[-i|--info]                    Display configuration information
-[-v|--verbose]                 Debugging mode
-[-h|--help]                 This Message
+[-m|--modify]         Modify configuration file
+[-i|--info]           Display configuration information
+[-v|--verbose]        Debugging mode
+[-h|--help]           This Message
 HELP
     exit 0
     ;;

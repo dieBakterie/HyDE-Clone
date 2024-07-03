@@ -1,7 +1,7 @@
 #!/bin/env bash
 
 if [ $# -eq 0 ]; then
-	echo "Usage: $0 --title | --arturl | --artist | --length | --album | --source"
+	echo "Usage: $0 --title | --arturl | --artist | --length | --album | --source | --position"
 	exit 1
 fi
 
@@ -25,6 +25,29 @@ get_source_info() {
 	else
 		echo ""
 	fi
+}
+
+# Function to get position using playerctl
+get_position() {
+    playerctl position 2>/dev/null
+}
+
+# Function to convert microseconds to minutes and seconds
+convert_length() {
+    local length=$1
+    local seconds=$((length / 1000000))
+    local minutes=$((seconds / 60))
+    local remaining_seconds=$((seconds % 60))
+    printf "%d:%02d" $minutes $remaining_seconds
+}
+
+# Function to convert seconds to minutes and seconds
+convert_position() {
+    local position=$1
+    local seconds=${position%.*} # Remove fractional part if exists
+    local minutes=$((seconds / 60))
+    local remaining_seconds=$((seconds % 60))
+    printf "%d:%02d" $minutes $remaining_seconds
 }
 
 # Parse the argument
@@ -61,8 +84,7 @@ case "$1" in
 	if [ -z "$length" ]; then
 		echo ""
 	else
-		# Convert length from microseconds to a more readable format (seconds)
-		echo "$(echo "scale=2; $length / 1000000 / 60" | bc) m"
+		convert_length "$length"
 	fi
 	;;
 --status)
@@ -91,9 +113,19 @@ case "$1" in
 --source)
 	get_source_info
 	;;
+--position)
+    position=$(get_position)
+    length=$(get_metadata "mpris:length")
+    if [ -z "$position" ] || [ -z "$length" ]; then
+        echo ""
+    else
+        position_formatted=$(convert_position "$position")
+        length_formatted=$(convert_length "$length")
+        echo "$position_formatted/$length_formatted"
+    fi
+    ;;
 *)
 	echo "Invalid option: $1"
-	echo "Usage: $0 --title | --url | --artist | --length | --album | --source"
-	exit 1
+	echo "Usage: $0 --title | --url | --artist | --length | --album | --source | --position" ; exit 1
 	;;
 esac

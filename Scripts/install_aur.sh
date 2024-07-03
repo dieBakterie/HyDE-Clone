@@ -35,7 +35,7 @@ else
 fi
 
 cd "$HOME/Clone/${aurhlpr}"
-makepkg ${use_default} -si
+makepkg "${use_default}" -si
 
 if [ $? -eq 0 ]; then
     echo "${aurhlpr} aur helper installed..."

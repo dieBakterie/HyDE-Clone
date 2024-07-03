@@ -50,12 +50,10 @@
           "label": "󰜉",
           "command": "systemctl reboot"
         },
-
         {
           "label": "󰍃",
           "command": "hyprctl dispatch exit"
         },
-
         {
           "label": "󰍃",
           "command": "hyprctl dispatch exit"

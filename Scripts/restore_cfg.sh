@@ -4,7 +4,7 @@
 #|-/ /--| Prasanth Rangan                |-/ /--|#
 #|/ /---+--------------------------------+/ /---|#
 
-scrDir="$(dirname "$(realpath "$0")")"
+scrDir=$(dirname "$(realpath "$0")")
 source "${scrDir}/global_fn.sh"
 if [ $? -ne 0 ]; then
     echo "Error: unable to source global_fn.sh..."
@@ -77,7 +77,7 @@ cat "${CfgLst}" | while read lst; do
 done
 
 if [ -z "${ThemeOverride}" ]; then
-    if nvidia_detect && [ "$(grep -c '^# █▄ █ █ █ █ █▀▄ █ ▄▀█' "${HOME}/.config/hypr/hyprland.conf")" -eq 0 ]; then
+    if nvidia_detect && [ "$(grep -c '^# █▄ █ █ █ █ █▀▄ █ ▄▀█' "${HOME}/.config/hypr/configs/environments.conf")" -eq 0 ]; then
         cat "${CfgDir}/.config/hypr/nvidia.conf" >>"${HOME}/.config/hypr/configs/environments.conf"
     fi
 fi

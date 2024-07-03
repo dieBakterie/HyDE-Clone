@@ -268,6 +268,7 @@
         "rotate": 0,
         "format-muted": "婢",
         "on-click": "pavucontrol -t 3",
+        "on-click-right": "volumecontroldunst.sh -s '' || volumecontrolswaync.sh -s ''",
         "on-click-middle": "volumecontroldunst.sh -o m || volumecontrolswaync.sh -o m",
         "on-scroll-up": "volumecontroldunst.sh -o i || volumecontrolswaync.sh -o i",
         "on-scroll-down": "volumecontroldunst.sh -o d || volumecontrolswaync.sh -o d",
