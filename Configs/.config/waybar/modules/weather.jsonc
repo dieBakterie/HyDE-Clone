@@ -1,0 +1,9 @@
+    "custom/weather": {
+        "rotate": ${r_deg},
+        "exec": "weather.py",
+        "tooltip" : true,
+        "format" : "{}",
+        "interval" : 1,
+        "return-type" : "json"
+    },
+

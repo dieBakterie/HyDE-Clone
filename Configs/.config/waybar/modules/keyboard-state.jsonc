@@ -1,0 +1,16 @@
+    "keyboard-state": {
+        "scrolllock": true,
+        "capslock": true,
+        "numlock": true,
+        "binding-keys": [70, 58, 69],
+        "format": {
+            "scrolllock": "S {icon}  ",
+            "capslock": "C {icon}  ",
+            "numlock": "N {icon}"
+        },
+        "format-icons": {
+            "locked": "",
+            "unlocked": ""
+        }
+    },
+

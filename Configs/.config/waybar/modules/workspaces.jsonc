@@ -1,0 +1,29 @@
+    "hyprland/workspaces": {
+        "format": "{icon} {windows}",
+        "format-icons": {
+            //"active": " ",
+            "empty": ""
+        },
+        "format-window-separator": " | ",
+        "rotate": ${r_deg},
+        "all-outputs": false,
+        "active-only": true,
+        "on-click": "activate",
+        "disable-scroll": false,
+        "on-scroll-up": "hyprctl dispatch workspace -1",
+        "on-scroll-down": "hyprctl dispatch workspace +1",
+        //"window-rewrite-default": "",
+        "window-rewrite": {
+            "regex": "^(firefox|kitty|dolphin|title<.*youtube.*>)$",
+            "firefox": "󰈹",
+            "kitty": "",
+            "dolphin": "󰉋",
+            ".*youtube.*": "",
+            "title<.*G*git*.*>": "",
+            "class<.*C*code.*>": "󰨞"
+        },
+        "persistent-workspaces": {
+            "*": 4
+        }
+    },
+

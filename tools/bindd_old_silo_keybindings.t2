@@ -1,0 +1,23 @@
+# Silo Google Application shortcuts
+bind = $mainMod, K, silos - launch Google Calendar, exec, silo -a google-calendar && hyprctl dispatch bringactivetotop
+bind = $mainMod+Alt, D, silos - launch Google Documents, exec, silo -a google-documents && hyprctl dispatch bringactivetotop
+bind = $mainMod, D, silos - launch Google Drive, exec, silo -a google-drive && hyprctl dispatch bringactivetotop
+bind = $mainMod, G, silos - launch G-Mail, exec, silo -a gmail && hyprctl dispatch bringactivetotop
+bind = $mainMod+Shift, K, silos - launch Google Keep, exec, silo -a google-keep && hyprctl dispatch bringactivetotop
+bind = $mainMod, M, silos - launch Google Maps, exec, silo -a google-maps && hyprctl dispatch bringactivetotop
+bind = $mainMod+Alt, F, silos - launch Google Photos, exec, silo -a google-photos && hyprctl dispatch bringactivetotop
+bind = $mainMod+Ctrl, S, silos - launch Google Sheets, exec, silo -a google-sheets && hyprctl dispatch bringactivetotop
+bind = $mainMod+Shift, S, silos - launch Google Slides, exec, silo -a google-slides && hyprctl dispatch bringactivetotop
+
+# Silo Messenger Application shortcuts
+bind = $mainMod+Alt, W, silos - launch WhatsApp-Web, exec, silo -a WhatsApp && hyprctl dispatch bringactivetotop
+
+# Silo Microsoft Application shortcuts
+bind = $mainMod, O, silos - launch Microsoft Office365, exec, silo -a Office365 && hyprctl dispatch bringactivetotop
+bind = $mainMod+Ctrl, T, silos - launch Microsoft Teams, exec, silo -a Teams && hyprctl dispatch bringactivetotop
+
+# Silo Multimedia Application shortcuts
+bind = $mainMod, N, silos - launch Netflix, exec, silo -a Netflix && hyprctl dispatch bringactivetotop
+bind = $mainMod+Shift, P, silos - launch Amazon PrimeVideo, exec, silo -a PrimeVideo && hyprctl dispatch bringactivetotop
+bind = $mainMod+Alt, T, silos - launch Twitch, exec, silo -a Twitch && hyprctl dispatch bringactivetotop
+bind = $mainMod+Shift, Y, silos - launch YouTube, exec, silo -a YouTube && hyprctl dispatch bringactivetotop

@@ -1,0 +1,194 @@
+# █▄▀ █▀▀ █▄█ █▄▄ █ █▄ █ █▀▄ █ █▄ █ █▀▀ █▀
+# █ █ ██▄  █  █▄█ █ █ ▀█ █▄▀ █ █ ▀█ █▄█ ▄█
+
+# See https://wiki.hyprland.org/Configuring/Keywords/
+#  &  https://wiki.hyprland.org/Configuring/Binds/
+
+# Main modifier
+$mainMod = Super # super / meta / windows key
+
+# Assign apps
+$term = kitty
+$editor = code
+$file = dolphin
+$browser = firefox
+
+# Window/Session actions
+bindd = $mainMod, Q, Close focused window, exec, $scrPath/dontkillsteam.sh
+bindd = Alt, F4, Close focused window, exec, $scrPath/dontkillsteam.sh
+bindd = $mainMod, Delete, Kill hyprland session, exit,
+bindd = $mainMod, W, Toggle the window between focus and float, togglefloating,
+bindd = $mainMod, G, Toggle the window between focus and group, togglegroup,
+bindd = Alt, Return, Toggle the window between focus and fullscreen, fullscreen,
+bindd = $mainMod, L, Launch lock screen(swaylock), exec, swaylock
+bindd = $mainMod+Alt, L, Launch lock screen(hyprlock), exec, hyprlock
+bindd = $mainMod+Shift, L, Launch lock screen with music widget, exec, $scrPath/hyprlock.sh -h
+bindd = $mainMod+Shift, F, Toggle pin on focused window, exec, $scrPath/windowpin.sh
+bindd = $mainMod, Backspace, Launch logout menu, exec, $scrPath/logoutlaunch.sh
+bindd = Ctrl+Alt, W, Toggle waybar, exec, killall waybar || waybar
+
+# Application shortcuts
+bindd = $mainMod, T, Launch terminal emulator, exec, $term
+bindd = $mainMod, E, Launch file manager, exec, $file
+bindd = $mainMod, C, Launch text editor, exec, $editor
+bindd = $mainMod, F, Launch web browser, exec, $browser
+bindd = $mainMod+Alt, V, Launch Vesktop, exec, vesktop
+bindd = Ctrl+Alt+Shift, R, Toggle obs screen recording, pass, ^(com\.obsproject\.Studio)$
+bindd = $mainMod, Period, Launch emoji selector, exec, emote
+bindd = Ctrl+Shift, Escape, Launch system monitor (htop/btop or fallback to top), exec, $scrPath/sysmonlaunch.sh
+
+# Silo Google Application shortcuts
+bindd = $mainMod, K, Toggle Google Calendar silo, exec, pkill -xf 'python /usr/lib/python3.12/site-packages/pyqtws/main.py -a google-calendar' || silo -a google-calendar
+bindd = $mainMod+Alt, D, Toggle Google Documents silo, exec, pkill -xf 'python /usr/lib/python3.12/site-packages/pyqtws/main.py -a google-documents' || silo -a google-documents
+bindd = $mainMod, D, Toggle Google Drive silo, exec, pkill -xf 'python /usr/lib/python3.12/site-packages/pyqtws/main.py -a google-drive' || silo -a google-drive
+bindd = $mainMod, G, Toggle G-Mail silo, exec, pkill -xf 'python /usr/lib/python3.12/site-packages/pyqtws/main.py -a gmail' || silo -a gmail
+bindd = $mainMod+Shift, K, Toggle Google Keep silo, exec, pkill -xf 'python /usr/lib/python3.12/site-packages/pyqtws/main.py -a google-keep' || silo -a google-keep
+bindd = $mainMod, M, Toggle Google Maps silo, exec, pkill -xf 'python /usr/lib/python3.12/site-packages/pyqtws/main.py -a google-maps' || silo -a google-maps
+bindd = $mainMod+Alt, F, Toggle Google Photos silo, exec, pkill -xf 'python /usr/lib/python3.12/site-packages/pyqtws/main.py -a google-photos' || silo -a google-photos
+bindd = $mainMod+Ctrl, S, Toggle Google Sheets silo, exec, pkill -xf 'python /usr/lib/python3.12/site-packages/pyqtws/main.py -a google-sheets' || silo -a google-sheets
+bindd = $mainMod+Shift, S, Toggle Google Slides silo, exec, pkill -xf 'python /usr/lib/python3.12/site-packages/pyqtws/main.py -a google-slides' || silo -a google-slides
+
+# Silo Messenger Application shortcuts
+bindd = $mainMod+Alt, W, Toggle WhatsApp-Web silo, exec, pkill -xf 'python /usr/lib/python3.12/site-packages/pyqtws/main.py -a WhatsApp' || silo -a WhatsApp
+
+# Silo Microsoft Application shortcuts
+# bindd = $mainMod, O, Toggle Microsoft Office365 silo, exec, pkill -xf 'python /usr/lib/python3.12/site-packages/pyqtws/main.py -a Office365' || silo -a Office365
+# bindd = $mainMod+Ctrl, T, Toggle Microsoft Teams silo, exec, pkill -xf 'python /usr/lib/python3.12/site-packages/pyqtws/main.py -a Teams' || silo -a Teams
+
+# Silo Multimedia Application shortcuts
+bindd = $mainMod, N, Toggle Netflix silo, exec, pkill -xf 'python /usr/lib/python3.12/site-packages/pyqtws/main.py -a Netflix' || silo -a Netflix
+bindd = $mainMod+Shift, P, Toggle Amazon PrimeVideo silo, exec, pkill -xf 'python /usr/lib/python3.12/site-packages/pyqtws/main.py -a PrimeVideo' || silo -a PrimeVideo
+bindd = $mainMod+Alt, T, Toggle Twitch silo, exec, pkill -xf 'python /usr/lib/python3.12/site-packages/pyqtws/main.py -a Twitch' || silo -a Twitch
+bindd = $mainMod+Shift, Y, Toggle YouTube silo, exec, pkill -xf 'python /usr/lib/python3.12/site-packages/pyqtws/main.py -a YouTube' || silo -a YouTube
+
+# Plugin shortcuts
+bindd = $mainMod, h, Toggle workspace overview (hyprexpo), exec, hyprctl dispatch hyprexpo:expo toggle
+
+# Scratchpad shortcuts
+bindd = $mainMod+Shift, V, Toggle volume scratchpad, exec, pypr toggle volume && hyprctl dispatch bringactivetotop
+bindd = $mainMod, B, Toggle bluetooth scratchpad, exec, pypr toggle bluetooth && hyprctl dispatch bringactivetotop
+bindd = $mainMod, Y, Toggle YouTube Music scratchpad, exec, pypr toggle youtube-music && hyprctl dispatch bringactivetotop
+bindd = $mainMod+Shift, E, Toggle yazi scratchpad, exec, pypr toggle yazi && hyprctl dispatch bringactivetotop
+
+# Rofi menus
+bindd = $mainMod, A, Launch application launcher, exec, pkill -x rofi || $scrPath/rofilaunch.sh d
+bindd = $mainMod, Tab, Launch window switcher, exec, pkill -x rofi || $scrPath/rofilaunch.sh w
+bindd = $mainMod+Shift, E, Launch file explorer, exec, pkill -x rofi || $scrPath/rofilaunch.sh f
+
+# Audio control
+binddl  = , XF86AudioMute, Toggle audio mute, exec, $scrPath/volumecontrol.sh -o m
+binddl  = , XF86AudioMicMute, Toggle microphone mute, exec, $scrPath/volumecontrol.sh -i m
+binddel = , XF86AudioLowerVolume, Decrease volume, exec, $scrPath/volumecontrol.sh -o d
+binddel = , XF86AudioRaiseVolume, Increase volume, exec, $scrPath/volumecontrol.sh -o i
+
+# Media control
+binddl  = , XF86AudioPlay, Toggle between media play and pause, exec, playerctl play-pause
+binddl  = , XF86AudioPause, Toggle between media play and pause, exec, playerctl play-pause
+binddl  = , XF86AudioNext, Next Media, exec, playerctl next
+binddl  = , XF86AudioPrev, Previous Media, exec, playerctl previous
+
+# Brightness control
+binddel = , XF86MonBrightnessUp, Increase brightness, exec, $scrPath/brightnesscontrol.sh i
+binddel = , XF86MonBrightnessDown, Decrease brightness, exec, $scrPath/brightnesscontrol.sh d
+
+# Move between grouped windows
+bindd = $mainMod CTRL , H, , changegroupactive, b
+bindd = $mainMod CTRL , L, , changegroupactive, f
+
+# Screenshot/Screencapture
+bindd = $mainMod, P, Partial screenshot capture, exec, $scrPath/screenshot.sh s
+bindd = $mainMod+Ctrl, P, Partial screenshot capture (frozen screen), exec, $scrPath/screenshot.sh sf
+bindd = $mainMod+Alt, P, Monitor screenshot capture, exec, $scrPath/screenshot.sh m
+bindd = , Print, All monitors screenshot capture, exec, $scrPath/screenshot.sh p
+
+# Custom scripts
+bindd = $mainMod+Alt, G, Disable hypr effects for gamemode, exec, $scrPath/gamemode.sh
+bindd = $mainMod+Shift, G, Launch steam game launcher, exec, pkill -x rofi || $scrPath/gamelauncher.sh
+bindd = $mainMod+Alt, Right, Next wallpaper, exec, $scrPath/swwwallpaper.sh -n
+bindd = $mainMod+Alt, Left, Previous wallpaper, exec, $scrPath/swwwallpaper.sh -p
+bindd = $mainMod+Alt, Up, Next waybar mode, exec, $scrPath/wbarconfgen.sh n
+bindd = $mainMod+Alt, Down, Previous waybar mode, exec, $scrPath/wbarconfgen.sh p
+bindd = $mainMod+Shift, R, Launch wallbash mode select menu, exec, pkill -x rofi || $scrPath/wallbashtoggle.sh -m
+bindd = $mainMod+Shift, T, Launch theme select menu, exec, pkill -x rofi || $scrPath/themeselect.sh
+bindd = $mainMod+Shift, A, Launch style select menu, exec, pkill -x rofi || $scrPath/rofiselect.sh
+bindd = $mainMod+Shift, W, Launch wallpaper select menu, exec, pkill -x rofi || $scrPath/swwwallselect.sh
+bindd = $mainMod, V, Launch clipboard, exec, pkill -x rofi || $scrPath/cliphist.sh c
+bindd = $mainMod, K, Switch keyboard layout, exec, $scrPath/keyboardswitch.sh
+bindd = $mainMod, code:20, Show keybindd hints, exec, $scrPath/keybindds_hint.sh
+
+# Move/Change window focus
+bindd = $mainMod, Left, , movefocus, l
+bindd = $mainMod, Right, , movefocus, r
+bindd = $mainMod, Up, , movefocus, u
+bindd = $mainMod, Down, , movefocus, d
+bindd = Alt, Tab, , movefocus, d
+
+# Switch workspaces
+bindd = $mainMod, 1, , workspace, 1
+bindd = $mainMod, 2, , workspace, 2
+bindd = $mainMod, 3, , workspace, 3
+bindd = $mainMod, 4, , workspace, 4
+bindd = $mainMod, 5, , workspace, 5
+bindd = $mainMod, 6, , workspace, 6
+bindd = $mainMod, 7, , workspace, 7
+bindd = $mainMod, 8, , workspace, 8
+
+# Switch workspaces to a relative workspace
+bindd = $mainMod+Ctrl, Right, , workspace, r+1
+bindd = $mainMod+Ctrl, Left, , workspace, r-1
+
+# Move to the first empty workspace
+bindd = $mainMod+Ctrl, Down, , workspace, empty
+
+# Resize windows
+bindde = $mainMod+Shift, Right, , resizeactive, 30 0
+bindde = $mainMod+Shift, Left, , resizeactive, -30 0
+bindde = $mainMod+Shift, Up, , resizeactive, 0 -30
+bindde = $mainMod+Shift, Down, , resizeactive, 0 30
+
+# Move focused window to a workspace
+bindd = $mainMod+Shift, 1, , movetoworkspace, 1
+bindd = $mainMod+Shift, 2, , movetoworkspace, 2
+bindd = $mainMod+Shift, 3, , movetoworkspace, 3
+bindd = $mainMod+Shift, 4, , movetoworkspace, 4
+bindd = $mainMod+Shift, 5, , movetoworkspace, 5
+bindd = $mainMod+Shift, 6, , movetoworkspace, 6
+bindd = $mainMod+Shift, 7, , movetoworkspace, 7
+bindd = $mainMod+Shift, 8, , movetoworkspace, 8
+
+# Move focused window to a relative workspace
+bindd = $mainMod+Ctrl+Alt, Right, , movetoworkspace, r+1
+bindd = $mainMod+Ctrl+Alt, Left, , movetoworkspace, r-1
+
+# Move focused window around the current workspace
+bindd = $mainMod+Shift+Ctrl, Left, , movewindow, l
+bindd = $mainMod+Shift+Ctrl, Right, , movewindow, r
+bindd = $mainMod+Shift+Ctrl, Up, , movewindow, u
+bindd = $mainMod+Shift+Ctrl, Down, , movewindow, d
+
+# Scroll through existing workspaces
+bindd = $mainMod, mouse_up, , workspace, e+1
+bindd = $mainMod, mouse_down, , workspace, e-1
+
+# Move/Resize focused window
+binddm = $mainMod, mouse:272, , movewindow
+binddm = $mainMod, mouse:273, , resizewindow
+binddm = $mainMod, Z, , movewindow
+binddm = $mainMod, X, , resizewindow
+
+# Move/Switch to special workspace (scratchpad)
+bindd = $mainMod+Alt, S, , movetoworkspacesilent, special
+bindd = $mainMod, S, , togglespecialworkspace,
+
+# Toggle focused window split
+bindd = $mainMod, J, , togglesplit
+
+# Move focused window to a workspace silently
+bindd = $mainMod+Alt, 1, movetoworkspacesilent, 1
+bindd = $mainMod+Alt, 2, movetoworkspacesilent, 2
+bindd = $mainMod+Alt, 3, movetoworkspacesilent, 3
+bindd = $mainMod+Alt, 4, movetoworkspacesilent, 4
+bindd = $mainMod+Alt, 5, movetoworkspacesilent, 5
+bindd = $mainMod+Alt, 6, movetoworkspacesilent, 6
+bindd = $mainMod+Alt, 7, movetoworkspacesilent, 7
+bindd = $mainMod+Alt, 8, movetoworkspacesilent, 8

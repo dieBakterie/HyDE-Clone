@@ -1,0 +1,38 @@
+# --------------------------------------------------- // System
+downgrade                                              # downgrade packages
+# trash-cli-git                                        # cli to manage trash files
+# libinput-gestures                                    # actions touchpad gestures using libinput
+# gestures                                             # gui for libinput-gestures
+hypridle-git                                           # idle manager
+
+# --------------------------------------------------- // Dependencies
+# xdg-desktop-portal-gtk                               # xdg desktop portal using gtk
+emote                                                  # emoji picker gtk3
+
+# --------------------------------------------------- // Gaming
+steam                                                  # gaming platform
+gamemode                                               # daemon and library for game optimisations
+mangohud                                               # system performance overlay
+gamescope                                              # micro-compositor for gaming
+
+# --------------------------------------------------- // Music
+# cava                                                 # audio visualizer
+spotify                                                # proprietary music streaming service
+spicetify-cli                                          # cli to customize spotify client
+
+# --------------------------------------------------- // Apps
+# neovim                                               # vim based text editor
+
+# --------------------------------------------------- // Silos
+silos                                                  # silos Browser
+silo-gmail                                             # Gmail App
+silo-google-calendar                                   # Google Calendar
+silo-google-maps                                       # Google Maps
+silo-google-photos                                     # Google Photos
+silo-gsuite                                            # Google Documents, Drive...
+silo-netflix                                           # Netflix
+# silo-office365                                       # Office365
+silo-primevideo                                        # Prime Video
+# silo-teams                                           # Microsoft Teams
+silo-twitch                                            # Twitch client
+silo-youtube                                           # YouTube client

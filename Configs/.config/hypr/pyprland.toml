@@ -1,0 +1,116 @@
+[pyprland]
+plugins = ["scratchpads", "expose", "magnify"]
+
+[scratchpads.bluetooth]
+command = "blueman-manager"
+animation = "fromRight"
+unfocus = "hide"
+margin = 20
+lazy = true
+
+[scratchpads.volume]
+command = "pavucontrol"
+animation = "fromLeft"
+unfocus = "hide"
+margin = 20
+lazy = true
+
+[scratchpads.terminal]
+command = "kitty --class scratchpad"
+excludes = ["dots"]
+lazy = true
+
+[scratchpads.yazi]
+command = "kitty --class scratchpad yazi"
+lazy = true
+
+[scratchpads.dots]
+command = "kitty --class scratchpad yadm enter lazygit"
+excludes = ["terminal"]
+lazy = true
+
+[scratchpads.youtube-music]
+command = "youtube-music"
+unfocus = "hide"
+lazy = true
+
+# [scratchpads.silo-youtube]
+# command = "pkill -xf 'python /usr/lib/python3.12/site-packages/pyqtws/main.py -a youtube' || silo -a youtube"
+# command = "silo -a YouTube"
+# unfocus = "hide"
+# lazy = true
+
+# [scratchpads.silo-gmail]
+# command = "pkill -x silo-gmail || silo -a gmail"
+# unfocus = "hide"
+# lazy = true
+
+# [scratchpads.silo-twitch]
+# command = "pkill -x silo-twitch || silo -a twitch"
+# unfocus = "hide"
+# lazy = true
+
+# [scratchpads.silo-teams]
+# command = "pkill -x silo-teams || silo -a teams"
+# unfocus = "hide"
+# lazy = true
+
+# [scratchpads.silo-office365]
+# command = "pkill -x silo-office365 || silo -a office365"
+# unfocus = "hide"
+# lazy = true
+
+# [scratchpads.silo-google-calendar]
+# command = "pkill -x silo-google-calendar || silo -a google-calendar"
+# unfocus = "hide"
+# lazy = true
+
+# [scratchpads.silo-google-drive]
+# command = "pkill -x silo-google-drive || silo -a google-drive"
+# unfocus = "hide"
+# lazy = true
+
+# [scratchpads.silo-google-slides]
+# command = "pkill -x silo-google-slides || silo -a google-slides"
+# unfocus = "hide"
+# lazy = true
+
+# [scratchpads.silo-google-sheets]
+# command = "pkill -x silo-google-sheets || silo -a google-sheets"
+# unfocus = "hide"
+# lazy = true
+
+# [scratchpads.silo-google-documents]
+# command = "pkill -x silo-google-documents || silo -a google-documents"
+# unfocus = "hide"
+# lazy = true
+
+# [scratchpads.silo-google-maps]
+# command = "pkill -x silo-google-maps || silo -a google-maps"
+# unfocus = "hide"
+# lazy = true
+
+# [scratchpads.silo-google-photos]
+# command = "pkill -x silo-google-photos || silo -a google-photos"
+# unfocus = "hide"
+# lazy = true
+
+# [scratchpads.silo-google-keep]
+# command = "pkill silo-google-keep || silo -a google-keep"
+# unfocus = "hide"
+# lazy = true
+
+# [scratchpads.silo-netflix]
+# command = "pkill silo-netflix || silo -a Netflix"
+# unfocus = "hide"
+# lazy = true
+
+# [scratchpads.silo-primevideo]
+# command = "pkill silo-primevideo || silo -a primevideo"
+# unfocus = "hide"
+# lazy = true
+
+# [scratchpads.silo-whatsapp]
+# command = "pkill silo-whatsapp || silo -a whatsapp"
+# unfocus = "hide"
+# lazy = true
