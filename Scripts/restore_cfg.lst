@@ -3,9 +3,9 @@ N|Y|${HOME}/.config/Code/User|settings.json|visual-studio-code-bin
 N|Y|${HOME}/.config/Code - OSS/User|settings.json|code
 Y|Y|${HOME}/local/share/bin|wallbashspotify.sh|spotify spicetify-cli
 Y|Y|${HOME}/.config|dunst|dunst
-Y|Y|${HOME}/.local/share/bin|wallbashdunst.sh notifications.py|dunst
+Y|Y|${HOME}/.local/share/bin|wallbashdunst.sh volumecontroldunst.sh notifications.py|dunst
 Y|Y|${HOME}/.config|swaync|swaync
-Y|Y|${HOME}/.local/share/bin|wallbashswaync.sh|swaync
+Y|Y|${HOME}/.local/share/bin|wallbashswaync.sh volumecontrolswaync.sh|swaync
 Y|Y|${HOME}/.config|fish|fish
 Y|Y|${HOME}/.config/hyde|wallbash|hyprland
 Y|Y|${HOME}/.config/hypr|hyprland.conf themes plugins|hyprland
@@ -16,7 +16,7 @@ N|Y|${HOME}/.config/hypr|hypridle.conf|hypridle
 Y|Y|${HOME}/.local/share/bin|batterynotify.sh cpuinfo.sh globalcontrol.sh keybinds_hint.sh keyboardswitch.sh sysmonlaunch.sh systemupdate.sh testrunner.sh themeswitch.sh wallbash.sh wallbashdiscord.sh weather.py windowpin.sh|hyprland
 Y|Y|${HOME}/.local/share/bin|amdgpu.py gpuinfo.sh |hyprland python-pyamdgpuinfo
 Y|Y|${HOME}/.local/share/bin|brightnesscontroldunst.sh|hyprland brightnessctl dunst
-Y|Y|${HOME}/.local/share/bin|brightnesscontrolswaync.sh|hyprland brightnessctl dunst
+Y|Y|${HOME}/.local/share/bin|brightnesscontrolswaync.sh|hyprland brightnessctl swaync
 Y|Y|${HOME}/.local/share/bin|cliphist.sh|hyprland cliphist
 Y|Y|${HOME}/.local/share/bin|dontkillsteam.sh|hyprland steam
 Y|Y|${HOME}/.local/share/bin|gamelauncher.sh|hyprland rofi-lbonn-wayland-git
