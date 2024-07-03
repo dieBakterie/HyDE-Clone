@@ -7,7 +7,23 @@ Y|Y|${HOME}/.local/share/bin|wallbashdunst.sh volumecontroldunst.sh notification
 Y|Y|${HOME}/.config|swaync|swaync
 Y|Y|${HOME}/.local/share/bin|wallbashswaync.sh volumecontrolswaync.sh|swaync
 Y|Y|${HOME}/.config|fish|fish
-Y|Y|${HOME}/.config/hyde|wallbash|hyprland
+Y|Y|${HOME}/.config/hyde|hyde.conf keycode.conf|hyprland
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Dcol|hypr.dcol|hyprland
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Dcol|rofi.dcol|hyprland rofi-lbonn-wayland-git
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Dcol|waybar.dcol|hyprland waybar
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Dcol|kitty.dcol|hyprland kitty
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Dcol|kvantum|hyprland kvantum
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Dcol/gtk|gtk3.dcol|hyprland gtk3
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Dcol/gtk|gtk4.dcol|hyprland gtk4
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways|palette qtct.dcol|hyprland qt5ct
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways|palette qtct.dcol|hyprland qt6ct
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways|cava.dcol|cava
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways|spotify.dcol|spotify spicetify-cli
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways|code.dcol|visual-studio-code-bin
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways|code.dcol|code
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways|hyprlock.dcol|hyprland hyprlock
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways/notification|dunst.dcol hyprdots.dcol muted-mic.dcol muted-speaker.dcol unmuted-mic.dcol unmuted-speaker.dcol vol-0.dcol vol-5.dcol vol-10.dcol vol-15.dcol vol-20.dcol vol-25.dcol vol-30.dcol vol-35.dcol vol-40.dcol vol-45.dcol vol-50.dcol vol-55.dcol vol-60.dcol vol-65.dcol vol-70.dcol vol-75.dcol vol-80.dcol vol-85.dcol vol-90.dcol vol-95.dcol vol-100.dcol|hyprland dunst
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways/notification|hyprdots.dcol muted-mic.dcol muted-speaker.dcol swaync.dcol unmuted-mic.dcol unmuted-speaker.dcol vol-0.dcol vol-5.dcol vol-10.dcol vol-15.dcol vol-20.dcol vol-25.dcol vol-30.dcol vol-35.dcol vol-40.dcol vol-45.dcol vol-50.dcol vol-55.dcol vol-60.dcol vol-65.dcol vol-70.dcol vol-75.dcol vol-80.dcol vol-85.dcol vol-90.dcol vol-95.dcol vol-100.dcol|hyprland swaync
 Y|Y|${HOME}/.config/hypr|hyprland.conf themes plugins|hyprland
 Y|Y|${HOME}/.config/hypr/configs|animations.conf inputs.conf launchs.conf layouts.conf misc.conf windowrules.conf workspacerules.conf|hyprland
 N|Y|${HOME}/.config/hypr/configs|keybindings.conf monitors.conf submaps.conf workspaces.conf|hyprland
