@@ -200,7 +200,7 @@
 		"format": "{icon}",
 		"rotate": 0,
 		"icon-size": 16,
-		"icon-theme": "Tela-circle-grey",
+		"icon-theme": "Tela-circle-dracula",
         "spacing": 0,
 		"tooltip-format": "{title}",
 		"on-click": "activate",
@@ -268,10 +268,10 @@
         "rotate": 0,
         "format-muted": "婢",
         "on-click": "pavucontrol -t 3",
-        "on-click-right": "volumecontrol.sh -s ''", // "volumecontroldunst.sh -s '' || volumecontrolswaync.sh -s ''",
-        "on-click-middle": "volumecontrol.sh -o m", // "volumecontroldunst.sh -o m || volumecontrolswaync.sh -o m",
-        "on-scroll-up": "volumecontrol.sh -o i", // "volumecontroldunst.sh -o i || volumecontrolswaync.sh -o i",
-        "on-scroll-down": "volumecontrol.sh -o d", // "volumecontroldunst.sh -o d || volumecontrolswaync.sh -o d",
+        "on-click-right": "volumecontrol.sh -s ''",
+        "on-click-middle": "volumecontrol.sh -o m",
+        "on-scroll-up": "volumecontrol.sh -o i",
+        "on-scroll-down": "volumecontrol.sh -o d",
         "tooltip-format": "{icon} {desc} // {volume}%",
         "scroll-step": 5,
         "format-icons": {
@@ -291,9 +291,9 @@
         "format-source": "",
         "format-source-muted": "",
         "on-click": "pavucontrol -t 4",
-        "on-click-middle": "volumecontrol.sh -i m", // "volumecontroldunst.sh -i m || volumecontrolswaync.sh -i m",
-        "on-scroll-up": "volumecontrol.sh -i i", // "volumecontroldunst.sh -i i || volumecontrolswaync.sh -i i",
-        "on-scroll-down": "volumecontrol.sh -i d", // "volumecontroldunst.sh -i d || volumecontrolswaync.sh -i d",
+        "on-click-middle": "volumecontrol.sh -i m",
+        "on-scroll-up": "volumecontrol.sh -i i",
+        "on-scroll-down": "volumecontrol.sh -i d",
         "tooltip-format": "{format_source} {source_desc} // {source_volume}%",
         "scroll-step": 5
     },
@@ -311,7 +311,7 @@
 
     "custom/notifications": {
         "tooltip": false,
-        "format": "{icon}",
+        "format": "{icon} {}",
         "rotate": 0,
         "format-icons": {
             "email-notification": "<span foreground='white'><sup></sup></span>",
@@ -330,15 +330,15 @@
             "dnd-none": "",
             "inhibited-notification": "<span foreground='white'><sup></sup></span>",
             "inhibited-none": "",
-            "dnd-inhibited-notification": "<span foreground='gray'><sup></sup></span>",
+            "dnd-inhibited-notification": "<span foreground='white'><sup></sup></span>",
             "dnd-inhibited-none": ""
         },
         "return-type": "json",
-        "exec-if": "which dunstctl || swaync-client",
+        "exec-if": "which dunstctl || which swaync-client",
         "exec": "notifications.py || swaync-client -swb",
         "on-click": "sleep 0.1 && dunstctl history-pop || swaync-client -t -sw",
-        "on-click-middle": "dunstctl history-clear || swaync-client -C -sw",
-        "on-click-right": "dunstctl close-all || swaync-client -d -sw",
+        "on-click-middle": "dunstctl history-clear",
+        "on-click-right": "dunstctl close-all || swaync-client -C -sw",
         "escape": true
     },
 
@@ -406,7 +406,7 @@
         "exec": "echo ; echo  switch bar //  dock",
         "on-click": "wbarconfgen.sh n",
         "on-click-right": "wbarconfgen.sh p",
-        "on-click-middle": "sleep 0.1 && quickapps.sh kitty firefox drmcord code-oss dolphin",
+        "on-click-middle": "sleep 0.1 && quickapps.sh kitty firefox spotify code-oss dolphin",
         "interval" : 86400,
         "tooltip": true
     },
