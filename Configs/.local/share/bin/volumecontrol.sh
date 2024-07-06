@@ -22,8 +22,10 @@ EOF
 }
 
 notify_vol() {
+    # export -f get_notd
+    # get_notd
     angle="$(((($vol + 2) / 5) * 5))"
-    ico="${icodir}/vol-${angle}.svg"
+    ico="${icoDir}/vol/vol-${angle}.svg"
     bar=$(seq -s "." $(($vol / 15)) | sed 's/[0-9]//g')
     notify-send -a "t2" -r 91190 -t 800 -i "${ico}" "${vol}${bar}" "${nsink}"
 }
@@ -32,9 +34,9 @@ notify_mute() {
     mute=$(pamixer "${srce}" --get-mute | cat)
     [ "${srce}" == "--default-source" ] && dvce="mic" || dvce="speaker"
     if [ "${mute}" == "true" ]; then
-        notify-send -a "t2" -r 91190 -t 800 -i "${icodir}/muted-${dvce}.svg" "muted" "${nsink}"
+        notify-send -a "t2" -r 91190 -t 800 -i "${icoDir}/vol/muted-${dvce}.svg" "muted" "${nsink}"
     else
-        notify-send -a "t2" -r 91190 -t 800 -i "${icodir}/unmuted-${dvce}.svg" "unmuted" "${nsink}"
+        notify-send -a "t2" -r 91190 -t 800 -i "${icoDir}/vol/unmuted-${dvce}.svg" "unmuted" "${nsink}"
     fi
 }
 
@@ -63,6 +65,7 @@ select_output() {
             while IFS= read -r x; do echo "$x"; done
     fi
 }
+
 
 # eval device option
 
@@ -97,11 +100,12 @@ while getopts iop:s DeviceOpt; do
     esac
 done
 
+
 # set default variables
 
-icodir="${confDir}/dunst/icons/vol"
 shift $((OPTIND - 1))
 step="${2:-5}"
+
 
 # execute action
 

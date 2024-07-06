@@ -127,6 +127,16 @@ pkg_installed()
     fi
 }
 
+if pkg_installed dunst && pkg_installed swaync || pkg_installed dunst-git && pkg_installed swaync-git; then
+    echo "Error you should not have dunst and swaync installed at the same time!"
+    exit 1
+    elif pkg_installed dunst || pkg_installed dunst-git; then
+        icoDir="${confDir}/dunst/icons"
+    elif pkg_installed swaync || pkg_installed swaync-git; then
+        icoDir="${confDir}/swaync/icons"
+    export icoDir
+fi
+
 get_aurhlpr()
 {
     if pkg_installed yay

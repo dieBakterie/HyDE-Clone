@@ -1,7 +1,7 @@
 #!/bin/env bash
 
 if [ $# -eq 0 ]; then
-	echo "Usage: $0 --title | --arturl | --artist | --length | --album | --source | --position"
+	echo "Usage: $0 --title | --arturl | --artist | --position | --length | --album | --source"
 	exit 1
 fi
 
@@ -22,6 +22,8 @@ get_source_info() {
 		echo -e "Spotify "
 	elif [[ "$trackid" == *"chromium"* ]]; then
 		echo -e "Chrome "
+	elif [[ "$trackid" == *"YoutubeMusic"* ]]; then
+		echo -e "YouTubeMusic "
 	else
 		echo ""
 	fi
@@ -38,7 +40,7 @@ convert_length() {
     local seconds=$((length / 1000000))
     local minutes=$((seconds / 60))
     local remaining_seconds=$((seconds % 60))
-    printf "%d:%02d" $minutes $remaining_seconds
+    printf "%d:%02d m" $minutes $remaining_seconds
 }
 
 # Function to convert seconds to minutes and seconds
@@ -57,7 +59,7 @@ case "$1" in
 	if [ -z "$title" ]; then
 		echo ""
 	else
-		echo "${title:0:28}" # Limit the output to 50 characters
+		echo "${title:0:50}" # Limit the output to 50 characters
 	fi
 	;;
 --arturl)
@@ -76,9 +78,20 @@ case "$1" in
 	if [ -z "$artist" ]; then
 		echo ""
 	else
-		echo "${artist:0:30}" # Limit the output to 50 characters
+		echo "${artist:0:50}" # Limit the output to 50 characters
 	fi
 	;;
+--position)
+    position=$(get_position)
+    length=$(get_metadata "mpris:length")
+    if [ -z "$position" ] || [ -z "$length" ]; then
+        echo ""
+    else
+        position_formatted=$(convert_position "$position")
+        length_formatted=$(convert_length "$length")
+        echo "$position_formatted/$length_formatted"
+    fi
+    ;;
 --length)
 	length=$(get_metadata "mpris:length")
 	if [ -z "$length" ]; then
@@ -113,19 +126,8 @@ case "$1" in
 --source)
 	get_source_info
 	;;
---position)
-    position=$(get_position)
-    length=$(get_metadata "mpris:length")
-    if [ -z "$position" ] || [ -z "$length" ]; then
-        echo ""
-    else
-        position_formatted=$(convert_position "$position")
-        length_formatted=$(convert_length "$length")
-        echo "$position_formatted/$length_formatted"
-    fi
-    ;;
 *)
 	echo "Invalid option: $1"
-	echo "Usage: $0 --title | --url | --artist | --length | --album | --source | --position" ; exit 1
+	echo "Usage: $0 --title | --arturl | --artist | --position | --length | --album | --source" ; exit 1
 	;;
 esac

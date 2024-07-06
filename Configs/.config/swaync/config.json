@@ -64,5 +64,31 @@
         }
       ]
     }
+  },
+  "notification-visibility": {
+    "critical": {
+      "state": "enabled",
+      "app-name": ".*",
+      "summary": ".*",
+      "body": ".*",
+      "urgency": "Critical",
+      "category": ".*"
+    },
+    "low": {
+      "state": "enabled",
+      "app-name": "t2",
+      "summary": ".*",
+      "body": ".*",
+      "urgency": "Low",
+      "category": ".*"
+    },
+    "normal": {
+      "state": "enabled",
+      "app-name": "t1",
+      "summary": ".*",
+      "body": ".*",
+      "urgency": "Normal",
+      "category": ".*"
+    }
   }
 }

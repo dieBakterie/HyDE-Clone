@@ -3,6 +3,7 @@
 scrDir=$(dirname "$(realpath "$0")")
 source "$scrDir/globalcontrol.sh"
 
+
 print_error() {
 cat << "EOF"
     ./brightnesscontrol.sh <action>
@@ -16,10 +17,11 @@ send_notification() {
     brightness=$(brightnessctl info | grep -oP "(?<=\()\d+(?=%)" | cat)
     brightinfo=$(brightnessctl info | awk -F "'" '/Device/ {print $2}')
     angle=$((((brightness + 2) / 5) * 5))
-    ico="$HOME/.config/dunst/icons/vol/vol-${angle}.svg"
+    ico="${icoDir}/vol/vol-${angle}.svg"
     bar=$(seq -s "." $((brightness / 15)) | sed 's/[0-9]//g')
-    notify-send -a "t2" -r 91190 -t 800 -i "${ico}" "${brightness}${bar}" "${brightinfo}"
+    notify-send -a "t2" -r 91190 -t 800 -i "${ico}" "${brightness}${bar}" "${brightinfo}" # -h string:x-canonical-private-synchronous:test
 }
+
 
 get_brightness() {
     brightnessctl -m | grep -o '[0-9]\+%' | head -c-2
@@ -46,7 +48,9 @@ d)  # decrease the backlight
         # decrease the backlight by 5% otherwise
         brightnessctl set 5%-
     fi
-    send_notification ;;
+    send_notification
+    ;;
 *)  # print error
-    print_error ;;
+    print_error
+    ;;
 esac

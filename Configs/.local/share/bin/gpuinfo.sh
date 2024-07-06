@@ -268,7 +268,7 @@ Avialable GPU: ${gpu_flags//_flag/}
 [options]
 --toggle         * Toggle available GPU
 --use [GPU]      * Only call the specified GPU (Useful for adding specific GPU on waybar)
---reset          *  Remove & restart all query
+--reset          * Remove & restart all query
 
 [flags]
 tired            * Adding this option will not query nvidia-smi if gpu is in suspend mode

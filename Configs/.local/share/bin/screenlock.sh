@@ -30,7 +30,7 @@ fn_check_lockscreen() { # this function is for hypridle/swayidle to set the lock
 
 # Locks the screen depending on player status
 fn_check_playerctl() {
-    "${scrDir}/hyprlock.sh" --thumbnail --lock
+    "${scrDir}/hyprlock.sh" --background --lock
 }
 
 # Displays help message

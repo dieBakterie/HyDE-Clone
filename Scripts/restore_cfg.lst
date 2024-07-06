@@ -1,11 +1,11 @@
-N|Y|${HOME}|.zshrc .p10k.zsh|zsh oh-my-zsh-git zsh-theme-powerlevel10k pokemon-colorscripts-git
-N|Y|${HOME}/.config/Code/User|settings.json|visual-studio-code-bin
-N|Y|${HOME}/.config/Code - OSS/User|settings.json|code
+Y|Y|${HOME}|.zshrc .p10k.zsh|zsh oh-my-zsh-git zsh-theme-powerlevel10k pokemon-colorscripts-git
+Y|Y|${HOME}/.config/Code/User|settings.json|visual-studio-code-bin
+Y|Y|${HOME}/.config/Code - OSS/User|settings.json|code
 Y|Y|${HOME}/.config|fish|fish
 Y|Y|${HOME}/.config|dunst|dunst
 Y|Y|${HOME}/.config|swaync|swaync
-Y|Y|${HOME}/.config/hyde|hyde.conf keycode.kb|hyprland-git
-Y|Y|${HOME}/.config/hyde/wallbash/Wall-Dcol|hypr.dcol|hyprland-git
+Y|Y|${HOME}/.config/hyde|hyde.conf keycode.kb|hyprland
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Dcol|hypr.dcol|hyprland
 Y|Y|${HOME}/.config/hyde/wallbash/Wall-Dcol|rofi.dcol|rofi
 Y|Y|${HOME}/.config/hyde/wallbash/Wall-Dcol|waybar.dcol|waybar
 Y|Y|${HOME}/.config/hyde/wallbash/Wall-Dcol|kitty.dcol|kitty
@@ -18,41 +18,37 @@ Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways|cava.dcol|cava
 Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways|spotify.dcol|spotify spicetify-cli
 Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways|code.dcol|visual-studio-code-bin
 Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways|code.dcol|code
-Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways|hyprlock.dcol|hyprlock-git
-Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways/notification|hyprdots.dcol muted-mic.dcol muted-speaker.dcol unmuted-mic.dcol unmuted-speaker.dcol vol-0.dcol vol-5.dcol vol-10.dcol vol-15.dcol vol-20.dcol vol-25.dcol vol-30.dcol vol-35.dcol vol-40.dcol vol-45.dcol vol-50.dcol vol-55.dcol vol-60.dcol vol-65.dcol vol-70.dcol vol-75.dcol vol-80.dcol vol-85.dcol vol-90.dcol vol-95.dcol vol-100.dcol|hyprland-git
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways|hyprlock.dcol|hyprlock
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways/notification|hyprdots.dcol muted-mic.dcol muted-speaker.dcol unmuted-mic.dcol unmuted-speaker.dcol vol-0.dcol vol-5.dcol vol-10.dcol vol-15.dcol vol-20.dcol vol-25.dcol vol-30.dcol vol-35.dcol vol-40.dcol vol-45.dcol vol-50.dcol vol-55.dcol vol-60.dcol vol-65.dcol vol-70.dcol vol-75.dcol vol-80.dcol vol-85.dcol vol-90.dcol vol-95.dcol vol-100.dcol|hyprland playerctl libnotify
 Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways/notification|dunst.dcol|dunst
 Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways/notification|swaync.dcol|swaync
-Y|Y|${HOME}/.config/hypr|hyprland.conf themes plugins|hyprland-git
-Y|Y|${HOME}/.config/hypr/configs|animations.conf inputs.conf launchs.conf layouts.conf misc.conf windowrules.conf workspacerules.conf|hyprland-git
-N|Y|${HOME}/.config/hypr/configs|keybindings.conf monitors.conf submaps.conf workspaces.conf|hyprland-git
-N|Y|${HOME}/.config/hypr|pyprland.toml|pyprland-git
-N|Y|${HOME}/.config/hypr|hypridle.conf|hypridle-git
-Y|Y|${HOME}/.local/share/bin|wallbashdunst.sh volumecontroldunst.sh notifications.py|dunst
-Y|Y|${HOME}/.local/share/bin|wallbashswaync.sh volumecontrolswaync.sh|swaync
-Y|Y|${HOME}/.local/share/bin|wallbashspotify.sh|spotify spicetify-cli
-Y|Y|${HOME}/.local/share/bin|amdgpu.py|python-pyamdgpuinfo
-Y|Y|${HOME}/.local/share/bin|gpuinfo.sh|hyprland-git
-Y|Y|${HOME}/.local/share/bin|brightnesscontroldunst.sh|dunst
-Y|Y|${HOME}/.local/share/bin|brightnesscontrolswaync.sh|swaync
-Y|Y|${HOME}/.local/share/bin|cliphist.sh|cliphist
-Y|Y|${HOME}/.local/share/bin|dontkillsteam.sh|steam
-Y|Y|${HOME}/.local/share/bin|gamelauncher.sh|rofi steam
-Y|Y|${HOME}/.local/share/bin|gamemode.sh globalcontrol.sh|hyprland-git
-Y|Y|${HOME}/.local/share/bin|hyprlock.sh infonlock.sh location.sh weather.sh|hyprlock-git
-Y|Y|${HOME}/.local/share/bin|playerctlock.sh|hyprlock-git playerctl
-Y|Y|${HOME}/.local/share/bin|logoutlaunch.sh|wlogout
-Y|Y|${HOME}/.local/share/bin|mediaplayer.py|playerctl
-Y|Y|${HOME}/.local/share/bin|polkitkdeauth.sh|hyprland-git polkit-gnome
-Y|Y|${HOME}/.local/share/bin|quickapps.sh rofilaunch.sh rofiselect.sh themeselect.sh wallbashtoggle.sh|rofi
-Y|Y|${HOME}/.local/share/bin|resetxdgportal.sh|hyprland-git xdg-desktop-portal-hyprland-git
-Y|Y|${HOME}/.local/share/bin|screenlock.sh|hypridle-git
-Y|Y|${HOME}/.local/share/bin|screenshot.sh|grimblast-git
-Y|Y|${HOME}/.local/share/bin|swwwallbash.sh swwwallcache.sh swwwallkon.sh swwwallpaper.sh swwwallselect.sh|swww
-Y|Y|${HOME}/.local/share/bin|wallbashcava.sh|cava
-Y|Y|${HOME}/.local/share/bin|wallbashcode.sh|code
-Y|Y|${HOME}/.local/share/bin|wallbashcode.sh|visual-studio-code-bin
-Y|Y|${HOME}/.local/share/bin|wbarconfgen.sh wbarstylegen.sh|waybar
-Y|Y|${HOME}/.local/share/bin|batterynotify.sh cpuinfo.sh globalcontrol.sh keybinds_hint.sh keyboardswitch.sh sysmonlaunch.sh systemupdate.sh testrunner.sh themeswitch.sh wallbash.sh wallbashdiscord.sh weather.py windowpin.sh|hyprland-git
+Y|Y|${HOME}/.config/hypr|hyprland.conf themes plugins|hyprland
+Y|Y|${HOME}/.config/hypr/configs|animations.conf inputs.conf launchs.conf layouts.conf misc.conf windowrules.conf workspacerules.conf|hyprland
+Y|Y|${HOME}/.config/hypr/configs|keybindings.conf monitors.conf submaps.conf workspaces.conf|hyprland
+Y|Y|${HOME}/.config/hypr|pyprland.toml|pyprland
+Y|Y|${HOME}/.config/hypr|hypridle.conf|hypridle
+Y|Y|${HOME}/.local/share/bin|wallbashdunst.sh notifications.py|hyprland dunst
+Y|Y|${HOME}/.local/share/bin|wallbashswaync.sh|hyprland swaync
+Y|Y|${HOME}/.local/share/bin|wallbashspotify.sh|hyprland spotify spicetify-cli
+Y|Y|${HOME}/.local/share/bin|gpuinfo.sh amdgpu.py|hyprland python-pyamdgpuinfo
+Y|Y|${HOME}/.local/share/bin|cliphist.sh|hyprland rofi cliphist
+Y|Y|${HOME}/.local/share/bin|dontkillsteam.sh|hyprland steam
+Y|Y|${HOME}/.local/share/bin|gamelauncher.sh|hyprland rofi steam
+Y|Y|${HOME}/.local/share/bin|gamelauncher.sh|hyprland rofi lutris
+Y|Y|${HOME}/.local/share/bin|batterynotify.sh cpuinfo.sh gamemode.sh globalcontrol.sh keybinds_hint.sh keyboardswitch.sh sysmonlaunch.sh systemupdate.sh testrunner.sh themeswitch.sh wallbash.sh wallbashdiscord.sh windowpin.sh volumecontrol.sh brightnesscontrol.sh|hyprland
+Y|Y|${HOME}/.local/share/bin|hyprlock.sh infonlock.sh location.sh weather.sh playerctlock.sh|hyprland hyprlock playerctl
+Y|Y|${HOME}/.local/share/bin|logoutlaunch.sh|hyprland wlogout
+Y|Y|${HOME}/.local/share/bin|mediaplayer.py|hyprland playerctl
+Y|Y|${HOME}/.local/share/bin|polkitkdeauth.sh|hyprland polkit-gnome
+Y|Y|${HOME}/.local/share/bin|quickapps.sh rofilaunch.sh rofiselect.sh themeselect.sh wallbashtoggle.sh|hyprland rofi
+Y|Y|${HOME}/.local/share/bin|resetxdgportal.sh|hyprland xdg-desktop-portal-hyprland
+Y|Y|${HOME}/.local/share/bin|screenlock.sh|hyprland hypridle
+Y|Y|${HOME}/.local/share/bin|screenshot.sh|hyprland grimblast-git
+Y|Y|${HOME}/.local/share/bin|swwwallbash.sh swwwallcache.sh swwwallkon.sh swwwallpaper.sh swwwallselect.sh|hyprland swww
+Y|Y|${HOME}/.local/share/bin|wallbashcava.sh|hyprland cava
+Y|Y|${HOME}/.local/share/bin|wallbashcode.sh|hyprland code
+Y|Y|${HOME}/.local/share/bin|wallbashcode.sh|hyprland visual-studio-code-bin
+Y|Y|${HOME}/.local/share/bin|wbarconfgen.sh wbarstylegen.sh weather.py|hyprland waybar
 Y|Y|${HOME}/.config|kitty|kitty
 Y|Y|${HOME}/.config|Kvantum|kvantum
 Y|Y|${HOME}/.config|lsd|lsd
@@ -62,7 +58,7 @@ Y|Y|${HOME}/.config|qt5ct|qt5ct
 Y|Y|${HOME}/.config|qt6ct|qt6ct
 Y|Y|${HOME}/.config|rofi|rofi
 Y|Y|${HOME}/.config|swaylock|swaylock-effects
-Y|Y|${HOME}/.config|hyprlock|hyprlock-git
+Y|Y|${HOME}/.config|hyprlock|hyprlock
 Y|Y|${HOME}/.config/waybar|modules config.jsonc style.css theme.css|waybar
 Y|Y|${HOME}/.config/waybar|config.ctl|waybar
 Y|Y|${HOME}/.config|wlogout|wlogout
@@ -74,4 +70,14 @@ Y|Y|${HOME}/.config/menus|applications.menu|dolphin
 Y|Y|${HOME}/.local/share|dolphin|dolphin
 Y|Y|${HOME}/.local/share/kxmlgui5|dolphin|dolphin
 Y|Y|${HOME}/.local/share/kio/servicemenus|hydewallpaper.desktop|dolphin
-N|Y|${HOME}/.config|libinput-gestures.conf|libinput-gestures
+Y|Y|${HOME}/.config|libinput-gestures.conf|libinput-gestures
+Y|Y|${HOME}/.local/share/bin|wallbashdiscord.sh|hyprland armcord
+Y|Y|${HOME}/.local/share/bin|wallbashdiscord.sh|hyprland discord
+Y|Y|${HOME}/.local/share/bin|wallbashdiscord.sh|hyprland vencord
+Y|Y|${HOME}/.local/share/bin|wallbashdiscord.sh|hyprland vesktop
+Y|Y|${HOME}/.local/share/bin|wallbashdiscord.sh|hyprland webcord
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways|discord.dcol|hyprland armcord
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways|discord.dcol|hyprland discord
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways|discord.dcol|hyprland vencord
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways|discord.dcol|hyprland vesktop
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways|discord.dcol|hyprland webcord

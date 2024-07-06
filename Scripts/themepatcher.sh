@@ -22,7 +22,7 @@ print_prompt() {
     echo ""
 }
 
-scrDir="$(dirname "$(realpath "$0")")"
+scrDir=$(dirname "$(realpath "$0")")
 source "${scrDir}/global_fn.sh"
 if [ $? -ne 0 ]; then
     echo "Error: unable to source global_fn.sh..."
@@ -55,14 +55,14 @@ Fav_Theme="$1"
 
 if [ -d "$2" ]; then
     Theme_Dir="$2"
-else
+else 
     Git_Repo=${2%/}
     if echo "$Git_Repo" | grep -q "/tree/"; then
         branch=${Git_Repo#*tree/}
         Git_Repo=${Git_Repo%/tree/*}
     else
         branches=$(curl -s "https://api.github.com/repos/${Git_Repo#*://*/}/branches" | jq -r '.[].name')
-        branches=("$branches")
+        branches=($branches)
         if [[ ${#branches[@]} -le 1 ]]; then
             branch=${branches[0]}
         else
@@ -82,7 +82,7 @@ else
         print_prompt "Directory $Theme_Dir already exists. Using existing directory."
         if cd "$Theme_Dir"; then
             git fetch --all &> /dev/null
-            git reset --hard "@{upstream}" &> /dev/null
+            git reset --hard @{upstream} &> /dev/null
             cd - &> /dev/null
         else
             print_prompt -y "Could not navigate to $Theme_Dir. Skipping git pull."
@@ -126,13 +126,13 @@ wallcount="$(echo "${wallpapers}" | wc -l)"
 check_tars() {
     local inVal="${1}"
     local gsLow=$(echo "${inVal}" | tr '[:upper:]' '[:lower:]')
-    local gsVal="$(awk -F"[\"']" '/^[[:space:]]*exec[[:space:]]*=[[:space:]]*gsettings[[:space:]]*set[[:space:]]*org.gnome.desktop.interface[[:space:]]*'"${gsLow}"'-theme[[:space:]]*/ {last=$2} END {print last}' "${Fav_Theme_Dir}/hypr.theme" )"
+    local gsVal="$(awk -F"[\"']" '/^[[:space:]]*exec[[:space:]]*=[[:space:]]*gsettings[[:space:]]*set[[:space:]]*org.gnome.desktop.interface[[:space:]]*'${gsLow}'-theme[[:space:]]*/ {last=$2} END {print last}' "${Fav_Theme_Dir}/hypr.theme" )"
     local trVal
 
-    if [ -n "${gsVal}" ]; then
+    if [ ! -z "${gsVal}" ]; then
         print_prompt -g "[OK] " "hypr.theme :: [${gsLow}]" -b " ${gsVal}"
         trArc="$(find "${Theme_Dir}" -type f -name "${inVal}_*.tar.*")"
-        [ -f "${trArc}" ] && [ "$(echo "${trArc}" | wc -l)" -eq 1 ] && trVal="$(basename "$(tar -tf "${trArc}" | cut -d '/' -f1 | sort -u)")" && trVal="$(echo "${trVal}" | grep -w "${gsVal}")"
+        [ -f "${trArc}" ] && [ $(echo "${trArc}" | wc -l) -eq 1 ] && trVal="$(basename "$(tar -tf "${trArc}" | cut -d '/' -f1 | sort -u)")" && trVal="$(echo "${trVal}" | grep -w "${gsVal}")"
         print_prompt -g "[OK] " "../*.tar.* :: [${gsLow}]" -b " ${trVal}"
         [ "${trVal}" != "${gsVal}" ] && print_prompt -r "[ERROR] " "${gsLow}-theme set in hypr.theme does not exist in ${inVal}_*.tar.*" && exit_flag=true
     else
@@ -150,7 +150,7 @@ print_prompt "" && [[ "${exit_flag}" = true ]] && exit 1
 prefix=("Gtk" "Icon" "Cursor")
 tgtDir=("$HOME/.themes" "$HOME/.icons" "$HOME/.icons")
 
-for indx in "${!prefix[@]}"; do
+for indx in ${!prefix[@]}; do
     tarFile="$(find "${Theme_Dir}" -type f -name "${prefix[indx]}_*.tar.*")"
     [ -f "${tarFile}" ] || continue
     [ -d "${tgtDir[indx]}" ] || mkdir -p "${tgtDir[indx]}"

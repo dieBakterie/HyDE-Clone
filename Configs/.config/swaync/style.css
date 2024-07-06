@@ -1,8 +1,9 @@
 @import "./theme.css";
-
+/*
 .testing {
   background-color: red;
 }
+*/
 
 .notification-row {
   transition: all 200ms ease;
@@ -15,6 +16,45 @@
   background: @wb-act-bg;
 }
 
+.notification-row:focus .notification,
+.notification-row:hover .notification {
+  box-shadow: none;
+}
+
+.notification {
+  transition: all 200ms ease;
+  border-radius: 0px;
+  margin: 6px 6px;
+  box-shadow: none;
+  padding: 0;
+  background-color: @main-bg;
+}
+
+.widget-inhibitors > button:hover {
+  background: @wb-act-bg;
+}
+
+.critical {
+  color: #1e1e2e;
+  border: 1px solid #f38ba8;
+  background: #f5e0dc;
+  mask-image: "$HOME/.config/swaync/icons/critical.svg";
+}
+
+.low {
+  color: #CCF0FFE6;
+  border: 1px solid #6591A303;
+  background: #6591A380;
+  mask-image: "$HOME/.config/swaync/icons/hyprdots.svg";
+}
+
+.normal {
+  background-color: #3A4A6B80;
+  color: #CCDDFFE6;
+  border-color: #3A4A6B03;
+  mask-image: "$HOME/.config/swaync/icons/hyprdots.svg";
+}
+
 .control-center .notification-row:focus,
 .control-center .notification-row:hover {
   opacity: 0.5;
@@ -25,26 +65,12 @@
   background: @shade-lighter;
 }
 
-.notification-row:focus .notification,
-.notification-row:hover .notification {
-  box-shadow: none;
-}
-
 .control-center .notification {
   box-shadow: none;
 }
 
 .control-center .notification-row {
   opacity: 0.8;
-}
-
-.notification {
-  transition: all 200ms ease;
-  border-radius: 0px;
-  margin: 6px 6px;
-  box-shadow: none;
-  padding: 0;
-  background-color: @main-bg;
 }
 
 .notification-content {
@@ -368,8 +394,4 @@ carouselindicatordots {
   border: 1px solid @noti-border-color;
   box-shadow: none;
   border-radius: 0px;
-}
-
-.widget-inhibitors > button:hover {
-  background: @wb-act-bg;
 }
