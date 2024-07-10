@@ -41,8 +41,8 @@ Y|Y|${HOME}/.local/share/bin|logoutlaunch.sh|hyprland wlogout
 Y|Y|${HOME}/.local/share/bin|mediaplayer.py|hyprland playerctl
 Y|Y|${HOME}/.local/share/bin|polkitkdeauth.sh|hyprland polkit-gnome
 Y|Y|${HOME}/.local/share/bin|quickapps.sh rofilaunch.sh rofiselect.sh themeselect.sh wallbashtoggle.sh|hyprland rofi
-Y|Y|${HOME}/.local/share/bin|resetxdgportal.sh|hyprland xdg-desktop-portal-hyprland
-Y|Y|${HOME}/.local/share/bin|screenlock.sh|hyprland hypridle
+Y|Y|${HOME}/.local/share/bin|resetxdgportal.sh|hyprland
+Y|Y|${HOME}/.local/share/bin|screenlock.sh|hyprland hypridle # WIP
 Y|Y|${HOME}/.local/share/bin|screenshot.sh|hyprland grimblast-git
 Y|Y|${HOME}/.local/share/bin|swwwallbash.sh swwwallcache.sh swwwallkon.sh swwwallpaper.sh swwwallselect.sh|hyprland swww
 Y|Y|${HOME}/.local/share/bin|wallbashcava.sh|hyprland cava

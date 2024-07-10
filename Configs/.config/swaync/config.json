@@ -55,10 +55,6 @@
           "command": "hyprctl dispatch exit"
         },
         {
-          "label": "󰍃",
-          "command": "hyprctl dispatch exit"
-        },
-        {
           "label": "",
           "command": "obs"
         }
@@ -76,7 +72,7 @@
     },
     "low": {
       "state": "enabled",
-      "app-name": "t2",
+      "app-name": "t1",
       "summary": ".*",
       "body": ".*",
       "urgency": "Low",
@@ -84,7 +80,7 @@
     },
     "normal": {
       "state": "enabled",
-      "app-name": "t1",
+      "app-name": "t2",
       "summary": ".*",
       "body": ".*",
       "urgency": "Normal",

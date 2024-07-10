@@ -1,8 +1,6 @@
 #!/usr/bin/env sh
 
-
 # detect hypr theme and initialize variables
-
 scrDir="$(dirname "$(realpath "$0")")"
 source "$scrDir/globalcontrol.sh"
 waybar_dir="${confDir}/waybar"
@@ -12,9 +10,7 @@ in_file="$waybar_dir/modules/style.css"
 out_file="$waybar_dir/style.css"
 src_file="${confDir}/hypr/themes/theme.conf"
 
-
 # calculate height from control file or monitor res
-
 b_height=$(grep '^1|' "$conf_ctl" | cut -d '|' -f 2)
 
 if [ -z "$b_height" ] || [ "$b_height" == "0" ]; then
@@ -22,9 +18,7 @@ if [ -z "$b_height" ] || [ "$b_height" == "0" ]; then
     b_height=$(( y_monres*3/100 ))
 fi
 
-
 # calculate values based on height
-
 export b_radius=$(( b_height*70/100 ))   # block rad 70% of height (type1)
 export c_radius=$(( b_height*25/100 ))   # block rad 25% of height {type2}
 export t_radius=$(( b_height*25/100 ))   # tooltip rad 25% of height
@@ -45,9 +39,7 @@ if [ $s_fontpx -lt 10 ] ; then
     export s_fontpx=10
 fi
 
-
 # adjust values for vert/horz
-
 export w_position="$(grep '^1|' "$conf_ctl" | cut -d '|' -f 3)"
 case ${w_position} in
     top|bottom)
@@ -102,15 +94,11 @@ case ${w_position} in
         export x4="bottom" ;;
 esac
 
-
 # list modules and generate theme style
-
 export modules_ls="$(grep -m 1 '".*.": {'  --exclude="$modules_dir/footer.jsonc" $modules_dir/*.jsonc | cut -d '"' -f 2 | awk -F '/' '{ if($1=="custom") print "#custom-"$NF"," ; else print "#"$NF","}')"
 envsubst < "$in_file" > "$out_file"
 
-
 # override rounded couners
-
 hypr_border=$(awk -F '=' '{if($1~" rounding ") print $2}' "$src_file" | sed 's/ //g')
 if [ "$hypr_border" == "0" ] ; then
     sed -i "/border-radius: /c\    border-radius: 0px;" "$out_file"

@@ -8,14 +8,14 @@ print_prompt() {
     [[ "${verbose}" == "false" ]] && return 0
     while (( "$#" )); do
         case "$1" in
-            -r) echo -ne "\e[31m$2\e[0m"; shift 2 ;; # Red
-            -g) echo -ne "\e[32m$2\e[0m"; shift 2 ;; # Green
-            -y) echo -ne "\e[33m$2\e[0m"; shift 2 ;; # Yellow
-            -b) echo -ne "\e[34m$2\e[0m"; shift 2 ;; # Blue
-            -m) echo -ne "\e[35m$2\e[0m"; shift 2 ;; # Magenta
-            -c) echo -ne "\e[36m$2\e[0m"; shift 2 ;; # Cyan
-            -w) echo -ne "\e[37m$2\e[0m"; shift 2 ;; # White
-            -n) echo -ne "\e[96m$2\e[0m"; shift 2 ;; # Neon
+            -r) echo -ne "\e[31m$2\e[0m"; shift 2 ;; # red
+            -g) echo -ne "\e[32m$2\e[0m"; shift 2 ;; # green
+            -y) echo -ne "\e[33m$2\e[0m"; shift 2 ;; # yellow
+            -b) echo -ne "\e[34m$2\e[0m"; shift 2 ;; # blue
+            -m) echo -ne "\e[35m$2\e[0m"; shift 2 ;; # magenta
+            -c) echo -ne "\e[36m$2\e[0m"; shift 2 ;; # cyan
+            -w) echo -ne "\e[37m$2\e[0m"; shift 2 ;; # white
+            -n) echo -ne "\e[96m$2\e[0m"; shift 2 ;; # neon
             *) echo -ne "$1"; shift ;;
         esac
     done
@@ -117,7 +117,7 @@ while IFS= read -r fchk; do
 done <<< "$config"
 readonly restore_list
 
-# Get Wallpapers
+# get wallpapers
 wallpapers=$(find "${Fav_Theme_Dir}" -type f \( -iname "*.gif" -o -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" \))
 wallcount="$(echo "${wallpapers}" | wc -l)"
 { [ -z "${wallpapers}" ] && print_prompt -r "[ERROR] " "No wallpapers found" && exit_flag=true ;} || { readonly wallpapers && print_prompt -g "\n[OK] " "wallpapers :: [count] ${wallcount} (.gif+.jpg+.jpeg+.png)" ;}
@@ -125,14 +125,16 @@ wallcount="$(echo "${wallpapers}" | wc -l)"
 # overparsing 😁
 check_tars() {
     local inVal="${1}"
-    local gsLow=$(echo "${inVal}" | tr '[:upper:]' '[:lower:]')
-    local gsVal="$(awk -F"[\"']" '/^[[:space:]]*exec[[:space:]]*=[[:space:]]*gsettings[[:space:]]*set[[:space:]]*org.gnome.desktop.interface[[:space:]]*'${gsLow}'-theme[[:space:]]*/ {last=$2} END {print last}' "${Fav_Theme_Dir}/hypr.theme" )"
+    local gsLow
+    gsLow=$(echo "${inVal}" | tr '[:upper:]' '[:lower:]')
+    local gsVal
+    gsVal="$(awk -F"[\"']" '/^[[:space:]]*exec[[:space:]]*=[[:space:]]*gsettings[[:space:]]*set[[:space:]]*org.gnome.desktop.interface[[:space:]]*'${gsLow}'-theme[[:space:]]*/ {last=$2} END {print last}' "${Fav_Theme_Dir}/hypr.theme" )"
     local trVal
 
-    if [ ! -z "${gsVal}" ]; then
+    if [ -n "${gsVal}" ]; then
         print_prompt -g "[OK] " "hypr.theme :: [${gsLow}]" -b " ${gsVal}"
         trArc="$(find "${Theme_Dir}" -type f -name "${inVal}_*.tar.*")"
-        [ -f "${trArc}" ] && [ $(echo "${trArc}" | wc -l) -eq 1 ] && trVal="$(basename "$(tar -tf "${trArc}" | cut -d '/' -f1 | sort -u)")" && trVal="$(echo "${trVal}" | grep -w "${gsVal}")"
+        [ -f "${trArc}" ] && [ "$(echo "${trArc}" | wc -l)" -eq 1 ] && trVal="$(basename "$(tar -tf "${trArc}" | cut -d '/' -f1 | sort -u)")" && trVal="$(echo "${trVal}" | grep -w "${gsVal}")"
         print_prompt -g "[OK] " "../*.tar.* :: [${gsLow}]" -b " ${trVal}"
         [ "${trVal}" != "${gsVal}" ] && print_prompt -r "[ERROR] " "${gsLow}-theme set in hypr.theme does not exist in ${inVal}_*.tar.*" && exit_flag=true
     else

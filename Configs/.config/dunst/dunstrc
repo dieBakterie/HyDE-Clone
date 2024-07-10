@@ -445,5 +445,5 @@
     background = "#f5e0dc"
     foreground = "#1e1e2e"
     frame_color = "#f38ba8"
-    icon = "${icoDir}/critical.svg"
+    icon = "$HOME/.config/dunst/icons/critical.svg"
     timeout = 0

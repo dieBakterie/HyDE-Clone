@@ -3,6 +3,7 @@
 scrDir="$(dirname "$(realpath "$0")")"
 source "$scrDir/globalcontrol.sh"
 
+# define functions
 
 print_error() {
 cat << "EOF"
@@ -22,35 +23,34 @@ send_notification() {
     notify-send -a "t2" -r 91190 -t 800 -i "${ico}" "${brightness}${bar}" "${brightinfo}" -h string:x-canonical-private-synchronous:test
 }
 
-
 get_brightness() {
     brightnessctl -m | grep -o '[0-9]\+%' | head -c-2
 }
 
 case $1 in
-i)  #// increase the backlight
+i)  # increase the backlight
     if [[ $(get_brightness) -lt 10 ]] ; then
-        #// increase the backlight by 1% if less than 10%
+        # increase the backlight by 1% if less than 10%
         brightnessctl set +1%
     else
-        #// increase the backlight by 5% otherwise
+        # increase the backlight by 5% otherwise
         brightnessctl set +5%
     fi
     send_notification ;;
-d)  #// decrease the backlight
+d)  # decrease the backlight
     if [[ $(get_brightness) -le 1 ]] ; then
-        #// avoid 0% brightness
+        # avoid 0% brightness
         brightnessctl set 1%
     elif [[ $(get_brightness) -le 10 ]] ; then
-        #// decrease the backlight by 1% if less than 10%
+        # decrease the backlight by 1% if less than 10%
         brightnessctl set 1%-
     else
-        #// decrease the backlight by 5% otherwise
+        # decrease the backlight by 5% otherwise
         brightnessctl set 5%-
     fi
     send_notification
     ;;
-*)  #// print error
+*)  # print error
     print_error
     ;;
 esac

@@ -1,14 +1,10 @@
 #!/usr/bin/env sh
 
-
 # set variables
-
 scrDir="$(dirname "$(realpath "$0")")"
 source "${scrDir}/globalcontrol.sh"
 
-
 # regen conf
-
 if pkg_installed spotify && pkg_installed spicetify-cli ; then
 
     if [ ! -w /opt/spotify ] || [ ! -w /opt/spotify/Apps ]; then

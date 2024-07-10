@@ -4,9 +4,7 @@
 #|-/ /--| Prasanth Rangan                             |-/ /--|#
 #|/ /---+---------------------------------------------+/ /---|#
 
-
-#// accent color profile
-
+# accent color profile
 colorProfile="default"
 wallbashCurve="32 50\n42 46\n49 40\n56 39\n64 38\n76 37\n90 33\n94 29\n100 20"
 sortMode="auto"
@@ -44,9 +42,7 @@ while [ $# -gt 0 ] ; do
     shift
 done
 
-
-#// set variables
-
+# set variables
 wallbashImg="${1}"
 wallbashColors=4
 wallbashFuzz=70
@@ -54,9 +50,7 @@ wallbashRaw="${2:-"${wallbashImg}"}.mpc"
 wallbashOut="${2:-"${wallbashImg}"}.dcol"
 wallbashCache="${2:-"${wallbashImg}"}.cache"
 
-
-#// color modulations
-
+# color modulations
 pryDarkBri=116
 pryDarkSat=110
 pryDarkHue=88
@@ -66,9 +60,7 @@ pryLightHue=114
 txtDarkBri=188
 txtLightBri=16
 
-
-#// input image validation
-
+# input image validation
 if [ -z "${wallbashImg}" ] || [ ! -f "${wallbashImg}" ] ; then
     echo "Error: Input file not found!"
     exit 1
@@ -83,8 +75,7 @@ fi
 echo -e "wallbash ${colorProfile} profile :: ${sortMode} :: Colors ${wallbashColors} :: Fuzzy ${wallbashFuzz} :: \"${wallbashOut}\""
 mkdir -p "${cacheDir}/${cacheThm}"> "${wallbashOut}"
 
-
-#// define functions
+# define functions
 
 rgb_negative() {
     local inCol=$1
@@ -115,15 +106,13 @@ fx_brightness() {
     local inCol="${1}"
     local fxb=$(magick "${inCol}" -colorspace gray -format "%[fx:mean]" info:)
     if awk -v fxb="${fxb}" 'BEGIN {exit !(fxb < 0.5)}' ; then
-        return 0 #// echo ":: ${fxb} :: dark :: ${inCol}"
+        return 0 # echo ":: ${fxb} :: dark :: ${inCol}"
     else
-        return 1 #// echo ":: ${fxb} :: light :: ${inCol}"
+        return 1 # echo ":: ${fxb} :: light :: ${inCol}"
     fi
 }
 
-
-#// quantize raw primary colors
-
+# quantize raw primary colors
 magick -quiet -regard-warnings "${wallbashImg}"[0] -alpha off +repage "${wallbashRaw}"
 readarray -t dcolRaw <<< $(magick "${wallbashRaw}" -depth 8 -fuzz ${wallbashFuzz}% +dither -kmeans ${wallbashColors} -depth 8 -format "%c" histogram:info: | sed -n 's/^[ ]*\(.*\):.*[#]\([0-9a-fA-F]*\) .*$/\1,\2/p' | sort -r -n -k 1 -t ",")
 
@@ -132,9 +121,7 @@ if [ ${#dcolRaw[*]} -lt ${wallbashColors} ] ; then
     readarray -t dcolRaw <<< $(magick "${wallbashRaw}" -depth 8 -fuzz ${wallbashFuzz}% +dither -kmeans $((wallbashColors + 2)) -depth 8 -format "%c" histogram:info: | sed -n 's/^[ ]*\(.*\):.*[#]\([0-9a-fA-F]*\) .*$/\1,\2/p' | sort -r -n -k 1 -t ",")
 fi
 
-
-#// sort colors based on image brightness
-
+# sort colors based on image brightness
 if [ "${sortMode}" == "auto" ] ; then
     if fx_brightness "${wallbashRaw}" ; then
         sortMode="dark"
@@ -153,13 +140,10 @@ if (( $(awk 'BEGIN {print ('"$greyCheck"' < 0.12)}') )); then
     wallbashCurve="10 0\n17 0\n24 0\n39 0\n51 0\n58 0\n72 0\n84 0\n99 0"
 fi
 
-
-#// loop for derived colors
-
+# loop for derived colors
 for (( i=0; i<${wallbashColors}; i++ )) ; do
 
-
-    #// generate missing primary colors
+    # generate missing primary colors
 
     if [ -z "${dcolHex[i]}" ] ; then
 
@@ -181,9 +165,7 @@ for (( i=0; i<${wallbashColors}; i++ )) ; do
     echo "dcol_pry$((i + 1))=\"${dcolHex[i]}\"" >> "${wallbashOut}"
     echo "dcol_pry$((i + 1))_rgba=\"$( rgba_convert "${dcolHex[i]}" )\"" >> "${wallbashOut}"
 
-
-    #// generate primary text colors
-
+    # generate primary text colors
     nTxt=$(rgb_negative ${dcolHex[i]})
 
     if fx_brightness "xc:#${dcolHex[i]}" ; then
@@ -196,9 +178,7 @@ for (( i=0; i<${wallbashColors}; i++ )) ; do
     echo "dcol_txt$((i + 1))=\"${tcol}\"" >> "${wallbashOut}"
     echo "dcol_txt$((i + 1))_rgba=\"$( rgba_convert "${tcol}" )\"" >> "${wallbashOut}"
 
-
-    #// generate accent colors
-
+    # generate accent colors
     xHue=$(magick xc:"#${dcolHex[i]}" -colorspace HSB -format "%c" histogram:info: | awk -F '[hsb(,]' '{print $2}')
     acnt=1
 
@@ -212,7 +192,5 @@ for (( i=0; i<${wallbashColors}; i++ )) ; do
 
 done
 
-
-#// cleanup temp cache
-
+# cleanup temp cache
 rm -f "${wallbashRaw}" "${wallbashCache}"

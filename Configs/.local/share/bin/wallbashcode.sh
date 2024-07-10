@@ -1,8 +1,6 @@
 #!/usr/bin/env sh
 
-
-#// set variables
-
+# set variables
 scrDir="$(dirname "$(realpath "$0")")"
 source "${scrDir}/globalcontrol.sh"
 readarray -t codeConf < <(find "${confDir}" -mindepth 1 -maxdepth 1 -type d -name "Code*" | sort)
@@ -10,9 +8,7 @@ readarray -t codeVsix < <(find "$HOME" -mindepth 1 -maxdepth 1 -type d -name ".v
 tmpFile="/tmp/$(id -u)$(basename ${0}).tmp"
 tgtFile="extensions/undefined_publisher.wallbash-0.0.1/themes/wallbash-color-theme.json"
 
-
-#// install and apply ext
-
+# install and apply ext
 for i in "${!codeConf[@]}" ; do
     [ -f "${codeConf[i]}/User/settings.json" ] || continue
     extTheme="$(jq -r '.["workbench.colorTheme"]' "${codeConf[i]}/User/settings.json")"

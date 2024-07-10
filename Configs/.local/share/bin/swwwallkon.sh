@@ -1,8 +1,6 @@
 #!/usr/bin/env sh
 
-
-#// set variables
-
+# set variables
 scrDir="$(dirname "$(realpath "$0")")"
 source "${scrDir}/globalcontrol.sh"
 scrName="$(basename "$0")"
@@ -11,13 +9,11 @@ kmenuDesk="${kmenuPath}/hydewallpaper.desktop"
 tgtPath="$(dirname "${hydeThemeDir}")"
 get_themes
 
-
-#// evaluate options
-
+# evaluate options
 while getopts "t:w:" option ; do
     case $option in
 
-        t ) #// set theme
+        t ) # set theme
             for x in "${!thmList[@]}" ; do
                 if [ "${thmList[x]}" == "$OPTARG" ] ; then
                     setTheme="${thmList[x]}"
@@ -27,7 +23,7 @@ while getopts "t:w:" option ; do
             [ -z "${setTheme}" ] && echo "Error: '$OPTARG' theme not available..." && exit 1
             ;;
 
-        w ) #// set wallpaper
+        w ) # set wallpaper
             if [ -f "$OPTARG" ] && file --mime-type "$OPTARG" | grep -q 'image/' ; then
                 setWall="$OPTARG"
             else
@@ -36,7 +32,7 @@ while getopts "t:w:" option ; do
             fi
             ;;
 
-        * ) #// refresh menu
+        * ) # refresh menu
             unset setTheme
             unset setWall
             ;;
@@ -44,9 +40,7 @@ while getopts "t:w:" option ; do
     esac
 done
 
-
-#// Regenerate desktop
-
+# regenerate desktop
 if [ -n "${setTheme}" ] && [ -n "${setWall}" ] ; then
 
     inwallHash="$(set_hash "${setWall}")"

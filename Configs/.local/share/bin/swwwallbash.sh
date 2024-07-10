@@ -1,15 +1,15 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
+# shellcheck disable=SC1090
+# shellcheck disable=SC1091
+# shellcheck disable=SC2154
 
-
-#// set variables
-
-export scrDir="$(dirname "$(realpath "$0")")"
+# set variables
+scrDir="$(dirname "$(realpath "$0")")"
+export scrDir
 source "${scrDir}/globalcontrol.sh"
 wallbashImg="${1}"
 
-
-#// validate input
-
+# validate input
 if [ -z "${wallbashImg}" ] || [ ! -f "${wallbashImg}" ] ; then
     echo "Error: Input wallpaper not found!"
     exit 1
@@ -26,9 +26,7 @@ source "${wallbashOut}"
 [ "${dcol_mode}" == "dark" ] && dcol_invt="light" || dcol_invt="dark"
 set +a
 
-
-#// deploy wallbash colors
-
+# deploy wallbash colors
 fn_wallbash () {
     local tplt="${1}"
     eval target="$(head -1 "${tplt}" | awk -F '|' '{print $1}')"
@@ -223,9 +221,7 @@ fn_wallbash () {
 
 export -f fn_wallbash
 
-
-#// switch theme <//> wall based colors
-
+# switch theme <//> wall based colors
 if [ "${enableWallDcol}" -eq 0 ] && [[ "${reload_flag}" -eq 1 ]] ; then
 
     echo ":: deploying ${hydeTheme} colors :: ${dcol_mode} wallpaper detected"

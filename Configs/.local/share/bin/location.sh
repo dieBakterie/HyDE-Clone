@@ -1,9 +1,18 @@
 #!/bin/env bash
+# shellcheck disable=SC1091
+# shellcheck disable=SC2154
 
-cache_file="$HOME/.cache/hyde/ip_cache.txt"
+# set variables
+scrDir="$(dirname "$(realpath "$0")")"
+source "$scrDir/globalcontrol.sh"
 
-if [ ! -f "$cache_file" ]; then
-	mkdir -p "$(dirname "$cache_file")" #// create .cache directory if it doesn't exist
+# define functions
+
+cache_file="${cacheDir}/ip_cache.txt"
+
+if [ ! -d "$(dirname "${cacheDir}")" ]; then
+	mkdir -p "$(dirname "$cache_file")"
+elif [ ! -f "$cache_file" ]; then
 	touch "$cache_file"
 fi
 

@@ -8,7 +8,7 @@ killall xdg-desktop-portal-wlr
 killall xdg-desktop-portal
 sleep 1
 
-#// use different directory on NixOS
+# use different directory on NixOS
 if [ -d /run/current-system/sw/libexec ]; then
     libDir=/run/current-system/sw/libexec
 else

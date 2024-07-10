@@ -1,31 +1,31 @@
 #!/bin/env bash
 
-#// check if the battery directory exists
+# check if the battery directory exists
 if [ -d "/sys/class/power_supply/BAT0" ]; then
 # if [ -d "/sys/class/power_supply/BAT0" ] || [ -d "/sys/class/power_supply/BAT1" ] || [ -d "/sys/class/power_supply/BAT2" ]; then
-  #// Get the current battery percentage
+  # get the current battery percentage
   battery_percentage=$(cat /sys/class/power_supply/BAT0/capacity)
 
-  #// Get the battery status (Charging or Discharging)
+  # get the battery status (Charging or Discharging)
   battery_status=$(cat /sys/class/power_supply/BAT0/status)
 
-  #// Define the battery icons for each 10% segment
+  # define the battery icons for each 10% segment
   battery_icons=("󰂃" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰁹")
 
-  #// Define the charging icon
+  # define the charging icon
   charging_icon="󰂄"
 
-  #// Calculate the index for the icon array
+  # calculate the index for the icon array
   icon_index=$((battery_percentage / 10))
 
-  #// Get the corresponding icon
+  # get the corresponding icon
   battery_icon=${battery_icons[icon_index]}
 
-  #// Check if the battery is charging
+  # check if the battery is charging
   if [ "$battery_status" = "Charging" ]; then
     battery_icon="$charging_icon"
   fi
 
-  #// Output the battery percentage and icon
+  # output the battery percentage and icon
   echo "$battery_percentage% $battery_icon"
 fi

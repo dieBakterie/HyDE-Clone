@@ -1,15 +1,12 @@
 #!/usr/bin/env sh
 
-
-#// set variables
-
+# set variables
 scrDir="$(dirname "$(realpath "$0")")"
 source "${scrDir}/globalcontrol.sh"
 [ -z "${hydeTheme}" ] && echo "ERROR: unable to detect theme" && exit 1
 get_themes
 
-
-#// define functions
+# define functions
 
 Theme_Change()
 {
@@ -27,9 +24,7 @@ Theme_Change()
     done
 }
 
-
-#// evaluate options
-
+# evaluate options
 while getopts "nps:" option ; do
     case $option in
 
@@ -54,9 +49,7 @@ while getopts "nps:" option ; do
     esac
 done
 
-
-#// update control file
-
+# update control file
 if ! $(echo "${thmList[@]}" | grep -wq "${themeSet}") ; then
     themeSet="${hydeTheme}"
 fi
@@ -66,28 +59,20 @@ echo ":: applying theme :: \"${themeSet}\""
 export reload_flag=1
 source "${scrDir}/globalcontrol.sh"
 
-
-#// hypr
-
+# hypr
 sed '1d' "${hydeThemeDir}/hypr.theme" > "${confDir}/hypr/themes/theme.conf"
 gtkTheme="$(grep 'gsettings set org.gnome.desktop.interface gtk-theme' "${hydeThemeDir}/hypr.theme" | awk -F "'" '{print $((NF - 1))}')"
 gtkIcon="$(grep 'gsettings set org.gnome.desktop.interface icon-theme' "${hydeThemeDir}/hypr.theme" | awk -F "'" '{print $((NF - 1))}')"
 
-
-#// qtct
-
+# qtct
 sed -i "/^icon_theme=/c\icon_theme=${gtkIcon}" "${confDir}/qt5ct/qt5ct.conf"
 sed -i "/^icon_theme=/c\icon_theme=${gtkIcon}" "${confDir}/qt6ct/qt6ct.conf"
 
-
-#// gtk3
-
+# gtk3
 sed -i "/^gtk-theme-name=/c\gtk-theme-name=${gtkTheme}" $confDir/gtk-3.0/settings.ini
 sed -i "/^gtk-icon-theme-name=/c\gtk-icon-theme-name=${gtkIcon}" $confDir/gtk-3.0/settings.ini
 
-
-#// gtk4
-
+# gtk4
 if [ -d /run/current-system/sw/share/themes ] ; then
     themeDir=/run/current-system/sw/share/themes
 else
@@ -96,9 +81,7 @@ fi
 rm -rf "${confDir}/gtk-4.0"
 ln -s "${themeDir}/${gtkTheme}/gtk-4.0" "${confDir}/gtk-4.0"
 
-
-#// flatpak GTK
-
+# flatpak GTK
 if pkg_installed flatpak ; then
     if [ "${enableWallDcol}" -eq 0 ] ; then
         flatpak --user override --env=GTK_THEME="${gtkTheme}"
@@ -109,20 +92,17 @@ if pkg_installed flatpak ; then
     fi
 fi
 
-
-#// swaync
+# swaync
 #! only for alternative version needed
 # if pkg_installed swaync ; then
 #     style_css="${confDir}/swaync/style.css"
 
-#     # Convert themeSet to the format used in style.css
+#     # convert themeSet to the format used in style.css
 #     theme_file=$(echo "$gtkTheme" | tr '[:upper:]' '[:lower:]' | tr '-' '_')
 
-#     # Replaces the @import-Statement with the desired theme
+#     # replaces the @import-Statement with the desired theme
 #     sed -i "s|@import \"\.\/themes\/[^\"]*\.css\"|@import \"\.\/themes\/${theme_file}.css\"|g" "${style_css}"
 # fi
 
-
-#// wallpaper
-
+# wallpaper
 "${scrDir}/swwwallpaper.sh" -s "$(readlink "${hydeThemeDir}/wall.set")"

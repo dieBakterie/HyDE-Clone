@@ -2,75 +2,69 @@
 # shellcheck disable=SC1091
 # shellcheck disable=SC2154
 
-
-#// set variables
-
+# set variables
 scrDir="$(dirname "$(realpath "$0")")"
 source "$scrDir/globalcontrol.sh"
 export -f pkg_installed
 
+# define functions
 
-#// functions
-
-
-#// locks the screen depending on lockscreen package
-
+# locks the screen depending on lockscreen package
 fn_lockscreen() {
     if pkg_installed "swaylock-effects-git"; then
         swaylock
     elif pkg_installed "hyprlock" || pkg_installed "hyprlock-git"; then
         hyprlock
+    else
+        echo "No supported lockscreen package installed." >&2
+        exit 1
     fi
 }
 
-
-#// sets the idle lock command
-
-fn_check_lockscreen() { #// this function is for hypridle/swayidle to set the lockscreen
+# sets the idle lock command
+fn_check_lockscreen() { # this function is for hypridle/swayidle to set the lockscreen
     if pkg_installed "swaylock-effects-git"; then
-        SCREENLOCK=swaylock
+        lockScreen=swaylock
     elif pkg_installed "hyprlock" || pkg_installed "hyprlock-git"; then
-        SCREENLOCK=hyprlock
+        lockScreen=hyprlock
+    else
+        lockScreen="none"
     fi
-    export SCREENLOCK
-    echo "${SCREENLOCK}"
+    echo "Lock screen: ${lockScreen}"
 }
 
-
-#// locks the screen depending on player status
-
+# locks the screen depending on player status
 fn_check_playerctl() {
-    "${scrDir}/hyprlock.sh" --background --lock
+    "${scrDir}/hyprlock.sh" --lock
 }
 
-
-#// displays help message
-
+# displays help message
 show_help() {
-    echo "Usage: $(basename "$0") [-c] [-l] [-m]"
-    echo
-    echo "Options:"
-    echo "  -c    Set the idle lock command"
-    echo "  -l    Lock the screen"
-    echo "  -m    Lock the screen depending on player status"
-    echo "  -h    Show this help message"
+    cat <<HELP
+Usage: $(basename "$0") [options]
+
+Options:
+  -m    Lock the screen depending on player status
+  -h    Show this help message
+HELP
 }
 
-
-#// main
-
+# main
 main() {
-    while getopts ":clmh" opt; do
+    while getopts ":mh" opt; do
         case $opt in
-        c) fn_check_lockscreen ;;
-        l) fn_lockscreen ;;
-        m) fn_check_playerctl ;;
-        h) show_help ;;
-        \?)
-            echo "Invalid option: -$OPTARG" >&2
-            show_help
-            exit 1
-            ;;
+            m)
+                fn_check_playerctl
+                ;;
+            h)
+                show_help
+                exit 0
+                ;;
+            \?)
+                echo "Invalid option: -$OPTARG" >&2
+                show_help
+                exit 1
+                ;;
         esac
     done
 }

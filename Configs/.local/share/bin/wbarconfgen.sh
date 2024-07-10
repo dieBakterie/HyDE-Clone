@@ -1,8 +1,6 @@
 #!/usr/bin/env sh
 
-
 # read control file and initialize variables
-
 export scrDir="$(dirname "$(realpath "$0")")"
 source "${scrDir}/globalcontrol.sh"
 waybar_dir="${confDir}/waybar"
@@ -14,9 +12,7 @@ readarray -t read_ctl < $conf_ctl
 num_files="${#read_ctl[@]}"
 switch=0
 
-
 # update control file to set next/prev mode
-
 if [ $num_files -gt 1 ]
 then
     for (( i=0 ; i<$num_files ; i++ ))
@@ -42,9 +38,7 @@ if [ $switch -eq 1 ] ; then
     awk -F '|' -v cmp="$update_ctl" '{OFS=FS} {if($0==cmp) $1=1; print$0}' $conf_ctl > $waybar_dir/tmp && mv $waybar_dir/tmp $conf_ctl
 fi
 
-
 # overwrite config from header module
-
 export set_sysname=$(hostnamectl hostname)
 export w_position=$(grep '^1|' $conf_ctl | cut -d '|' -f 3)
 
@@ -73,9 +67,7 @@ fi
 
 envsubst < $modules_dir/header.jsonc > $conf_file
 
-
 # module generator function
-
 gen_mod()
 {
     local pos=$1
@@ -95,17 +87,13 @@ gen_mod()
     write_mod=$(echo $write_mod $mod)
 }
 
-
 # write positions for modules
-
 echo -e "\n\n// positions generated based on config.ctl //\n" >> $conf_file
 gen_mod left 4
 gen_mod center 5
 gen_mod right 6
 
-
 # copy modules/*.jsonc to the config
-
 echo -e "\n\n// sourced from modules based on config.ctl //\n" >> $conf_file
 echo "$write_mod" | sed 's/","/\n/g ; s/ /\n/g' | awk -F '/' '{print $NF}' | awk -F '#' '{print $1}' | awk '!x[$0]++' | while read mod_cpy
 do
@@ -116,14 +104,10 @@ done
 
 cat $modules_dir/footer.jsonc >> $conf_file
 
-
 # generate style
-
-$scrDir/wbarstylegen.sh
-
+"$scrDir/wbarstylegen.sh"
 
 # restart waybar
-
 if [ "$reload_flag" == "1" ] ; then
     killall waybar
     waybar --config ${waybar_dir}/config.jsonc --style ${waybar_dir}/style.css > /dev/null 2>&1 &

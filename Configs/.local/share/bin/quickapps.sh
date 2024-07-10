@@ -1,7 +1,6 @@
 #!/usr/bin/env sh
 
-#// set variables
-
+# set variables
 scrDir="$(dirname "$(realpath "$0")")"
 source "$scrDir/globalcontrol.sh"
 roconf="${confDir}/rofi/quickapps.rasi"
@@ -13,9 +12,7 @@ else
     appCount="$#"
 fi
 
-
-#// set position
-
+# set position
 x_mon=$( cat /sys/class/drm/*/modes | head -1  )
 y_mon=$( echo "$x_mon" | cut -d 'x' -f 2 )
 x_mon=$( echo "$x_mon" | cut -d 'x' -f 1 )
@@ -48,18 +45,14 @@ if [ -n "$x_rofi" ] || [ -n "$y_rofi" ] ; then
     pos="window {location: $y_rofi $x_rofi; $x_offset $y_offset}"
 fi
 
-
-#// override rofi
-
+# override rofi
 dockHeight=$(( x_mon * 3 / 100))
 dockWidth=$(( dockHeight * appCount ))
 iconSize=$(( dockHeight - 4 ))
 wind_border=$(( hypr_border * 3/2 ))
 r_override="window{height:${dockHeight};width:${dockWidth};border-radius:${wind_border}px;} listview{columns:${appCount};} element{border-radius:${wind_border}px;} element-icon{size:${iconSize}px;}"
 
-
-#// launch rofi menu
-
+# launch rofi menu
 if [ -d /run/current-system/sw/share/applications ]; then
     appDir=/run/current-system/sw/share/applications
 else

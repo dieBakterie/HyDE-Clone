@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 
+# set variables
 scrDir="$(dirname "$(realpath "$0")")"
 source "$scrDir/globalcontrol.sh"
-
 
 # define functions
 
@@ -64,9 +64,7 @@ select_output() {
     fi
 }
 
-
 # eval device option
-
 while getopts iop:s DeviceOpt; do
     case "${DeviceOpt}" in
     i)
@@ -98,15 +96,11 @@ while getopts iop:s DeviceOpt; do
     esac
 done
 
-
 # set default variables
-
 shift $((OPTIND - 1))
 step="${2:-5}"
 
-
 # execute action
-
 case "${1}" in
 i) action_${ctrl} i ;;
 d) action_${ctrl} d ;;

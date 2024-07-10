@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # lock instance
 lockFile="/tmp/hyde$(id -u)$(basename ${0}).lock"
@@ -7,6 +7,32 @@ touch "${lockFile}"
 trap 'rm -f ${lockFile}' EXIT
 
 # define functions
+
+# function to update the wallpaper path in the configuration files
+background() {
+    local file=$1
+    local wallpaper_path=$2
+
+    # update wallpaper in configuration files
+    sed -i -e "s|^\(\$wallpaper = \).*|\1${wallpaper_path}|" "$file"
+    echo -e "\033[0;32m[BACKGROUND]\033[0m ${wallpaper_path} -> ${file}"
+}
+
+# sets the background image for Hyprlock
+fn_background() {
+    local wallpaper_path=$1
+
+    if [[ -z $wallpaper_path ]]; then
+        echo "No wallpaper path provided."
+        exit 1
+    fi
+
+    # replace wallpaper in the configuration files
+    background "${confDir}/hypr/hyprlock.conf" "$wallpaper_path"
+    for file in "${confDir}/hyprlock/presets"/*; do
+        background "$file" "$wallpaper_path"
+    done
+}
 
 Wall_Cache()
 {
@@ -21,8 +47,7 @@ Wall_Cache()
     ln -fs "${dcolDir}/${wallHash[setIndex]}.dcol" "${wallDcl}"
 }
 
-Wall_Change()
-{
+Wall_Change() {
     curWall="$(set_hash "${wallSet}")"
     for i in "${!wallHash[@]}" ; do
         if [ "${curWall}" == "${wallHash[i]}" ] ; then
@@ -60,11 +85,9 @@ get_hashmap "${wallPathArray[@]}"
 while getopts "nps:" option ; do
     case $option in
     n ) # set next wallpaper
-        xtrans="grow"
         Wall_Change n
         ;;
     p ) # set previous wallpaper
-        xtrans="outer"
         Wall_Change p
         ;;
     s ) # set input wallpaper
@@ -83,18 +106,6 @@ while getopts "nps:" option ; do
     esac
 done
 
-# check swww daemon
-swww query &> /dev/null
-if [ $? -ne 0 ] ; then
-    swww-daemon --format xrgb &
-    swww query && swww restore
-fi
-
-# set defaults
-[ -z "${xtrans}" ] && xtrans="grow"
-[ -z "${wallFramerate}" ] && wallFramerate=60
-[ -z "${wallTransDuration}" ] && wallTransDuration=0.4
-
 # apply wallpaper
 echo ":: applying wall :: \"$(readlink -f "${wallSet}")\""
-swww img "$(readlink "${wallSet}")" --transition-bezier .43,1.19,1,.4 --transition-type "${xtrans}" --transition-duration "${wallTransDuration}" --transition-fps "${wallFramerate}" --invert-y --transition-pos "$(hyprctl cursorpos | grep -E '^[0-9]' || echo "0,0")" &
+fn_background "$(readlink -f "${wallSet}")" &

@@ -49,13 +49,14 @@
 .control-center-list-placeholder {
   opacity: 0.5;
 }
-
-/* .control-center .notification-row:hover { */
-/*   opacity: 1; */
-/*   background: @red; */
-/*   border-radius: 0px; */
-/*   margin: 0px; */
-/* } */
+/*
+.control-center .notification-row:hover {
+  opacity: 1;
+  background: @red;
+  border-radius: 0px;
+  margin: 0px;
+}
+*/
 
 /*
 *

@@ -13,9 +13,7 @@ fi
 
 cloneDir=$(dirname "$(realpath "$cloneDir")")
 
-
-#// icons
-
+# icons
 if [ -f /usr/share/applications/rofi-theme-selector.desktop ] && [ -f /usr/share/applications/rofi.desktop ]; then
     sudo rm /usr/share/applications/rofi-theme-selector.desktop
     sudo rm /usr/share/applications/rofi.desktop
@@ -23,9 +21,7 @@ fi
 sudo sed -i "/^Icon=/c\Icon=adjust-colors" /usr/share/applications/nwg-look.desktop
 sudo sed -i "/^Icon=/c\Icon=spectacle" /usr/share/applications/swappy.desktop
 
-
-#// firefox
-
+# firefox
 if pkg_installed firefox; then
     FoxRel=$(find ~/.mozilla/firefox -maxdepth 1 -type d -name "*.default-release" | head -1)
 
@@ -47,4 +43,3 @@ if pkg_installed firefox; then
         firefox -profile "${FoxRel}" "${fext}" &> /dev/null &
     done
 fi
-

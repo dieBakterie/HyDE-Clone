@@ -21,7 +21,6 @@ def signal_handler(sig, frame):
     # loop.quit()
     sys.exit(0)
 
-
 class PlayerManager:
     def __init__(self, selected_player=None):
         self.manager = Playerctl.PlayerManager()
@@ -157,7 +156,6 @@ def parse_arguments():
 
     return parser.parse_args()
 
-
 def main():
     arguments = parse_arguments()
 
@@ -177,7 +175,6 @@ def main():
         logger.info(f"Filtering for player: {arguments.player}")
     player = PlayerManager(arguments.player)
     player.run()
-
 
 if __name__ == "__main__":
     main()

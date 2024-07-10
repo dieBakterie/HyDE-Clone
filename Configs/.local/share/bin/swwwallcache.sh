@@ -1,9 +1,11 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
+# shellcheck disable=SC2154
+# shellcheck disable=SC1091
+# shellcheck disable=SC2317
 
-
-#// set variables
-
-export scrDir="$(dirname "$(realpath "$0")")"
+# set variables
+scrDir="$(dirname "$(realpath "$0")")"
+export scrDir
 source "${scrDir}/globalcontrol.sh"
 export thmbDir
 export dcolDir
@@ -20,8 +22,7 @@ else
     export wallbashCustomCurve="32 50\n42 46\n49 40\n56 39\n64 38\n76 37\n90 33\n94 29\n100 20"
 fi
 
-
-#// define functions
+# define functions
 
 fn_wallcache()
 {
@@ -48,30 +49,28 @@ fn_wallcache_force()
 export -f fn_wallcache
 export -f fn_wallcache_force
 
-
-#// evaluate options
-
+# evaluate options
 while getopts "w:t:f" option ; do
     case $option in
-    w ) #// generate cache for input wallpaper
+    w ) # generate cache for input wallpaper
         if [ -z "${OPTARG}" ] || [ ! -f "${OPTARG}" ] ; then
             echo "Error: Input wallpaper \"${OPTARG}\" not found!"
             exit 1
         fi
         cacheIn="${OPTARG}"
         ;;
-    t ) #// generate cache for input theme
+    t ) # generate cache for input theme
         cacheIn="$(dirname "${hydeThemeDir}")/${OPTARG}"
         if [ ! -d "${cacheIn}" ] ; then
             echo "Error: Input theme \"${OPTARG}\" not found!"
             exit 1
         fi
         ;;
-    f ) #// full cache rebuild
+    f ) # full cache rebuild
         cacheIn="$(dirname "${hydeThemeDir}")"
         mode="_force"
         ;;
-    * ) #// invalid option
+    * ) # invalid option
         echo "... invalid option ..."
         echo "$(basename "${0}") -[option]"
         echo "w : generate cache for input wallpaper"
@@ -81,9 +80,7 @@ while getopts "w:t:f" option ; do
     esac
 done
 
-
-#// generate cache
-
+# generate cache
 wallPathArray=("${cacheIn}")
 wallPathArray+=("${wallAddCustomPath[@]}")
 get_hashmap "${wallPathArray[@]}"

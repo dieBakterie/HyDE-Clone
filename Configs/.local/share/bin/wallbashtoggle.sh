@@ -1,17 +1,13 @@
 #!/usr/bin/env sh
 
-
-#// set variables
-
+# set variables
 scrDir="$(dirname "$(realpath "$0")")"
 source "${scrDir}/globalcontrol.sh"
 TgtScr="$scrDir/globalcontrol.sh"
 rofiConf="${confDir}/rofi/wallbash.rasi"
 wallbashModes=("theme" "auto" "dark" "light")
 
-
-#// rofi select mode
-
+# rofi select mode
 rofi_wallbash()
 {
     [[ "${rofiScale}" =~ ^[0-9]+$ ]] || rofiScale=10
@@ -26,9 +22,7 @@ rofi_wallbash()
     fi
 }
 
-
-#// switch mode
-
+# switch mode
 step_wallbash()
 {
     for i in "${!wallbashModes[@]}" ; do
@@ -43,9 +37,7 @@ step_wallbash()
     done
 }
 
-
-#// apply wallbash mode
-
+# apply wallbash mode
 case "${1}" in
     m|-m|--menu) rofi_wallbash ;;
     n|-n|--next) step_wallbash n ;;

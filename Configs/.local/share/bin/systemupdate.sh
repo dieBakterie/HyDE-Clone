@@ -1,20 +1,20 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2154
+# shellcheck disable=SC1091
 
-# Check release
+# check release
 if [ ! -f /etc/arch-release ]; then
     exit 0
 fi
 
-# source variables
+# set variables
 scrDir="$(dirname "$(realpath "$0")")"
-# shellcheck disable=SC1091
 source "$scrDir/globalcontrol.sh"
 get_aurhlpr
 export -f pkg_installed
 fpk_exup="pkg_installed flatpak && flatpak update"
 
-# Trigger upgrade
+# trigger upgrade
 if [ "$1" == "up" ]; then
     trap 'pkill -RTMIN+20 waybar' EXIT
     command="
@@ -27,14 +27,14 @@ if [ "$1" == "up" ]; then
     kitty --title systemupdate sh -c "${command}"
 fi
 
-# Check for AUR updates
+# check for AUR updates
 aur=$(${aurhlpr} -Qua | wc -l)
 ofc=$(
     (while pgrep -x checkupdates >/dev/null; do sleep 1; done)
     checkupdates | wc -l
 )
 
-# Check for flatpak updates
+# check for flatpak updates
 if pkg_installed flatpak; then
     fpk=$(flatpak remote-ls --updates | wc -l)
     fpk_disp="\n󰏓 Flatpak $fpk"
@@ -43,15 +43,15 @@ else
     fpk_disp=""
 fi
 
-# Calculate total available updates
+# calculate total available updates
 upd=$((ofc + aur + fpk))
 
 [ "${1}" == upgrade ] && printf "[Official] %-10s\n[AUR]      %-10s\n[Flatpak]  %-10s\n" "$ofc" "$aur" "$fpk" && exit
 
-# Show tooltip
+# show tooltip
 if [ $upd -eq 0 ]; then
-    # upd="" # Remove Icon completely
-    upd="󰮯" # If zero Display Icon only
+    # upd="" # remove Icon completely
+    upd="󰮯" # if zero Display Icon only
     echo "{\"text\":\"$upd\", \"tooltip\":\" Packages are up to date\"}"
 else
     # shellcheck disable=SC2028

@@ -1,8 +1,6 @@
 #!/usr/bin/env sh
 
-
-#// hyde envs
-
+# hyde envs
 export confDir="${XDG_CONFIG_HOME:-$HOME/.config}"
 export hydeConfDir="${confDir}/hyde"
 export cacheDir="$HOME/.cache/hyde"
@@ -102,17 +100,13 @@ export hydeThemeDir="${hydeConfDir}/themes/${hydeTheme}"
 export wallbashDir="${hydeConfDir}/wallbash"
 export enableWallDcol
 
-
-#// hypr vars
-
+# hypr vars
 if printenv HYPRLAND_INSTANCE_SIGNATURE &> /dev/null; then
     export hypr_border="$(hyprctl -j getoption decoration:rounding | jq '.int')"
     export hypr_width="$(hyprctl -j getoption general:border_size | jq '.int')"
 fi
 
-
-#// extra fns
-
+# extra fns
 pkg_installed()
 {
     local pkgIn="$1"

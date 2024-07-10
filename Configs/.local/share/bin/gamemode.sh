@@ -1,19 +1,13 @@
 #!/usr/bin/env sh
 
-
-#// set variables
-
+# set variables
 scrDir="$(dirname "$(realpath "$0")")"
 source "${scrDir}/globalcontrol.sh"
 
-
-#// Hyprland gamemode
-
+# hyprland gamemode
 HYPRGAMEMODE=$(hyprctl getoption animations:enabled | sed -n '1p' | awk '{print $2}')
 
-
-#// Waybar performance
-
+# Waybar performance
 FILE="${confDir}/waybar/style.css"
 
 sed -i 's/\/\* \(.*animation:.*\) \*\//\1/g' "$FILE"
@@ -25,9 +19,7 @@ fi
 killall waybar
 waybar >/dev/null 2>&1 &
 
-
-#// Hyprland performance
-
+# hyprland performance
 if [ "$HYPRGAMEMODE" = 1 ]; then
 	hyprctl --batch "\
         keyword animations:enabled 0;\

@@ -2,7 +2,7 @@
 # shellcheck disable=SC1091
 # shellcheck disable=SC2154
 
-# source variables
+# set variables
 scrDir="$(dirname "$(realpath "$0")")"
 source "$scrDir/globalcontrol.sh"
 
@@ -32,7 +32,7 @@ fn_mpris() {
     { playerctl metadata --format '{{title}}   {{artist}}' && mpris_thumb; } || { rm -f "${thumb}*" && exit 1; }
 }
 
-# Generate thumbnail for mpris
+# generate thumbnail for mpris
 mpris_thumb() {
     local artUrl
     artUrl=$(playerctl metadata --format '{{mpris:artUrl}}')

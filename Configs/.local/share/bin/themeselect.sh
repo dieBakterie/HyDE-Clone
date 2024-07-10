@@ -1,30 +1,22 @@
 #!/usr/bin/env sh
 
-
-#// set variables
-
+# set variables
 scrDir="$(dirname "$(realpath "$0")")"
 source "${scrDir}/globalcontrol.sh"
 rofiConf="${confDir}/rofi/selector.rasi"
 
-
-#// set rofi scaling
-
+# set rofi scaling
 [[ "${rofiScale}" =~ ^[0-9]+$ ]] || rofiScale=10
 r_scale="configuration {font: \"JetBrainsMono Nerd Font ${rofiScale}\";}"
 elem_border=$(( hypr_border * 5 ))
 icon_border=$(( elem_border - 5 ))
 
-
-#// scale for monitor
-
+# scale for monitor
 mon_x_res=$(hyprctl -j monitors | jq '.[] | select(.focused==true) | .width')
 mon_scale=$(hyprctl -j monitors | jq '.[] | select(.focused==true) | .scale' | sed "s/\.//")
 mon_x_res=$(( mon_x_res * 100 / mon_scale ))
 
-
-#// generate config
-
+# generate config
 case "${themeSelect}" in
 2) # adapt to style 2
     elm_width=$(( (20 + 12) * rofiScale * 2 ))
@@ -40,18 +32,14 @@ case "${themeSelect}" in
     thmbExtn="sqre" ;;
 esac
 
-
-#// launch rofi menu
-
+# launch rofi menu
 get_themes
 
 rofiSel=$(for i in "${!thmList[@]}" ; do
     echo -en "${thmList[i]}\x00icon\x1f${thmbDir}/$(set_hash "${thmWall[i]}").${thmbExtn}\n"
 done | rofi -dmenu -theme-str "${r_scale}" -theme-str "${r_override}" -config "${rofiConf}" -select "${hydeTheme}")
 
-
-#// apply theme
-
+# apply theme
 if [ -n "${rofiSel}" ] ; then
     "${scrDir}/themeswitch.sh" -s "${rofiSel}"
     notify-send -a "t1" -i "${icoDir}/hyprdots.png" " ${rofiSel}"
