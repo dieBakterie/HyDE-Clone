@@ -12,8 +12,9 @@ confDir="${XDG_CONFIG_HOME:-$HOME/.config}"
 cacheDir="$HOME/.cache/hyde"
 aurList=(yay paru)
 shlList=(zsh fish)
-lckList=(swaylock hyprlock-git)
-notdList=(dunst swaync)
+lckList=(swaylock-effects-git hyprlock hyprlock-git)
+ntdList=(dunst dunst-git swaync swaync-git)
+idlList=(swayidle hypridle hypridle-git)
 
 pkg_installed() {
     local PkgIn=$1

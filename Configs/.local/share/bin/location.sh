@@ -1,9 +1,9 @@
 #!/bin/env bash
 
-cache_file="$HOME/.cache/ip_cache.txt"
+cache_file="$HOME/.cache/hyde/ip_cache.txt"
 
 if [ ! -f "$cache_file" ]; then
-	mkdir -p "$(dirname "$cache_file")" # Create .cache directory if it doesn't exist
+	mkdir -p "$(dirname "$cache_file")" #// create .cache directory if it doesn't exist
 	touch "$cache_file"
 fi
 

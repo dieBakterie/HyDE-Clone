@@ -2,14 +2,18 @@
 # shellcheck disable=SC2154
 # shellcheck disable=SC1091
 
-# Set variables
+
+#// set variables
+
 scrDir="$(dirname "$(realpath "$0")")"
 source "$scrDir/globalcontrol.sh"
-export scrDir
 
-# Functions
 
-# Locks the screen depending on player status
+#// define functions
+
+
+#// locks screen depending on player status
+
 fn_hyprlock() {
     if [[ $(playerctl status) == Playing ]]; then
         hyprlock --config "${confDir}/hyprlock/presets/hyprlock_music.conf"
@@ -20,48 +24,57 @@ fn_hyprlock() {
     fi
 }
 
-# Sets the background image
+
+#// sets the background image
+
 fn_background() {
     local wallpaper_path
     wallpaper_path=$(swww query | grep -oP '(?<=image: ).*' | head -n 1)
 
-    # Replace lockFile in the configuration files
+    #// replace lockFile in the configuration files
     background "${confDir}/hypr/hyprlock.conf" "$wallpaper_path"
     for file in "${confDir}/hyprlock/presets"/*; do
         background "$file" "$wallpaper_path"
     done
 }
 
-# Function to update the wallpaperpath in the configuration files
+
+#// function to update the wallpaperpath in the configuration files
+
 background() {
     local file=$1
     local wallpaper_path=$2
 
-    # Use sed to directly edit the file
+    #// use sed to directly edit the file
     sed -i -e "s|^\(\$wallpaper = \).*|\1${wallpaper_path}|" "$file"
     echo -e "\033[0;32m[BACKGROUND]\033[0m ${wallpaper_path} -> ${file}"
 }
 
-# Function for MPRIS
+
+#// sets the MPRIS thumbnail
+
 fn_mpris() {
-    local thumb
-    thumb="${cacheDir}/thumb"
-    { playerctl metadata --format '{{title}}  {{artist}}' && mpris_thumb; } || { rm -f "${thumb}.*" && exit 1; }
+   local thumb
+   thumb="${cacheDir}/thumb"
+   { mpris_thumb; } || { rm -f "${thumb}.*" && exit 1; }
 }
 
-# Generate thumbnail
+
+#// get the MPRIS thumbnail
+
 mpris_thumb() {
-    local artUrl
-    artUrl=$(playerctl metadata --format '{{mpris:artUrl}}')
-    [[ "${artUrl}" = "$(cat "${thumb}.inf")" ]] && return 0
+   local artUrl
+   artUrl=$(playerctl metadata --format '{{mpris:artUrl}}')
+   [[ "${artUrl}" = "$(cat "${thumb}.inf")" ]] && return 0
 
-    printf "%s\n" "$artUrl" >"${thumb}.inf"
+   printf "%s\n" "$artUrl" >"${thumb}.inf"
 
-    curl -so "${thumb}.png" "$artUrl"
-    pkill -USR2 hyprlock # updates the MPRIS thumbnail
+   curl -so "${thumb}.jpg" "$artUrl"
 }
 
-# Show help message
+
+#// show help message
+
 ask_help() {
     cat <<HELP
 Usage: $(basename "$0") [options]
@@ -73,7 +86,9 @@ Options:
 HELP
 }
 
-# Main function
+
+#// main function
+
 main() {
     local lock=false
     local background=false
@@ -89,7 +104,7 @@ main() {
         -b | --background) background=true ;;
         -t | --thumbnail) thumbnail=true ;;
         -*)
-            # Iterate over combined short options
+            #// iterate over combined short options
             for ((i = 1; i < ${#1}; i++)); do
                 case ${1:i:1} in
                 l) lock=true ;;

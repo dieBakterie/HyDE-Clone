@@ -1,20 +1,34 @@
 #!/usr/bin/env sh
+
+
+#// set variables
+
+scrDir="$(dirname "$(realpath "$0")")"
+source "${scrDir}/globalcontrol.sh"
+
+
+#// Hyprland gamemode
+
 HYPRGAMEMODE=$(hyprctl getoption animations:enabled | sed -n '1p' | awk '{print $2}')
 
-# Waybar performance
-FILE="$HOME/.config/waybar/style.css"
 
-sed -i 's/\/\* \(.*animation:.*\) \*\//\1/g' $FILE
-sed -i 's/\/\* \(.*transition:.*\) \*\//\1/g' $FILE
-if [ $HYPRGAMEMODE = 1 ]; then
-	sed -i 's/^\(.*animation:.*\)$/\/\* \1 \*\//g' $FILE
-	sed -i 's/^\(.*transition:.*\)$/\/\* \1 \*\//g' $FILE
+#// Waybar performance
+
+FILE="${confDir}/waybar/style.css"
+
+sed -i 's/\/\* \(.*animation:.*\) \*\//\1/g' "$FILE"
+sed -i 's/\/\* \(.*transition:.*\) \*\//\1/g' "$FILE"
+if [ "$HYPRGAMEMODE" = 1 ]; then
+	sed -i 's/^\(.*animation:.*\)$/\/\* \1 \*\//g' "$FILE"
+	sed -i 's/^\(.*transition:.*\)$/\/\* \1 \*\//g' "$FILE"
 fi
 killall waybar
 waybar >/dev/null 2>&1 &
 
-# Hyprland performance
-if [ $HYPRGAMEMODE = 1 ]; then
+
+#// Hyprland performance
+
+if [ "$HYPRGAMEMODE" = 1 ]; then
 	hyprctl --batch "\
         keyword animations:enabled 0;\
         keyword decoration:drop_shadow 0;\

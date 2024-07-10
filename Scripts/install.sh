@@ -8,11 +8,11 @@ cat << "EOF"
 
 -------------------------------------------------
         .
-       / \         _       _  _      ___  ___ 
+       / \         _       _  _      ___  ___
       /^  \      _| |_    | || |_  _|   \| __|
-     /  _  \    |_   _|   | __ | || | |) | _| 
+     /  _  \    |_   _|   | __ | || | |) | _|
     /  | | ~\     |_|     |_||_|\_, |___/|___|
-   /.-'   '-.\                  |__/          
+   /.-'   '-.\                  |__/         
 
 -------------------------------------------------
 
@@ -21,7 +21,7 @@ EOF
 #--------------------------------#
 # import variables and functions #
 #--------------------------------#
-scrDir=$(dirname "$(realpath "$0")")
+scrDir="$(dirname "$(realpath "$0")")"
 source "${scrDir}/global_fn.sh"
 if [ $? -ne 0 ]; then
     echo "Error: unable to source global_fn.sh..."
@@ -124,30 +124,54 @@ EOF
     fi
 
     if ! chk_list "myLock" "${lckList[@]}"; then
-        echo -e "Select lock screen:\n[1] swaylock\n[2] hyprlock"
+        echo -e "Select lock screen:\n[1] swaylock-effects-git\n[2] hyprlock\n[3] hyprlock-git"
         prompt_timer 120 "Enter option number"
 
         case "${promptIn}" in
-            1) export myLock="swaylock" ;;
+            1) export myLock="swaylock-effects-git" ;;
             2) export myLock="hyprlock" ;;
+            3) export myLock="hyprlock-git" ;;
             *) echo -e "...Invalid option selected..." ; exit 1 ;;
         esac
-        # echo "Lockscreen: ${myLock}"
+        echo -e "\n\033[0;32m[userprefs]\033[0m Lockscreen: ${myLock}"
         echo "${myLock}" >> "${scrDir}/install_pkg.lst"
+        myLock=$(echo "${myLock}" | sed -E 's/-.*$//')
+        sed -i "s/^\(\$lockScreen = \).*/\1$myLock/" "${cloneDir}/Configs/.config/hypr/hyprland.conf"
+        sed -i "s/^\(\$lockScreen = \).*/\1$myLock/" "${cloneDir}/Configs/.config/hypr/hypridle.conf"
     fi
 
-    if ! chk_list "myNotd" "${notdList[@]}"; then
-        echo -e "Select notification daemon:\n[1] dunst\n[2] swaync"
+    if ! chk_list "myIdle" "${idlList[@]}"; then
+        echo -e "Select idle manager:\n[1] swayidle\n[2] hypridle\n[3] hypridle-git\n[4] none"
+        prompt_timer 120 "Enter option number"
+
+        case "${promptIn}" in
+            1) export myIdle="swayidle" ;;
+            2) export myIdle="hypridle" ;;
+            3) export myIdle="hypridle-git" ;;
+            4) export myIdle="" ;;
+            *) echo -e "...Invalid option selected..." ; exit 1 ;;
+        esac
+        echo -e "\n\033[0;32m[userprefs]\033[0m Idle manager: ${myIdle}"
+        echo "${myIdle}" >> "${scrDir}/install_pkg.lst"
+        myIdle=$(echo "${myIdle}" | sed -E 's/-.*$//')
+        sed -i "s/^\(\$idleManager = \).*/\1$myIdle/" "${cloneDir}/Configs/.config/hypr/configs/launchs.conf"
+    fi
+
+    if ! chk_list "myNotd" "${ntdList[@]}"; then
+        echo -e "Select Notification Daemon or Center:\n[1] dunst\n[2] dunst-git\n[3] swaync\n[4] swaync-git"
         prompt_timer 120 "Enter option number"
 
         case "${promptIn}" in
             1) export myNotd="dunst" ;;
-            2) export myNotd="swaync" ;;
+            2) export myNotd="dunst-git" ;;
+            3) export myNotd="swaync" ;;
+            4) export myNotd="swaync-git" ;;
             *) echo -e "...Invalid option selected..." ; exit 1 ;;
         esac
-        # echo "Notification daemon: ${myNotd}"
+        echo -e "\n\033[0;32m[userfprefs]\033[0m Notification Daemon or Center: ${myNotd}"
         echo "${myNotd}" >> "${scrDir}/install_pkg.lst"
-        exit 0
+        myNotd=$(echo "${myNotd}" | sed -E 's/-.*$//')
+        sed -i "s/^\(\$notificationDaemon = \).*/\1$myNotd/" "${cloneDir}/Configs/.config/hypr/configs/launchs.conf"
     fi
 
     if ! chk_list "myShell" "${shlList[@]}"; then
@@ -159,7 +183,7 @@ EOF
             2) export myShell="fish" ;;
             *) echo -e "...Invalid option selected..." ; exit 1 ;;
         esac
-        # echo "Shell: ${myShell}"
+        echo -e "\n\033[0;32m[userprefs]\033[0m Shell: ${myShell}"
         echo "${myShell}" >> "${scrDir}/install_pkg.lst"
     fi
 

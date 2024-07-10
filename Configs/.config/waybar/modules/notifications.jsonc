@@ -1,5 +1,6 @@
-    "custom/notificationsdunst": {
-        "format": "{icon} {}",
+    "custom/notifications": {
+        "tooltip": false,
+        "format": "{icon}",
         "rotate": ${r_deg},
         "format-icons": {
             "email-notification": "<span foreground='white'><sup></sup></span>",
@@ -11,17 +12,22 @@
             "update-notification": "󰚰<span foreground='white'><sup></sup></span>",
             "music-notification": "󰝚<span foreground='white'><sup></sup></span>",
             "volume-notification": "󰕿<span foreground='white'><sup></sup></span>",
+            // "notification": "<span foreground='white'><sup></sup></span>",
             "notification": "<span foreground='white'><sup></sup></span>",
-            "none": ""
+            "none": "",
+            "dnd-notification": "<span foreground='white'><sup></sup></span>",
+            "dnd-none": "",
+            "inhibited-notification": "<span foreground='white'><sup></sup></span>",
+            "inhibited-none": "",
+            "dnd-inhibited-notification": "<span foreground='gray'><sup></sup></span>",
+            "dnd-inhibited-none": ""
         },
         "return-type": "json",
-        "exec-if": "which dunstctl",
-        "exec": "notifications.py",
-        "on-click": "sleep 0.1 && dunstctl history-pop",
-        "on-click-middle": "dunstctl history-clear",
-        "on-click-right": "dunstctl close-all",
-        "interval": 1,
-        "tooltip": true,
+        "exec-if": "which dunstctl || which swaync-client",
+        "exec": "notifications.py || swaync-client -swb",
+        "on-click": "sleep 0.1 && dunstctl history-pop || swaync-client -t -sw",
+        "on-click-middle": "dunstctl history-clear || swaync-client -C -sw",
+        "on-click-right": "dunstctl close-all || swaync-client -d -sw",
         "escape": true
     },
 

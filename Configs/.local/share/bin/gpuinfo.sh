@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC2312
-# shellcheck disable=SC1090
+#// shellcheck disable=SC2312
+#// shellcheck disable=SC1090
 scrDir="$(dirname "$(realpath "$0")")"
 gpuQ="/tmp/hyprdots-${UID}-gpuinfo-query"
 
 tired=false
 [[ " $* " =~ " tired " ]] && ! grep -q "tired" "${gpuQ}" && echo "tired=true" >>"${gpuQ}"
 if [[ ! " $* " =~ " startup " ]]; then
-   gpuQ="${gpuQ}$2"
+  gpuQ="${gpuQ}$2"
 fi
-detect() { # Auto detect Gpu used by Hyprland(declared using env = WLR_DRM_DEVICES) Sophisticated?
+detect() { #// auto detect Gpu used by Hyprland(declared using env = WLR_DRM_DEVICES) Sophisticated?
 card=$(echo "${WLR_DRM_DEVICES}" | cut -d':' -f1 | cut -d'/' -f4)
-# shellcheck disable=SC2010
+#// shellcheck disable=SC2010
 slot_number=$(ls -l /dev/dri/by-path/ | grep "${card}" | awk -F'pci-0000:|-card' '{print $2}')
 vendor_id=$(lspci -nn -s "${slot_number}" )
 declare -A vendors=(["10de"]="nvidia" ["8086"]="intel" ["1002"]="amd")
@@ -32,12 +32,12 @@ touch "${gpuQ}"
 
 if lsmod | grep -q 'nouveau'; then
       echo "nvidia_gpu=\"Linux\"" >>"${gpuQ}" #? Incase If nouveau is installed
-      echo "nvidia_flag=1 # Using nouveau an open-source nvidia driver" >>"${gpuQ}"
+      echo "nvidia_flag=1 #// Using nouveau an open-source nvidia driver" >>"${gpuQ}"
 elif  command -v nvidia-smi &> /dev/null; then
 nvidia_gpu=$(nvidia-smi --query-gpu=gpu_name --format=csv,noheader,nounits | head -n 1)
-  if [[ -n "${nvidia_gpu}" ]] ; then  # Check for NVIDIA GPU
+  if [[ -n "${nvidia_gpu}" ]] ; then  #// Check for NVIDIA GPU
       if  [[ "${nvidia_gpu}" == *"NVIDIA-SMI has failed"* ]]; then  #? Second Layer for dGPU
-        echo "nvidia_flag=0 # NVIDIA-SMI has failed" >> "${gpuQ}"
+        echo "nvidia_flag=0 #// NVIDIA-SMI has failed" >> "${gpuQ}"
       else
         nvidia_address=$(lspci | grep -Ei "VGA|3D" | grep -i "${nvidia_gpu/NVIDIA /}" | cut -d' ' -f1)
         {   echo "nvidia_address=\"${nvidia_address}\""
@@ -52,7 +52,7 @@ if lspci -nn | grep -E "(VGA|3D)" | grep -iq "1002"; then
 amd_gpu="$(lspci -nn | grep -Ei "VGA|3D" | grep -m 1 "1002" | awk -F'Advanced Micro Devices, Inc. ' '{gsub(/ *\[[^\]]*\]/,""); gsub(/ *\([^)]*\)/,""); print $2}')"
 amd_address=$(lspci | grep -Ei "VGA|3D" | grep -i "${amd_gpu}" | cut -d' ' -f1)
 { echo "amd_address=\"${amd_address}\""
-  echo "amd_flag=1" # Check for Amd GPU
+  echo "amd_flag=1" #// check for Amd GPU
   echo "amd_gpu=\"${amd_gpu}\""
 } >> "${gpuQ}";fi
 
@@ -60,7 +60,7 @@ if lspci -nn | grep -E "(VGA|3D)" | grep -iq "8086"; then
 intel_gpu="$(lspci -nn | grep -Ei "VGA|3D" | grep -m 1 "8086" | awk -F'Intel Corporation ' '{gsub(/ *\[[^\]]*\]/,""); gsub(/ *\([^)]*\)/,""); print $2}')"
 intel_address=$(lspci | grep -Ei "VGA|3D" | grep -i "${intel_gpu}" | cut -d' ' -f1)
 { echo "intel_address=\"${intel_address}\""
-  echo "intel_flag=1"  # Check for Intel GPU
+  echo "intel_flag=1"  #// check for Intel GPU
   echo "intel_gpu=\"${intel_gpu}\""
 } >>"${gpuQ}"; fi
 
@@ -74,7 +74,7 @@ toggle() {
   if [[ -n "$1" ]]; then
       next_prioGPU="$1_flag"
   else
-    # Initialize gpu_flags and prioGPU if they don't exist
+    #// initialize gpu_flags and prioGPU if they don't exist
     if ! grep -q "gpu_flags=" "${gpuQ}"; then
         gpu_flags=$(grep "flag=1" "${gpuQ}" | cut -d '=' -f 1 | tr '\n' ' ' | tr -d '#')
         echo "" >> "${gpuQ}"
@@ -87,8 +87,8 @@ toggle() {
         echo "prioGPU=${initGPU}" >> "${gpuQ}"
     fi
     mapfile -t anchor < <(grep "flag=1" "${gpuQ}" | cut -d '=' -f 1)
-    prioGPU=$(grep "prioGPU=" "${gpuQ}" | cut -d'=' -f 2)    # Get the current prioGPU from the file
-    # Find the index of the current prioGPU in the anchor array
+    prioGPU=$(grep "prioGPU=" "${gpuQ}" | cut -d'=' -f 2)    #// Get the current prioGPU from the file
+    #// find the index of the current prioGPU in the anchor array
     for index in "${!anchor[@]}"; do
         if [[ "${anchor[${index}]}" = "${prioGPU}" ]]; then
             current_index=${index}
@@ -98,65 +98,65 @@ toggle() {
     next_prioGPU=${anchor[${next_index}]#\#}
 fi
 
-# Set the next prioGPU and remove the '#' character
-sed -i 's/^\(nvidia_flag=1\|amd_flag=1\|intel_flag=1\)/#\1/' "${gpuQ}" # Comment out all the gpu flags in the file
-sed -i "s/^#${next_prioGPU}/${next_prioGPU}/" "${gpuQ}" # Uncomment the next prioGPU in the file
-sed -i "s/prioGPU=${prioGPU}/prioGPU=${next_prioGPU}/" "${gpuQ}" # Update the prioGPU in the file
+#// set the next prioGPU and remove the '#' character
+sed -i 's/^\(nvidia_flag=1\|amd_flag=1\|intel_flag=1\)/#\1/' "${gpuQ}" #// Comment out all the gpu flags in the file
+sed -i "s/^#${next_prioGPU}/${next_prioGPU}/" "${gpuQ}" #// Uncomment the next prioGPU in the file
+sed -i "s/prioGPU=${prioGPU}/prioGPU=${next_prioGPU}/" "${gpuQ}" #// Update the prioGPU in the file
 }
 
-# Thee shalt find the greatest one,
-# He who not more than the chosen one
+#// Thee shalt find the greatest one,
+#//hHe who not more than the chosen one
 map_floor() {
 
-    # From the depths of the string, words arise,
-    # Keys in pairs, a treasure in disguise.
+    #// from the depths of the string, words arise,
+    #// Keys in pairs, a treasure in disguise.
     IFS=', ' read -r -a pairs <<< "$1"
 
-    # If the final token stands alone and bold,
-    # Declare it the default, its worth untold.
+    #// If the final token stands alone and bold,
+    #// Declare it the default, its worth untold.
     if [[ ${pairs[-1]} != *":"* ]]; then
         def_val="${pairs[-1]}"
         unset 'pairs[${#pairs[@]}-1]'
     fi
 
-    # Scans the map, a peak it seeks,
-    # The highest passed, the value speaks.
+    #// Scans the map, a peak it seeks,
+    #// The highest passed, the value speaks.
     for pair in "${pairs[@]}"; do
         IFS=':' read -r key value <<< "$pair"
 
-        # Behold! Thou holds the secrets they seek,
-        # Declare it and silence the whispers unique.
+        #// Behold! Thou holds the secrets they seek,
+        #// Declare it and silence the whispers unique.
         if awk -v num="$2" -v k="$key" 'BEGIN { exit !(num > k) }'; then
             echo "$value"
             return
         fi
     done
 
-    # On this lonely shore, where silence dwells
-    # Even the waves, echoes words unheard
+    #// On this lonely shore, where silence dwells
+    #// Even the waves, echoes words unheard
     [ -n "$def_val" ] && echo "$def_val" || echo " "
 }
 
-# generate emoji and icon based on temperature and utilization
+#// generate emoji and icon based on temperature and utilization
 get_icons() {
-    # key-value pairs of temperature and utilization levels
+    #// key-value pairs of temperature and utilization levels
     temp_lv="85:&🌋, 65:&🔥, 45:&☁️, &❄️"
     util_lv="90:, 60:󰓅, 30:󰾅, 󰾆"
 
-    # return comma separated emojis/icons
+    #// return comma separated emojis/icons
     icons=$(map_floor "$temp_lv" $1 | sed "s/&/,/")
     icons="$icons,$(map_floor "$util_lv" "$2")"
     echo "$icons"
 }
 
 generate_json() {
-  # get emoji and icon based on temperature and utilization
+  #// get emoji and icon based on temperature and utilization
   icons=$(get_icons "$temperature" "$utilization")
   thermo=$(echo "$icons" | awk -F, '{print $1}')
   emoji=$(echo "$icons" | awk -F, '{print $2}')
   speedo=$(echo "$icons" | awk -F, '{print $3}')
 
-  # emoji=$(get_temperature_emoji "${temperature}")
+  #// emoji=$(get_temperature_emoji "${temperature}")
   local json="{\"text\":\"${thermo} ${temperature}°C\", \"tooltip\":\"${primary_gpu}\n${thermo} Temperature: ${temperature}°C ${emoji}"
 #? Soon Add Something incase needed.
   declare -A tooltip_parts
@@ -182,18 +182,18 @@ generate_json() {
   echo "${json}"
 }
 
-general_query() { # Function to get temperature from 'sensors'
+general_query() { #// function to get temperature from 'sensors'
 	filter=''
 temperature=$(sensors | ${filter} grep -m 1 -E "(edge|Package id.*|another keyword)" | awk -F ':' '{print int($2)}') #! We can get json data from sensors too
-  # gpu_load=$()
-  # core_clock=$()
+  #// gpu_load=$()
+  #// core_clock=$()
 for file in /sys/class/power_supply/BAT*/power_now; do
     [[ -f "${file}" ]] && power_discharge=$(awk '{print $1*10^-6 ""}' "${file}") && break
 done
 [[ -z "${power_discharge}" ]] && for file in /sys/class/power_supply/BAT*/current_now; do
     [[ -e "${file}" ]] && power_discharge=$(awk -v current="$(cat "${file}")" -v voltage="$(cat "${file/current_now/voltage_now}")" 'BEGIN {print (current * voltage) / 10^12 ""}') && break
 done
-# power_limit=$()
+#// power_limit=$()
 utilization=$(top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print 100 - $1" "}')
 current_clock_speed=$(awk '{sum += $1; n++} END {if (n > 0) print sum / n / 1000 ""}' /sys/devices/system/cpu/cpufreq/policy*/scaling_cur_freq)
 max_clock_speed=$(awk '{print $1/1000}' /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq)
@@ -213,9 +213,9 @@ if ${tired}; then is_suspend="$(cat /sys/bus/pci/devices/0000:"${nvidia_address}
       printf '{"text":"󰤂", "tooltip":"%s ⏾ Suspended mode"}' "${primary_gpu}"; exit ;fi
 fi
   gpu_info=$(nvidia-smi --query-gpu=temperature.gpu,utilization.gpu,clocks.current.graphics,clocks.max.graphics,power.draw,power.limit --format=csv,noheader,nounits)
-  # Split the comma-separated values into an array
+  #// split the comma-separated values into an array
   IFS=',' read -ra gpu_data <<< "${gpu_info}"
-  # Extract individual values
+  #// extract individual values
   temperature="${gpu_data[0]// /}"
   utilization="${gpu_data[1]// /}"
   current_clock_speed="${gpu_data[2]// /}"
@@ -226,10 +226,10 @@ fi
 
 amd_GPU() { #? Function to query amd GPU
   primary_gpu="AMD ${amd_gpu}"
-    # Execute the AMD GPU Python script and use its output
-  amd_output=$(python3 ${scrDir}/amdgpu.py)
+    #// execute the AMD GPU Python script and use its output
+  amd_output=$(python3 "${scrDir}/amdgpu.py")
 if [[ ! ${amd_output} == *"No AMD GPUs detected."* ]] && [[ ! ${amd_output} == *"Unknown query failure"* ]]; then
-  # Extract GPU Temperature, GPU Load, GPU Core Clock, and GPU Power Usage from amd_output
+  #// extract GPU Temperature, GPU Load, GPU Core Clock, and GPU Power Usage from amd_output
   temperature=$(echo "${amd_output}" | jq -r '.["GPU Temperature"]' | sed 's/°C//')
   gpu_load=$(echo "${amd_output}" | jq -r '.["GPU Load"]' | sed 's/%//')
   core_clock=$(echo "${amd_output}" | jq -r '.["GPU Core Clock"]' | sed 's/ GHz//;s/ MHz//')
@@ -268,7 +268,7 @@ Avialable GPU: ${gpu_flags//_flag/}
 [options]
 --toggle         * Toggle available GPU
 --use [GPU]      * Only call the specified GPU (Useful for adding specific GPU on waybar)
---reset          *  Remove & restart all query
+--reset          * Remove & restart all query
 
 [flags]
 tired            * Adding this option will not query nvidia-smi if gpu is in suspend mode

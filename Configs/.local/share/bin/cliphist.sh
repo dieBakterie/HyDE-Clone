@@ -4,7 +4,7 @@
 #// set variables
 
 scrDir="$(dirname "$(realpath "$0")")"
-source $scrDir/globalcontrol.sh
+source "$scrDir/globalcontrol.sh"
 roconf="${confDir}/rofi/clipboard.rasi"
 
 

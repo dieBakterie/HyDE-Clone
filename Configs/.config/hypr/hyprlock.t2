@@ -4,7 +4,7 @@
 # This config is being used by default
 
 source = ~/.config/hyprlock/colors.conf # source colors from wallbash
-$wallpaper = 
+$wallpaper =
 
 # functions
 $fn_greet=echo "Good $(date +%H | awk '{if ($1 < 10) print "morning"; else if ($1 < 13) print "noon"; else if ($1 < 18) print "afternoon"; else if ($1 < 22) print "evening"; else print "night"}'), $(echo ${USER} | tr '[:lower:]' '[:upper:]')"

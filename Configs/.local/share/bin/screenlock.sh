@@ -2,13 +2,19 @@
 # shellcheck disable=SC1091
 # shellcheck disable=SC2154
 
+
+#// set variables
+
 scrDir="$(dirname "$(realpath "$0")")"
 source "$scrDir/globalcontrol.sh"
 export -f pkg_installed
 
-# Functions
 
-# Locks the screen depending on lockscreen package
+#// functions
+
+
+#// locks the screen depending on lockscreen package
+
 fn_lockscreen() {
     if pkg_installed "swaylock-effects-git"; then
         swaylock
@@ -17,8 +23,10 @@ fn_lockscreen() {
     fi
 }
 
-# Sets the idle lock command
-fn_check_lockscreen() { # this function is for hypridle/swayidle to set the lockscreen
+
+#// sets the idle lock command
+
+fn_check_lockscreen() { #// this function is for hypridle/swayidle to set the lockscreen
     if pkg_installed "swaylock-effects-git"; then
         SCREENLOCK=swaylock
     elif pkg_installed "hyprlock" || pkg_installed "hyprlock-git"; then
@@ -28,12 +36,16 @@ fn_check_lockscreen() { # this function is for hypridle/swayidle to set the lock
     echo "${SCREENLOCK}"
 }
 
-# Locks the screen depending on player status
+
+#// locks the screen depending on player status
+
 fn_check_playerctl() {
-    "${scrDir}/hyprlock.sh" --thumbnail --lock
+    "${scrDir}/hyprlock.sh" --background --lock
 }
 
-# Displays help message
+
+#// displays help message
+
 show_help() {
     echo "Usage: $(basename "$0") [-c] [-l] [-m]"
     echo
@@ -44,7 +56,9 @@ show_help() {
     echo "  -h    Show this help message"
 }
 
-# main
+
+#// main
+
 main() {
     while getopts ":clmh" opt; do
         case $opt in
