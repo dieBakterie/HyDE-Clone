@@ -1,9 +1,9 @@
 #!/usr/bin/env sh
 
-scrDir=$(dirname "$(realpath "$0")")
-source $scrDir/globalcontrol.sh
+scrDir="$(dirname "$(realpath "$0")")"
+source "$scrDir/globalcontrol.sh"
 
-hyprctl devices -j | jq -r '.keyboards[].name' | while read keyName
+hyprctl devices -j | jq -r '.keyboards[].name' | while read -r keyName
 do
     hyprctl switchxkblayout "$keyName" next
 done

@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-#// Set variables
+#// set variables
 
 scrDir="$(dirname "$(realpath "$0")")"
 source "${scrDir}/globalcontrol.sh"
@@ -12,12 +12,12 @@ tgtPath="$(dirname "${hydeThemeDir}")"
 get_themes
 
 
-#// Evaluate options
+#// evaluate options
 
 while getopts "t:w:" option ; do
     case $option in
 
-        t ) # Set theme
+        t ) #// set theme
             for x in "${!thmList[@]}" ; do
                 if [ "${thmList[x]}" == "$OPTARG" ] ; then
                     setTheme="${thmList[x]}"
@@ -27,7 +27,7 @@ while getopts "t:w:" option ; do
             [ -z "${setTheme}" ] && echo "Error: '$OPTARG' theme not available..." && exit 1
             ;;
 
-        w ) # Set wallpaper
+        w ) #// set wallpaper
             if [ -f "$OPTARG" ] && file --mime-type "$OPTARG" | grep -q 'image/' ; then
                 setWall="$OPTARG"
             else
@@ -36,7 +36,7 @@ while getopts "t:w:" option ; do
             fi
             ;;
 
-        * ) # Refresh menu
+        * ) #// refresh menu
             unset setTheme
             unset setWall
             ;;

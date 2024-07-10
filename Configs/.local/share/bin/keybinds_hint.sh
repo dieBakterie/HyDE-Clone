@@ -64,33 +64,33 @@ HELP
 
 while [ "$#" -gt 0 ]; do
   case "$1" in
-  -j) # show the json format
+  -j) #// show the json format
     kb_hint_json=true
     ;;
-  -p) # show the pretty format
+  -p) #// show the pretty format
     kb_hint_pretty=true
     ;;
-  -d) # Add custom delimiter symbol default '>'
+  -d) #// add custom delimiter symbol default '>'
     shift
     kb_hint_delim="$1"
     ;;
-  -f) # Add custom file
+  -f) #// add custom file
     shift
     kb_hint_conf+=("${@}")
     ;;
-  -w) # Custom kb_hint_width
+  -w) #// custom kb_hint_width
     shift
     kb_hint_width="$1"
     ;;
-  -h) # Custom height
+  -h) #// custom height
     shift
     kb_hint_height="$1"
     ;;
-  -l) # Custom number of line
+  -l) #// custom number of line
     shift
     kb_hint_line="$1"
     ;;
-  -*) # Add Help message
+  -*) #// add Help message
     HELP
     exit
     ;;
@@ -317,7 +317,7 @@ GROUP() {
 END {
     n = asorti(binds, b)
     for (i = 1; i <= n; i++) {
-      print b[i]  # Print the header name
+      print b[i]  #// print the header name
       gsub(/\[.*\] =/, "", b[i])
       split(binds[b[i]], lines, "\n")
       for (j in lines) {
@@ -361,21 +361,21 @@ if ! command -v rofi &>/dev/null; then
 fi
 
 #? Put rofi configuration here
-# Read hypr theme border
+#// read hypr theme border
 wind_border=$((hypr_border * 3 / 2))
 elem_border=$([ "$hypr_border" -eq 0 ] && echo "5" || echo "$hypr_border")
 
-# TODO Dynamic scaling for text and the window >>> I do not know if rofi is capable of this
+#// TODO Dynamic scaling for text and the window >>> I do not know if rofi is capable of this
 r_width="width: ${kb_hint_width:-35em};"
 r_height="height: ${kb_hint_height:-35em};"
 r_listview="listview { lines: ${kb_hint_line:-13}; }"
 r_override="window {$r_height $r_width border: ${hypr_width}px; border-radius: ${wind_border}px;} entry {border-radius: ${elem_border}px;} element {border-radius: ${elem_border}px;} ${r_listview} "
 
-# Read hypr font size
+#// read hypr font size
 fnt_override=$(gsettings get org.gnome.desktop.interface font-name | awk '{gsub(/'\''/,""); print $NF}')
 fnt_override="configuration {font: \"JetBrainsMono Nerd Font ${fnt_override}\";}"
 
-# Read hypr theme icon
+#// read hypr theme icon
 icon_override=$(gsettings get org.gnome.desktop.interface icon-theme | sed "s/'//g")
 icon_override="configuration {icon-theme: \"${icon_override}\";}"
 
@@ -383,7 +383,7 @@ icon_override="configuration {icon-theme: \"${icon_override}\";}"
 selected=$(echo "$output" | rofi -dmenu -p -i -theme-str "${fnt_override}" -theme-str "${r_override}" -theme-str "${icon_override}" -config "${roconf}" | sed 's/.*\s*//')
 if [ -z "$selected" ]; then exit 0; fi
 
-sel_1=$(awk -F "${kb_hint_delim:->}" '{print $1}' <<<"$selected" | awk '{$1=$1};1') #? are the double spaces important? "__' <- Those
+sel_1=$(awk -F "${kb_hint_delim:->}" '{print $1}' <<<"$selected" | awk '{$1=$1};1')
 sel_2=$(awk -F "${kb_hint_delim:->}" '{print $2}' <<<"$selected" | awk '{$1=$1};1')
 run="$(grep "$sel_1" <<<"$metaData" | grep "$sel_2")"
 
@@ -403,7 +403,7 @@ if [ -n "$run_sel" ] && [ "$(echo "$run_sel" | wc -l)" -eq 1 ]; then
       repeat_command=$(echo -e "Repeat" | rofi -dmenu -no-custom -p "[Enter] repeat; [ESC] exit") #? Needed a separate Rasi ? Dunno how to make; Maybe Something like confirmation rasi for buttons Yes and No then the -p will be the Question like Proceed? Repeat?
 
       if [ "$repeat_command" = "Repeat" ]; then
-        # Repeat the command here
+        #// repeat the command here
         RUN
       else
         exit 0

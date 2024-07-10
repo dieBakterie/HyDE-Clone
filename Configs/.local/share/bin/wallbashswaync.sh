@@ -3,7 +3,7 @@
 # set variables
 
 scrDir="$(dirname "$(realpath "$0")")"
-source $scrDir/globalcontrol.sh
+source "$scrDir/globalcontrol.sh"
 #dstDir="${confDir}/swaync"
 
 # regen conf

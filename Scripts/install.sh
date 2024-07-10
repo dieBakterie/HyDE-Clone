@@ -21,7 +21,7 @@ EOF
 #--------------------------------#
 # import variables and functions #
 #--------------------------------#
-scrDir=$(dirname "$(realpath "$0")")
+scrDir="$(dirname "$(realpath "$0")")"
 source "${scrDir}/global_fn.sh"
 if [ $? -ne 0 ]; then
     echo "Error: unable to source global_fn.sh..."
@@ -135,6 +135,9 @@ EOF
         esac
         echo -e "\n\033[0;32m[userprefs]\033[0m Lockscreen: ${myLock}"
         echo "${myLock}" >> "${scrDir}/install_pkg.lst"
+        myLock=$(echo "${myLock}" | sed -E 's/-.*$//')
+        sed -i "s/^\(\$lockScreen = \).*/\1$myLock/" "${cloneDir}/Configs/.config/hypr/hyprland.conf"
+        sed -i "s/^\(\$lockScreen = \).*/\1$myLock/" "${cloneDir}/Configs/.config/hypr/hypridle.conf"
     fi
 
     if ! chk_list "myIdle" "${idlList[@]}"; then
@@ -150,6 +153,8 @@ EOF
         esac
         echo -e "\n\033[0;32m[userprefs]\033[0m Idle manager: ${myIdle}"
         echo "${myIdle}" >> "${scrDir}/install_pkg.lst"
+        myIdle=$(echo "${myIdle}" | sed -E 's/-.*$//')
+        sed -i "s/^\(\$idleManager = \).*/\1$myIdle/" "${cloneDir}/Configs/.config/hypr/configs/launchs.conf"
     fi
 
     if ! chk_list "myNotd" "${ntdList[@]}"; then
@@ -165,6 +170,8 @@ EOF
         esac
         echo -e "\n\033[0;32m[userfprefs]\033[0m Notification Daemon or Center: ${myNotd}"
         echo "${myNotd}" >> "${scrDir}/install_pkg.lst"
+        myNotd=$(echo "${myNotd}" | sed -E 's/-.*$//')
+        sed -i "s/^\(\$notificationDaemon = \).*/\1$myNotd/" "${cloneDir}/Configs/.config/hypr/configs/launchs.conf"
     fi
 
     if ! chk_list "myShell" "${shlList[@]}"; then

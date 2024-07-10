@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
-scrDir=$(dirname "$(realpath "$0")")
-source $scrDir/globalcontrol.sh
+scrDir="$(dirname "$(realpath "$0")")"
+source "$scrDir/globalcontrol.sh"
 
 
 # define functions
@@ -22,21 +22,19 @@ EOF
 }
 
 notify_vol() {
-    # export -f get_notd
-    # get_notd
     angle="$(((($vol + 2) / 5) * 5))"
     ico="${icoDir}/vol/vol-${angle}.svg"
     bar=$(seq -s "." $(($vol / 15)) | sed 's/[0-9]//g')
-    notify-send -a "t2" -r 91190 -t 800 -i "${ico}" "${vol}${bar}" "${nsink}"
+    notify-send -a "t2" -r 91190 -t 800 -i "${ico}" "${vol}${bar}" "${nsink}" -h string:x-canonical-private-synchronous:test
 }
 
 notify_mute() {
     mute=$(pamixer "${srce}" --get-mute | cat)
     [ "${srce}" == "--default-source" ] && dvce="mic" || dvce="speaker"
     if [ "${mute}" == "true" ]; then
-        notify-send -a "t2" -r 91190 -t 800 -i "${icoDir}/vol/muted-${dvce}.svg" "muted" "${nsink}"
+        notify-send -a "t2" -r 91190 -t 800 -i "${icoDir}/vol/muted-${dvce}.svg" "muted" "${nsink}" -h string:x-canonical-private-synchronous:test
     else
-        notify-send -a "t2" -r 91190 -t 800 -i "${icoDir}/vol/unmuted-${dvce}.svg" "unmuted" "${nsink}"
+        notify-send -a "t2" -r 91190 -t 800 -i "${icoDir}/vol/unmuted-${dvce}.svg" "unmuted" "${nsink}" -h string:x-canonical-private-synchronous:test
     fi
 }
 
