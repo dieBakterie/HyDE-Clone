@@ -37,7 +37,7 @@ Options:
  --help Display this help message
 
 Example:
- $(basename "$0") -j -p -d '>' -f custom_file.txt -w 80 -h 90"
+ $(basename "$0") -j -p -d '>' -f custom_file.txt -w 80 -h 90
 
 Users can also add a global overrides inside ${hydeConfDir}/hyde.conf
 Available overrides:
@@ -48,7 +48,7 @@ Available overrides:
  kb_hint_line=13                           ﯦ adjust how many lines are listed
 
 Users can also add key overrides inside ${hydeConfDir}
-List of file override:
+List of file overrides:
  ${keycodeFile} => keycode
  ${modmaskFile} => modmask
  ${keyFile} => keys
@@ -64,33 +64,33 @@ HELP
 
 while [ "$#" -gt 0 ]; do
   case "$1" in
-  -j) # show the json format
+  -j) # Show the json format
     kb_hint_json=true
     ;;
-  -p) # show the pretty format
+  -p) # Show the pretty format
     kb_hint_pretty=true
     ;;
-  -d) # add custom delimiter symbol default '>'
+  -d) # Add custom delimiter symbol default '>'
     shift
     kb_hint_delim="$1"
     ;;
-  -f) # add custom file
+  -f) # Add custom file
     shift
     kb_hint_conf+=("${@}")
     ;;
-  -w) # custom kb_hint_width
+  -w) # Custom kb_hint_width
     shift
     kb_hint_width="$1"
     ;;
-  -h) # custom height
+  -h) # Custom height
     shift
     kb_hint_height="$1"
     ;;
-  -l) # custom number of line
+  -l) # Custom number of line
     shift
     kb_hint_line="$1"
     ;;
-  -*) # add Help message
+  -*) # Add Help message
     HELP
     exit
     ;;
@@ -100,7 +100,8 @@ done
 
 #? Read all the variables in the configuration file
 #! Intentional globbing on the $kb_hint_conf variable
-keyVars="$(awk -F '=' '/^ *\$/ && !/^ *#[^#]/ || /^ *##/ {gsub(/^ *\$| *$/, "", $1); gsub(/#.*/, "", $2); gsub(/^ *| *$/, "", $2); print $1 "='\''"$2"'\''"}' "${kb_hint_conf[@]}")"
+# shellcheck disable=SC2068
+keyVars="$(awk -F '=' '/^ *\$/ && !/^ *#[^#]/ || /^ *##/ {gsub(/^ *\$| *$/, "", $1); gsub(/#.*/, "", $2); gsub(/^ *| *$/, "", $2); print $1 "='\''"$2"'\''"}' ${kb_hint_conf[@]})"
 keyVars+="
 "
 keyVars+="HOME=$HOME"
@@ -168,24 +169,20 @@ $comments
 "u" : "Up",
 "f" : "Forward",
 "b" : "Backward",
-
 };
-
 def keycode_mapping: { #? Fetches keycode from a file
  "0": "",
  $([ -f "${keycodeFile}" ] && cat "${keycodeFile}")
 };
-
   def modmask_mapping: { #? Define mapping for modmask numbers represents bitmask
-    "64": " ",  #? SUPER  󰻀 Also added 2 En space ' ' <<<
+    "64": " ", #? SUPER  󰻀 Also added 2 En space ' ' <<<
     "8": "ALT",
     "4": "CTRL",
     "1": "SHIFT",
     "0": " ",
  $([ -f "${modmaskFile}" ] && cat "${modmaskFile}")
   };
-
-  def key_mapping: { #?Define mappings for .keys to be readable symbols
+  def key_mapping: { #? Define mappings for .keys to be readable symbols
     "mouse_up" : "󱕑",
     "mouse_down" : "󱕐",
     "mouse:272" : "󰍽",
@@ -231,15 +228,14 @@ def keycode_mapping: { #? Fetches keycode from a file
 def arg_mapping: { #! Do not Change this used for Demo only... As this will change .args! will be fatal
     "arg2": "mapped_arg2",
   };
-
     def description_mapping: {  #? Derived from dispatcher and Gives Description for Dispatchers; Basically translates dispatcher.
     "movefocus": "Move Focus",
     "resizeactive": "Resize Active Floating Window",
     "exit" : "End Hyprland Session",
-    "movetoworkspacesilent" : "Silently Move to Workspace",
+    "movetoworkspacesilent" : "Silently Move focused Window to Workspace",
     "movewindow" : "Move Window",
     "exec" : "" , #? Remove exec as executable will give the Description from separate function
-    "movetoworkspace" : "Move To Workspace",
+    "movetoworkspace" : "Move focused Window to Workspace",
     "workspace" : "Navigate to Workspace",
     "togglefloating" : "Toggle Floating",
     "fullscreen" : "Toggle Fullscreen",
@@ -250,7 +246,6 @@ def arg_mapping: { #! Do not Change this used for Demo only... As this will chan
     "changegroupactive" : "Switch Active group",
     $([ -f "${dispatcherFile}" ] && cat "${dispatcherFile}")
   };
-
 OVERRIDES
 
 #? Script to re Modify hyprctl json output
@@ -317,7 +312,7 @@ GROUP() {
 END {
     n = asorti(binds, b)
     for (i = 1; i <= n; i++) {
-      print b[i]  # print the header name
+      print b[i]  # Print the header name
       gsub(/\[.*\] =/, "", b[i])
       split(binds[b[i]], lines, "\n")
       for (j in lines) {
@@ -361,7 +356,7 @@ if ! command -v rofi &>/dev/null; then
 fi
 
 #? Put rofi configuration here
-# read hypr theme border
+# Read hypr theme border
 wind_border=$((hypr_border * 3 / 2))
 elem_border=$([ "$hypr_border" -eq 0 ] && echo "5" || echo "$hypr_border")
 
@@ -371,11 +366,11 @@ r_height="height: ${kb_hint_height:-35em};"
 r_listview="listview { lines: ${kb_hint_line:-13}; }"
 r_override="window {$r_height $r_width border: ${hypr_width}px; border-radius: ${wind_border}px;} entry {border-radius: ${elem_border}px;} element {border-radius: ${elem_border}px;} ${r_listview} "
 
-# read hypr font size
+# Read hypr font size
 fnt_override=$(gsettings get org.gnome.desktop.interface font-name | awk '{gsub(/'\''/,""); print $NF}')
 fnt_override="configuration {font: \"JetBrainsMono Nerd Font ${fnt_override}\";}"
 
-# read hypr theme icon
+# Read hypr theme icon
 icon_override=$(gsettings get org.gnome.desktop.interface icon-theme | sed "s/'//g")
 icon_override="configuration {icon-theme: \"${icon_override}\";}"
 
@@ -403,7 +398,7 @@ if [ -n "$run_sel" ] && [ "$(echo "$run_sel" | wc -l)" -eq 1 ]; then
       repeat_command=$(echo -e "Repeat" | rofi -dmenu -no-custom -p "[Enter] repeat; [ESC] exit") #? Needed a separate Rasi ? Dunno how to make; Maybe Something like confirmation rasi for buttons Yes and No then the -p will be the Question like Proceed? Repeat?
 
       if [ "$repeat_command" = "Repeat" ]; then
-        # repeat the command here
+        # Repeat the command here
         RUN
       else
         exit 0

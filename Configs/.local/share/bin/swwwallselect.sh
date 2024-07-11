@@ -35,5 +35,5 @@ if [ -n "${rofiSel}" ] ; then
         [ -z "${setWall}" ] || break
     done
     "${scrDir}/swwwallpaper.sh" -s "${setWall}"
-    notify-send -a "t1" -i "${thmbDir}/$(set_hash "${setWall}").sqre" " ${rofiSel}"
+    notify-send -a "t1" -i "${thmbDir}/$(set_hash "${setWall}").sqre" "Set SWWW Wallpaper to ${rofiSel}"
 fi
