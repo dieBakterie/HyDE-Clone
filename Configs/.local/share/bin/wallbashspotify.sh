@@ -8,7 +8,7 @@ source "${scrDir}/globalcontrol.sh"
 if pkg_installed spotify && pkg_installed spicetify-cli ; then
 
     if [ ! -w /opt/spotify ] || [ ! -w /opt/spotify/Apps ]; then
-        notify-send -a "Hyprdots" "Permission needed for Wallbash Spotify theme"
+        notify-send -a "Hyde" "Permission needed for Wallbash Spotify theme"
         pkexec chmod a+wr /opt/spotify
         pkexec chmod a+wr /opt/spotify/Apps -R
     fi
