@@ -27,7 +27,7 @@ get_hashmap()
         fi
 
         while read -r hash image ; do
-            wallHash+=("${hash}") 
+            wallHash+=("${hash}")
             wallList+=("${image}")
         done <<< "${hashMap}"
     done
