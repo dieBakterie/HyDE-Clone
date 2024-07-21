@@ -2,9 +2,9 @@
 # shellcheck disable=SC1091
 # shellcheck disable=SC2154
 
-#* jq to parse and create a metadata.
-#* Users are advised to use bindd to explicitly add the description
-#* Please inform us if there are new Categories upstream will try to add comments to this script
+#* jq to parse and create a metadata
+#* users are advised to use bindd to explicitly add the description
+#* please inform us if there are new Categories upstream will try to add comments to this script
 #* Khing 🦆
 
 pkill -x rofi && exit
@@ -39,7 +39,7 @@ Options:
 Example:
  $(basename "$0") -j -p -d '>' -f custom_file.txt -w 80 -h 90
 
-Users can also add a global overrides inside ${hydeConfDir}/hyde.conf
+Users can also add global overrides inside ${hydeConfDir}/hyde.conf
 Available overrides:
  kb_hint_delim=">"                         ﯦ add a custom custom delimeter
  kb_hint_conf=("file1.conf" "file2.conf")  ﯦ add a custom keybinds.conf path (add it like an array)
@@ -64,33 +64,41 @@ HELP
 
 while [ "$#" -gt 0 ]; do
   case "$1" in
-  -j) # Show the json format
+  -j)
+    # show the json format
     kb_hint_json=true
     ;;
-  -p) # Show the pretty format
+  -p)
+    # show the pretty format
     kb_hint_pretty=true
     ;;
-  -d) # Add custom delimiter symbol default '>'
+  -d)
+    # add custom delimiter symbol default '>'
     shift
     kb_hint_delim="$1"
     ;;
-  -f) # Add custom file
+  -f)
+    # add custom file
     shift
     kb_hint_conf+=("${@}")
     ;;
-  -w) # Custom kb_hint_width
+  -w)
+    # custom kb_hint_width
     shift
     kb_hint_width="$1"
     ;;
-  -h) # Custom height
+  -h)
+    # custom height
     shift
     kb_hint_height="$1"
     ;;
-  -l) # Custom number of line
+  -l)
+    # custom number of line
     shift
     kb_hint_line="$1"
     ;;
-  -*) # Add Help message
+  -*)
+    # add Help message
     HELP
     exit
     ;;
@@ -98,8 +106,8 @@ while [ "$#" -gt 0 ]; do
   shift
 done
 
-#? Read all the variables in the configuration file
-#! Intentional globbing on the $kb_hint_conf variable
+#? read all the variables in the configuration file
+#! intentional globbing on the $kb_hint_conf variable
 # shellcheck disable=SC2068
 keyVars="$(awk -F '=' '/^ *\$/ && !/^ *#[^#]/ || /^ *##/ {gsub(/^ *\$| *$/, "", $1); gsub(/#.*/, "", $2); gsub(/^ *| *$/, "", $2); print $1 "='\''"$2"'\''"}' ${kb_hint_conf[@]})"
 keyVars+="
@@ -107,8 +115,8 @@ keyVars+="
 keyVars+="HOME=$HOME"
 #  echo "$keyVars"
 
-#? This part substitutes the variables into the actual value.
-#TODO It will be easier if hyprland will expose the variables.
+#? this part substitutes the variables into the actual value.
+#TODO it will be easier if hyprland will expose the variables.
 substitute_vars() {
   local s="$1"
   local IFS=$'\n'
@@ -122,7 +130,7 @@ substitute_vars() {
   IFS=$' \t\n'
   echo "$s"
 }
-#? Other accurate but risky option
+#? other accurate but risky option
 #  eval "$keyVars"
 # substitute_vars() {
 #   local s="$1"
@@ -151,11 +159,11 @@ comments=$(substitute_vars "$initialized_comments" | awk -F'#' \
 
 cat <<OVERRIDES >$tmpMap
 # hyde-keybinds.jq
-#! This is Our Translator for some binds  #🦆
-def executables_mapping: {  #? Derived from .args to parse scripts to be Readable
-#? Auto Generated Comment Conversion
+#! this is Our Translator for some binds  #🦆
+def executables_mapping: {  #? derived from .args to parse scripts to be Readable
+#? auto Generated Comment Conversion
 $comments
-#? Defaults
+#? defaults
 " empty " :  "Empty",
 "r+1" : "Relative Right",
 "r-1" : "Relative Left",
@@ -170,19 +178,19 @@ $comments
 "f" : "Forward",
 "b" : "Backward",
 };
-def keycode_mapping: { #? Fetches keycode from a file
+def keycode_mapping: { #? fetches keycode from a file
  "0": "",
  $([ -f "${keycodeFile}" ] && cat "${keycodeFile}")
 };
-  def modmask_mapping: { #? Define mapping for modmask numbers represents bitmask
-    "64": " ", #? SUPER  󰻀 Also added 2 En space ' ' <<<
+  def modmask_mapping: { #? define mapping for modmask numbers represents bitmask
+    "64": " ", #? SUPER  󰻀 also added 2 En space ' ' <<<
     "8": "ALT",
     "4": "CTRL",
     "1": "SHIFT",
     "0": " ",
  $([ -f "${modmaskFile}" ] && cat "${modmaskFile}")
   };
-  def key_mapping: { #? Define mappings for .keys to be readable symbols
+  def key_mapping: { #? define mappings for .keys to be readable symbols
     "mouse_up" : "󱕑",
     "mouse_down" : "󱕐",
     "mouse:272" : "󰍽",
@@ -205,7 +213,7 @@ def keycode_mapping: { #? Fetches keycode from a file
     "Backspace" : "󰁮 ",
     $([ -f "${keyFile}" ] && cat "${keyFile}")
   };
-  def category_mapping: { #? Define Category Names, derive from Dispatcher #? This will serve as the Group header
+  def category_mapping: { #? define Category Names, derive from Dispatcher, this will serve as the Group header
     "exec" : "Execute a Command:",
     "global": "Global:",
     "exit" : "Exit Hyprland Session:",
@@ -225,16 +233,16 @@ def keycode_mapping: { #? Fetches keycode from a file
     "changegroupactive" : "Change Active Group:",
     $([ -f "${categoryFile}" ] && cat "${categoryFile}")
   };
-def arg_mapping: { #! Do not Change this used for Demo only... As this will change .args! will be fatal
+def arg_mapping: { #! do not Change this used for Demo only... As this will change .args! will be fatal
     "arg2": "mapped_arg2",
   };
-    def description_mapping: {  #? Derived from dispatcher and Gives Description for Dispatchers; Basically translates dispatcher.
+    def description_mapping: {  #? derived from dispatcher and gives Description for Dispatchers; Basically translates dispatcher.
     "movefocus": "Move Focus",
     "resizeactive": "Resize Active Floating Window",
     "exit" : "End Hyprland Session",
     "movetoworkspacesilent" : "Silently Move focused Window to Workspace",
     "movewindow" : "Move Window",
-    "exec" : "" , #? Remove exec as executable will give the Description from separate function
+    "exec" : "" , #? remove exec as executable will give the Description from separate function
     "movetoworkspace" : "Move focused Window to Workspace",
     "workspace" : "Navigate to Workspace",
     "togglefloating" : "Toggle Floating",
@@ -248,14 +256,14 @@ def arg_mapping: { #! Do not Change this used for Demo only... As this will chan
   };
 OVERRIDES
 
-#? Script to re Modify hyprctl json output
-#? Basically we are using jq to handle json data and outputs a pretty and friendly output
+#? script to re Modify hyprctl json output
+#? basically we are using jq to handle json data and outputs a pretty and friendly output
 jsonData="$(
   hyprctl binds -j | jq -L "$tmpMapDir" -c '
 include "hyde-keybinds";
 
-  #? Funtions to Convert modmask into Keys, There should be a beter math for this but Im lazy
-  #? Also we can just map it manually too
+  #? funtions to Convert modmask into Keys, there should be a better math for this but I am lazy
+  #? also we can just map it manually too
   def get_keys:
     if . == 0 then
       ""
@@ -280,28 +288,28 @@ def get_keycode:
   (keycode_mapping[(. | tostring)] // .); #? use the keycode conversion... and turn to string
 
 .[] | #? Filter 1
-.dispatcher as $dispatcher | .desc_dispatcher = $dispatcher | #? Value conversions for the description
-.dispatcher as $dispatcher | .category = $dispatcher | #? Value conversions for the category
+.dispatcher as $dispatcher | .desc_dispatcher = $dispatcher | #? value conversions for the description
+.dispatcher as $dispatcher | .category = $dispatcher | #? value conversions for the category
 .arg as $arg | .desc_executable = $arg | #? creates new key .desc_executable to be use later
-.modmask |= (get_keys | ltrimstr(" ")) | #? Execute Momask conversions, b
-.keycode |= (get_keycode // .) |  #? Apply the get_keycode transformation
-.key |= (key_mapping[.] // .) | #? Apply the get_key
-# .keybind = (.modmask | tostring // "") + (.key // "") | #! Same as below but without the keycode
-.keybind = (.modmask | tostring // "") + (.key // "") + ((.keycode // 0) | tostring) | #? Show the keybindings
-.flags = " locked=" + (.locked | tostring) + " mouse=" + (.mouse | tostring) + " release=" + (.release | tostring) + " repeat=" + (.repeat | tostring) + " non_consuming=" + (.non_consuming | tostring) | #? This are the flags repeat,lock etc
-.category |= (category_mapping[.] // .) | #? Group by Categories will be use for headers
+.modmask |= (get_keys | ltrimstr(" ")) | #? execute Modmask conversions
+.keycode |= (get_keycode // .) |  #? apply the get_keycode transformation
+.key |= (key_mapping[.] // .) | #? apply the get_key
+# .keybind = (.modmask | tostring // "") + (.key // "") | #! same as below but without the keycode
+.keybind = (.modmask | tostring // "") + (.key // "") + ((.keycode // 0) | tostring) | #? show the keybindings
+.flags = " locked=" + (.locked | tostring) + " mouse=" + (.mouse | tostring) + " release=" + (.release | tostring) + " repeat=" + (.repeat | tostring) + " non_consuming=" + (.non_consuming | tostring) | #? this are the flags repeat, lock etc
+.category |= (category_mapping[.] // .) | #? group by Categories will be used for headers
 #!if .modmask and .modmask != " " and .modmask != "" then .modmask |= (split(" ") | map(select(length > 0)) | if length > 1 then join("  + ") else .[0] end) else .modmask = "" end |
-if .keybind and .keybind != " " and .keybind != "" then .keybind |= (split(" ") | map(select(length > 0)) | if length > 1 then join("  + ") else .[0] end) else .keybind = "" end |  #? Clean up
-  .arg |= (arg_mapping[.] // .) | #? See above for how arg is converted
- #!    .desc_executable |= gsub(".sh"; "") | #? Maybe Usefull soon removes ".sh" to file
-  #? Creates a key desc... for fallback if  "has description" is false
+if .keybind and .keybind != " " and .keybind != "" then .keybind |= (split(" ") | map(select(length > 0)) | if length > 1 then join("  + ") else .[0] end) else .keybind = "" end |  #? clean up
+  .arg |= (arg_mapping[.] // .) | #? see above for how arg is converted
+ #!    .desc_executable |= gsub(".sh"; "") | #? maybe Usefull soon removes ".sh" to file
+  #? creates a key desc... for fallback if  "has description" is false
   .desc_executable |= (executables_mapping[.] // .) | #? exclusive for "exec" dispatchers
   .desc_dispatcher |= (description_mapping[.] // .)  |  #? for all other dispatchers
   .description = if .has_description == false then "\(.desc_dispatcher) \(.desc_executable)" else.description end
-' #* <---- There is a '   do not delete this'
+' #* <---- there is a '   do not delete this'
 )"
 
-#? Now we have the metadata we can Group it accordingly
+#? now we have the metadata we can Group it accordingly
 GROUP() {
   awk -v cols="$cols" -F '!=!' '
 {
@@ -325,22 +333,22 @@ END {
 }'
 }
 
-#? Display the JSON format
+#? display the JSON format
 [ "$kb_hint_json" = true ] && jq <<<"$jsonData" && exit 0
 
-#? Format this is how the keybinds are displayed.
+#? format this is how the keybinds are displayed.
 DISPLAY() { awk -v kb_hint_delim="${kb_hint_delim:->}" -F '!=!' '{if ($0 ~ /=/ && $6 != "") printf "%-25s %-2s %-30s\n", $5, kb_hint_delim, $6; else if ($0 ~ /=/) printf "%-25s\n", $5; else print $0}'; }
 
-#? Extra design use for distinction
+#? extra design use for distinction
 header="$(printf "%-35s %-1s %-20s\n" "󰌌 Keybinds" "󱧣" "Description")"
 cols=$(tput cols)
 cols=${cols:-999}
 linebreak="$(printf '%.0s━' $(seq 1 "${cols}") "")"
 
-#! this Part Gives extra loading time as I don't have efforts to make single space for each class
+#! this part gives extra loading time as I don't have efforts to make single space for each class
 metaData="$(jq -r '"\(.category) !=! \(.modmask) !=! \(.key) !=! \(.dispatcher) !=! \(.arg) !=! \(.keybind) !=! \(.description) !=! \(.flags)"' <<<"${jsonData}" | tr -s ' ' | sort -k 1)"
 
-#? This formats the pretty output
+#? this formats the pretty output
 display="$(GROUP <<<"$metaData" | DISPLAY)"
 
 # output=$(echo -e "${header}\n${linebreak}\n${primMenu}\n${linebreak}\n${display}")
@@ -355,26 +363,26 @@ if ! command -v rofi &>/dev/null; then
   exit 0
 fi
 
-#? Put rofi configuration here
-# Read hypr theme border
+#? put rofi configuration here
+# read hypr theme border
 wind_border=$((hypr_border * 3 / 2))
 elem_border=$([ "$hypr_border" -eq 0 ] && echo "5" || echo "$hypr_border")
 
-# TODO Dynamic scaling for text and the window >>> I do not know if rofi is capable of this
+#TODO Dynamic scaling for text and the window >>> I do not know if rofi is capable of this
 r_width="width: ${kb_hint_width:-35em};"
 r_height="height: ${kb_hint_height:-35em};"
 r_listview="listview { lines: ${kb_hint_line:-13}; }"
 r_override="window {$r_height $r_width border: ${hypr_width}px; border-radius: ${wind_border}px;} entry {border-radius: ${elem_border}px;} element {border-radius: ${elem_border}px;} ${r_listview} "
 
-# Read hypr font size
+# read hypr font size
 fnt_override=$(gsettings get org.gnome.desktop.interface font-name | awk '{gsub(/'\''/,""); print $NF}')
 fnt_override="configuration {font: \"JetBrainsMono Nerd Font ${fnt_override}\";}"
 
-# Read hypr theme icon
+# read hypr theme icon
 icon_override=$(gsettings get org.gnome.desktop.interface icon-theme | sed "s/'//g")
 icon_override="configuration {icon-theme: \"${icon_override}\";}"
 
-#? Actions to do when selected
+#? actions to do when selected
 selected=$(echo "$output" | rofi -dmenu -p -i -theme-str "${fnt_override}" -theme-str "${r_override}" -theme-str "${icon_override}" -config "${roconf}" | sed 's/.*\s*//')
 if [ -z "$selected" ]; then exit 0; fi
 
@@ -389,16 +397,16 @@ run_sel="$(echo "$run" | awk -F '!=!' '{gsub(/^ *| *$/, "", $5); if ($5 ~ /[[:sp
 #?
 RUN() { case "$(eval "hyprctl dispatch $run_sel")" in *"Not enough arguments"*) exec $0 ;; esac }
 
-#? If flag is repeat then repeat rofi if not then just execute once
+#? if flag is repeat then repeat rofi if not then just execute once
 if [ -n "$run_sel" ] && [ "$(echo "$run_sel" | wc -l)" -eq 1 ]; then
   eval "$run_flg"
   if [ "$repeat" = true ]; then
 
     while true; do
-      repeat_command=$(echo -e "Repeat" | rofi -dmenu -no-custom -p "[Enter] repeat; [ESC] exit") #? Needed a separate Rasi ? Dunno how to make; Maybe Something like confirmation rasi for buttons Yes and No then the -p will be the Question like Proceed? Repeat?
+      repeat_command=$(echo -e "Repeat" | rofi -dmenu -no-custom -p "[Enter] repeat; [ESC] exit") #? needed a separate Rasi ? dunno how to make; maybe Something like confirmation rasi for buttons Yes and No then the -p will be the Question like Proceed? Repeat?
 
       if [ "$repeat_command" = "Repeat" ]; then
-        # Repeat the command here
+        # repeat the command here
         RUN
       else
         exit 0

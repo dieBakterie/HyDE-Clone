@@ -50,8 +50,8 @@ upd=$((ofc + aur + fpk))
 
 # show tooltip
 if [ $upd -eq 0 ]; then
-    # upd="" # remove Icon completely
-    upd="󰮯" # if zero Display Icon only
+    upd="" # remove Icon completely
+    # upd="󰮯" # if zero Display Icon only
     echo "{\"text\":\"$upd\", \"tooltip\":\" Packages are up to date\"}"
 else
     # shellcheck disable=SC2028

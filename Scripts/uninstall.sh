@@ -4,7 +4,7 @@
 #|-/ /--| Prasanth Rangan               |-/ /--|#
 #|/ /---+-------------------------------+/ /---|#
 
-cat << "EOF"
+cat << EOF
 
 -------------------------------------------------
         .
@@ -49,7 +49,7 @@ fi
 BkpDir="${HOME}/.config/cfg_backups/$(date +'%y%m%d_%Hh%Mm%Ss')_remove"
 mkdir -p "${BkpDir}"
 
-cat "${CfgLst}" | while read lst ; do
+cat <"${CfgLst}" | while read lst ; do
     pth=$(echo "${lst}" | awk -F '|' '{print $3}')
     pth=$(eval echo "${pth}")
     cfg=$(echo "${lst}" | awk -F '|' '{print $4}')

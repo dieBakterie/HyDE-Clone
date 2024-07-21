@@ -49,7 +49,7 @@
     },
 
     "custom/cpuinfo": {
-        "exec": " cpuinfo.sh",
+        "exec": "cpuinfo.sh",
         "return-type": "json",
         "format": "{}",
         "rotate": 0,
@@ -59,7 +59,7 @@
     },
 
     "custom/gpuinfo": {
-        "exec": " gpuinfo.sh",
+        "exec": "gpuinfo.sh",
         "return-type": "json",
         "format": "{}",
         "rotate": 0,
@@ -112,7 +112,7 @@
         "format": "{:%R 󰃭 %d·%m·%y}",
         "rotate": 0,
         "format-alt": "{:%I:%M %p}",
-        "tooltip-format": "<tt>{calendar}</tt>",
+        "tooltip-format": "<span>{calendar}</span>",
         "calendar": {
             "mode": "month",
             "mode-mon-col": 3,
@@ -183,7 +183,7 @@
             "(.*)YouTube(.*)": "$1YouTube ", // YouTube custom icon
             "(.*) - YouTube(.*)": "$1 ", // YouTube Music custom icon
             "(.*)Mozilla Firefox": "$1 󰈹", // Firefox icon for other sites
-            "(.*) – Mozilla Firefox": "$1 󰈹",
+            // "(.*) – Mozilla Firefox": "$1 󰈹",
             "(.*) - Visual Studio Code": "$1 󰨞", // Visual Studio Code icon
             "(.*)Visual Studio Code": "$1 󰨞",
             "(.*) - Code - OSS": "$1 󰨞", // Visual Studio Code icon

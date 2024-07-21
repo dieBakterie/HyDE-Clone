@@ -1,4 +1,5 @@
 ###### *<div align="right"><sub>// design by t2</sub></div>*
+
 <div align = center>
     <a href="https://discord.gg/AYbJ9MJez7">
 <img alt="Dynamic JSON Badge" src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdiscordapp.com%2Fapi%2Finvites%2FmT5YqjaJFh%3Fwith_counts%3Dtrue&query=%24.approximate_member_count&suffix=%20members&style=for-the-badge&logo=discord&logoSize=auto&label=The%20HyDe%20Project&labelColor=ebbcba&color=c79bf0">
@@ -15,21 +16,21 @@
 
 ![hyde_banner](https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/hyde_banner.png)
 
-<br>
+</br>
 
-<a href="#installation"><kbd> <br> Installation <br> </kbd></a>&ensp;&ensp;
-<a href="#themes"><kbd> <br> Themes <br> </kbd></a>&ensp;&ensp;
-<a href="#styles"><kbd> <br> Styles <br> </kbd></a>&ensp;&ensp;
-<a href="#keybindings"><kbd> <br> Keybindings <br> </kbd></a>&ensp;&ensp;
-<a href="https://www.youtube.com/watch?v=2rWqdKU1vu8&list=PLt8rU_ebLsc5yEHUVsAQTqokIBMtx3RFY&index=1"><kbd> <br> Youtube <br> </kbd></a>&ensp;&ensp;
-<a href="https://github.com/prasanthrangan/hyprdots/wiki"><kbd> <br> Wiki <br> </kbd></a>&ensp;&ensp;
-<a href="https://discord.gg/qWehcFJxPa"><kbd> <br> Discord <br> </kbd></a>
+<a href="#installation"><kbd> </br> Installation </br> </kbd></a>&ensp;&ensp;
+<a href="#themes"><kbd> </br> Themes </br> </kbd></a>&ensp;&ensp;
+<a href="#styles"><kbd> </br> Styles </br> </kbd></a>&ensp;&ensp;
+<a href="#keybindings"><kbd> </br> Keybindings </br> </kbd></a>&ensp;&ensp;
+<a href="https://www.youtube.com/watch?v=2rWqdKU1vu8&list=PLt8rU_ebLsc5yEHUVsAQTqokIBMtx3RFY&index=1"><kbd> </br> Youtube </br> </kbd></a>&ensp;&ensp;
+<a href="https://github.com/prasanthrangan/hyprdots/wiki"><kbd> </br> Wiki </br> </kbd></a>&ensp;&ensp;
+<a href="https://discord.gg/qWehcFJxPa"><kbd> </br> Discord </br> </kbd></a>
 
-</div><br><br>
+</div></br></br>
 
 https://github.com/prasanthrangan/hyprdots/assets/106020512/7f8fadc8-e293-4482-a851-e9c6464f5265
 
-<br><div align="center"><img width="12%" src="https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/arch.png"/><br></div>
+</br><div align="center"><img width="12%" src="https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/arch.png"/></br></div>
 
 ## Installation
 
@@ -84,8 +85,8 @@ As a second update option, you can use `Hyde restore ...`, which does have a bet
 For more details, you can refer to [Hyde-cli - dots management wiki](https://github.com/kRHYME7/Hyde-cli/wiki/Dots-Management).
 
 <div align="right">
-  <br>
-  <a href="#-design-by-t2"><kbd> <br> 🡅 <br> </kbd></a>
+  </br>
+  <a href="#-design-by-t2"><kbd> </br> 🡅 </br> </kbd></a>
 </div>
 
 ## Themes
@@ -118,8 +119,8 @@ For more information, visit [prasanthrangan/hyde-themes](https://github.com/pras
 > If you wish to have your hyde theme showcased, or you want to find some non-official themes, visit [kRHYME7/hyde-gallery](https://github.com/kRHYME7/hyde-gallery)!
 
 <div align="right">
-  <br>
-  <a href="#-design-by-t2"><kbd> <br> 🡅 <br> </kbd></a>
+  </br>
+  <a href="#-design-by-t2"><kbd> </br> 🡅 </br> </kbd></a>
 </div>
 
 ## Styles
@@ -164,8 +165,8 @@ For more information, visit [prasanthrangan/hyde-themes](https://github.com/pras
 <img src="https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/game_launch_5.png"/></td></tr></table></div>
 
 <div align="right">
-  <br>
-  <a href="#-design-by-t2"><kbd> <br> 🡅 <br> </kbd></a>
+  </br>
+  <a href="#-design-by-t2"><kbd> </br> 🡅 </br> </kbd></a>
 </div>
 
 ## Keybindings
@@ -175,7 +176,7 @@ For more information, visit [prasanthrangan/hyde-themes](https://github.com/pras
 <!--
 | Keys | Action |
 | :--- | :--- |
-| <kbd>Super</kbd> + <kbd>Q</kbd><br><kbd>Alt</kbd> + <kbd>F4</kbd> | Close focused window |
+| <kbd>Super</kbd> + <kbd>Q</kbd></br><kbd>Alt</kbd> + <kbd>F4</kbd> | Close focused window |
 | <kbd>Super</kbd> + <kbd>Del</kbd> | Kill Hyprland session |
 | <kbd>Super</kbd> + <kbd>W</kbd> | Toggle the window between focus and float |
 | <kbd>Super</kbd> + <kbd>G</kbd> | Toggle the window between focus and group |
@@ -217,8 +218,8 @@ For more information, visit [prasanthrangan/hyde-themes](https://github.com/pras
 | <kbd>Super</kbd> + <kbd>Shift</kbd> + <kbd>[0-9]</kbd> | Move focused window to a relative workspace |
 | <kbd>Super</kbd> + <kbd>Shift</kbd> + <kbd>Ctrl</kbd> + <kbd>←</kbd><kbd>→</kbd><kbd>↑</kbd><kbd>↓</kbd> | Move focused window around the current workspace |
 | <kbd>Super</kbd> + <kbd>MouseScroll</kbd> | Scroll through existing workspaces |
-| <kbd>Super</kbd> + <kbd>LeftClick</kbd><br><kbd>Super</kbd> + <kbd>Z</kbd> | Move focused window |
-| <kbd>Super</kbd> + <kbd>RightClick</kbd><br><kbd>Super</kbd> + <kbd>X</kbd> | Resize focused window |
+| <kbd>Super</kbd> + <kbd>LeftClick</kbd></br><kbd>Super</kbd> + <kbd>Z</kbd> | Move focused window |
+| <kbd>Super</kbd> + <kbd>RightClick</kbd></br><kbd>Super</kbd> + <kbd>X</kbd> | Resize focused window |
 | <kbd>Super</kbd> + <kbd>Alt</kbd> + <kbd>S</kbd> | Move/Switch to special workspace (scratchpad) |
 | <kbd>Super</kbd> + <kbd>S</kbd> | Toggle to special workspace |
 | <kbd>Super</kbd> + <kbd>J</kbd> | Toggle focused window split |
@@ -353,6 +354,6 @@ For more information, visit [prasanthrangan/hyde-themes](https://github.com/pras
 </div>
 
 <div align="right">
-  <br>
-  <a href="#-design-by-t2"><kbd> <br> 🡅 <br> </kbd></a>
+  </br>
+  <a href="#-design-by-t2"><kbd> </br> 🡅 </br> </kbd></a>
 </div>

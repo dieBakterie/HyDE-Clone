@@ -146,10 +146,10 @@ class PlayerManager:
 def parse_arguments():
     parser = argparse.ArgumentParser()
 
-    # Increase verbosity with every occurrence of -v
+    # increase verbosity with every occurrence of -v
     parser.add_argument("-v", "--verbose", action="count", default=0)
 
-    # Define for which player we"re listening
+    # define for which player we"re listening
     parser.add_argument("--player")
 
     parser.add_argument("--enable-logging", action="store_true")
@@ -159,15 +159,15 @@ def parse_arguments():
 def main():
     arguments = parse_arguments()
 
-    # Initialize logging
+    # initialize logging
     if arguments.enable_logging:
         logfile = os.path.join(os.path.dirname(
             os.path.realpath(__file__)), "media-player.log")
         logging.basicConfig(filename=logfile, level=logging.DEBUG,
                             format="%(asctime)s %(name)s %(levelname)s:%(lineno)d %(message)s")
 
-    # Logging is set by default to WARN and higher.
-    # With every occurrence of -v it's lowered by one
+    # logging is set by default to WARN and higher.
+    # with every occurrence of -v it's lowered by one
     logger.setLevel(max((3 - arguments.verbose) * 10, 0))
 
     logger.info("Creating player manager")

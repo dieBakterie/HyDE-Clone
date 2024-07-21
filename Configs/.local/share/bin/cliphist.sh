@@ -9,7 +9,7 @@ roconf="${confDir}/rofi/clipboard.rasi"
 [[ "${rofiScale}" =~ ^[0-9]+$ ]] || rofiScale=10
 r_scale="configuration {font: \"JetBrainsMono Nerd Font ${rofiScale}\";}"
 wind_border=$((hypr_border * 3 / 2))
-elem_border=$([ $hypr_border -eq 0 ] && echo "5" || echo $hypr_border)
+elem_border=$([ "$hypr_border" -eq 0 ] && echo "5" || echo "$hypr_border")
 
 # evaluate spawn position
 readarray -t curPos < <(hyprctl cursorpos -j | jq -r '.x,.y')

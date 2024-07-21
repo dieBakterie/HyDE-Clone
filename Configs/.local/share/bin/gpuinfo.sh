@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2312
 # shellcheck disable=SC1090
+
+# set variables
 scrDir="$(dirname "$(realpath "$0")")"
 gpuQ="/tmp/hyde-${UID}-gpuinfo-query"
 
@@ -31,7 +33,7 @@ query() {
 touch "${gpuQ}"
 
 if lsmod | grep -q 'nouveau'; then
-      echo "nvidia_gpu=\"Linux\"" >>"${gpuQ}" #? Incase If nouveau is installed
+      echo "nvidia_gpu=\"Linux\"" >>"${gpuQ}" #? incase If nouveau is installed
       echo "nvidia_flag=1 # Using nouveau an open-source nvidia driver" >>"${gpuQ}"
 elif  command -v nvidia-smi &> /dev/null; then
 nvidia_gpu=$(nvidia-smi --query-gpu=gpu_name --format=csv,noheader,nounits | head -n 1)
@@ -103,36 +105,30 @@ sed -i "s/^#${next_prioGPU}/${next_prioGPU}/" "${gpuQ}" # uncomment the next pri
 sed -i "s/prioGPU=${prioGPU}/prioGPU=${next_prioGPU}/" "${gpuQ}" # update the prioGPU in the file
 }
 
-# Thee shalt find the greatest one,
-# he who not more than the chosen one
+# 
 map_floor() {
 
-    # from the depths of the string, words arise,
-    # Keys in pairs, a treasure in disguise.
+    # read the key-value pairs into an array
     IFS=', ' read -r -a pairs <<< "$1"
 
-    # If the final token stands alone and bold,
-    # declare it the default, its worth untold.
+    # set the default value if the last pair does not contain a colon
     if [[ ${pairs[-1]} != *":"* ]]; then
         def_val="${pairs[-1]}"
         unset 'pairs[${#pairs[@]}-1]'
     fi
 
-    # Scans the map, a peak it seeks,
-    # the highest passed, the value speaks.
+    # loop through the pairs and find the highest value that is less than or equal to the given number
     for pair in "${pairs[@]}"; do
         IFS=':' read -r key value <<< "$pair"
 
-        # Behold! Thou holds the secrets they seek,
-        # declare it and silence the whispers unique.
+        # check if the current pair is the highest value that is less than or equal to the given number
         if awk -v num="$2" -v k="$key" 'BEGIN { exit !(num > k) }'; then
             echo "$value"
             return
         fi
     done
 
-    # On this lonely shore, where silence dwells
-    # even the waves, echoes words unheard
+    # return the default value if it exists
     [ -n "$def_val" ] && echo "$def_val" || echo " "
 }
 
@@ -157,7 +153,7 @@ generate_json() {
 
   # emoji=$(get_temperature_emoji "${temperature}")
   local json="{\"text\":\"${thermo} ${temperature}°C\", \"tooltip\":\"${primary_gpu}\n${thermo} Temperature: ${temperature}°C ${emoji}"
-#? Soon Add Something incase needed.
+  #? soon add Something incase needed.
   declare -A tooltip_parts
   if [[ -n "${utilization}" ]]; then tooltip_parts["\n$speedo Utilization: "]="${utilization}%" ; fi
   if [[ -n "${current_clock_speed}" ]] && [[ -n "${max_clock_speed}" ]]; then tooltip_parts["\n Clock Speed: "]="${current_clock_speed}/${max_clock_speed} MHz" ; fi
@@ -183,7 +179,7 @@ generate_json() {
 
 general_query() { # function to get temperature from 'sensors'
 	filter=''
-temperature=$(sensors | ${filter} grep -m 1 -E "(edge|Package id.*|another keyword)" | awk -F ':' '{print int($2)}') #! We can get json data from sensors too
+temperature=$(sensors | ${filter} grep -m 1 -E "(edge|Package id.*|another keyword)" | awk -F ':' '{print int($2)}') #! we can get json data from sensors too
   # gpu_load=$()
   # core_clock=$()
 for file in /sys/class/power_supply/BAT*/power_now; do
@@ -198,15 +194,15 @@ current_clock_speed=$(awk '{sum += $1; n++} END {if (n > 0) print sum / n / 1000
 max_clock_speed=$(awk '{print $1/1000}' /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq)
 }
 
-intel_GPU() { #? Function to query basic intel GPU
+intel_GPU() { #? function to query basic intel GPU
     primary_gpu="Intel ${intel_gpu}"
     general_query
 }
 
-nvidia_GPU() { #? Function to query Nvidia GPU
+nvidia_GPU() { #? function to query Nvidia GPU
     primary_gpu="NVIDIA ${nvidia_gpu}"
-  if [[ "${nvidia_gpu}" == "Linux" ]]; then general_query ; return ; fi #? Open source driver
-#? Tired Flag for not using nvidia-smi if GPU is in suspend mode.
+  if [[ "${nvidia_gpu}" == "Linux" ]]; then general_query ; return ; fi #? open source driver
+#? tired Flag for not using nvidia-smi if GPU is in suspend mode.
 if ${tired}; then is_suspend="$(cat /sys/bus/pci/devices/0000:"${nvidia_address}"/power/runtime_status)"
    if [[ ${is_suspend} == *"suspend"* ]]; then
       printf '{"text":"󰤂", "tooltip":"%s ⏾ Suspended mode"}' "${primary_gpu}"; exit ;fi
@@ -223,7 +219,7 @@ fi
   power_limit="${gpu_data[5]// /}"
 }
 
-amd_GPU() { #? Function to query amd GPU
+amd_GPU() { #? function to query amd GPU
   primary_gpu="AMD ${amd_gpu}"
   # execute the AMD GPU Python script and use its output
   amd_output=$(python3 "${scrDir}/amdgpu.py")
@@ -278,7 +274,7 @@ exit
 esac
 
 nvidia_flag=${nvidia_flag:-0} intel_flag=${intel_flag:-0} amd_flag=${amd_flag:-0}
-#? Based on the flags, call the corresponding function multi flags means multi GPU.
+#? based on the flags, call the corresponding function multi flags means multi GPU.
 if [[ "${nvidia_flag}" -eq 1 ]]; then
   nvidia_GPU
 elif [[ "${amd_flag}" -eq 1 ]]; then
@@ -289,4 +285,4 @@ else primary_gpu="Not found"
   general_query
 fi
 
-generate_json #? AutoGen the Json txt for Waybar
+generate_json #? autoGen the Json txt for Waybar

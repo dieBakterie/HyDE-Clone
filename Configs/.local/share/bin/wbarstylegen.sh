@@ -40,7 +40,8 @@ if [ $s_fontpx -lt 10 ] ; then
 fi
 
 # adjust values for vert/horz
-export w_position="$(grep '^1|' "$conf_ctl" | cut -d '|' -f 3)"
+w_position="$(grep '^1|' "$conf_ctl" | cut -d '|' -f 3)"
+export w_position
 case ${w_position} in
     top|bottom)
         export x1g_margin=${g_margin}
@@ -95,7 +96,8 @@ case ${w_position} in
 esac
 
 # list modules and generate theme style
-export modules_ls="$(grep -m 1 '".*.": {'  --exclude="$modules_dir/footer.jsonc" $modules_dir/*.jsonc | cut -d '"' -f 2 | awk -F '/' '{ if($1=="custom") print "#custom-"$NF"," ; else print "#"$NF","}')"
+modules_ls="$(grep -m 1 '".*.": {'  --exclude="$modules_dir/footer.jsonc" "$modules_dir"/*.jsonc | cut -d '"' -f 2 | awk -F '/' '{ if($1=="custom") print "#custom-"$NF"," ; else print "#"$NF","}')"
+export modules_ls
 envsubst < "$in_file" > "$out_file"
 
 # override rounded couners

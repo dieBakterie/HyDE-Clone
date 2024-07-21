@@ -5,7 +5,7 @@ scrDir="$(dirname "$(realpath "$0")")"
 source "${scrDir}/globalcontrol.sh"
 readarray -t codeConf < <(find "${confDir}" -mindepth 1 -maxdepth 1 -type d -name "Code*" | sort)
 readarray -t codeVsix < <(find "$HOME" -mindepth 1 -maxdepth 1 -type d -name ".vscode*" | sort)
-tmpFile="/tmp/$(id -u)$(basename ${0}).tmp"
+tmpFile="/tmp/$(id -u)$(basename "${0}").tmp"
 tgtFile="extensions/undefined_publisher.wallbash-0.0.1/themes/wallbash-color-theme.json"
 
 # install and apply ext

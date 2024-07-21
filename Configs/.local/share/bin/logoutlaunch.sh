@@ -50,7 +50,7 @@ export active_rad=$(( hypr_border * 5 ))
 export button_rad=$(( hypr_border * 8 ))
 
 # eval config files
-wlStyle="$(envsubst < $wlTmplt)"
+wlStyle="$(envsubst < "$wlTmplt")"
 
 # launch wlogout
 wlogout -b "${wlColms}" -c 0 -r 0 -m 0 --layout "${wLayout}" --css <(echo "${wlStyle}") --protocol layer-shell

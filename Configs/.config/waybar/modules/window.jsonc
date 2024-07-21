@@ -10,7 +10,7 @@
             "(.*)YouTube(.*)": "$1YouTube ", // YouTube custom icon
             "(.*) - YouTube(.*)": "$1 ", // YouTube Music custom icon
             "(.*)Mozilla Firefox": "$1 󰈹", // Firefox icon for other sites
-            "(.*) – Mozilla Firefox": "$1 󰈹",
+            // "(.*) – Mozilla Firefox": "$1 󰈹",
             "(.*) - Visual Studio Code": "$1 󰨞", // Visual Studio Code icon
             "(.*)Visual Studio Code": "$1 󰨞",
             "(.*) - Code - OSS": "$1 󰨞", // Visual Studio Code icon

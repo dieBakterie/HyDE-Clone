@@ -10,8 +10,8 @@ get_themes
 
 Theme_Change()
 {
-    local x_switch=$1
-    for i in ${!thmList[@]} ; do
+    local x_switch="$1"
+    for i in "${!thmList[@]}" ; do
         if [ "${thmList[i]}" == "${hydeTheme}" ] ; then
             if [ "${x_switch}" == 'n' ] ; then
                 setIndex=$(( (i + 1) % ${#thmList[@]} ))
@@ -28,18 +28,22 @@ Theme_Change()
 while getopts "nps:" option ; do
     case $option in
 
-    n ) # set next theme
+    n )
+        # set next theme
         Theme_Change n
         export xtrans="grow" ;;
 
-    p ) # set previous theme
+    p )
+        # set previous theme
         Theme_Change p
         export xtrans="outer" ;;
 
-    s ) # set selected theme
+    s )
+        # set selected theme
         themeSet="$OPTARG" ;;
 
-    * ) # invalid option
+    * )
+        # invalid option
         echo "... invalid option ..."
         echo "$(basename "${0}") -[option]"
         echo "n : set next theme"
@@ -61,16 +65,22 @@ source "${scrDir}/globalcontrol.sh"
 
 # hypr
 sed '1d' "${hydeThemeDir}/hypr.theme" > "${confDir}/hypr/themes/theme.conf"
-gtkTheme="$(grep 'gsettings set org.gnome.desktop.interface gtk-theme' "${hydeThemeDir}/hypr.theme" | awk -F "'" '{print $((NF - 1))}')"
-gtkIcon="$(grep 'gsettings set org.gnome.desktop.interface icon-theme' "${hydeThemeDir}/hypr.theme" | awk -F "'" '{print $((NF - 1))}')"
+gtkTheme="$(
+{ grep -q "^[[:space:]]*\$GTK-THEME\s*=" "${hydeThemeDir}/hypr.theme" && grep "^[[:space:]]*\$GTK-THEME\s*=" "${hydeThemeDir}/hypr.theme" | cut -d '=' -f2 | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' ;} || 
+grep 'gsettings set org.gnome.desktop.interface gtk-theme' "${hydeThemeDir}/hypr.theme" | awk -F "'" '{print $((NF - 1))}'
+)"
+gtkIcon="$(
+{ grep -q "^[[:space:]]*\$ICON-THEME\s*=" "${hydeThemeDir}/hypr.theme" && grep "^[[:space:]]*\$ICON-THEME\s*=" "${hydeThemeDir}/hypr.theme" | cut -d '=' -f2 | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' ;} ||  
+grep 'gsettings set org.gnome.desktop.interface icon-theme' "${hydeThemeDir}/hypr.theme" | awk -F "'" '{print $((NF - 1))}'
+)"
 
 # qtct
 sed -i "/^icon_theme=/c\icon_theme=${gtkIcon}" "${confDir}/qt5ct/qt5ct.conf"
 sed -i "/^icon_theme=/c\icon_theme=${gtkIcon}" "${confDir}/qt6ct/qt6ct.conf"
 
 # gtk3
-sed -i "/^gtk-theme-name=/c\gtk-theme-name=${gtkTheme}" $confDir/gtk-3.0/settings.ini
-sed -i "/^gtk-icon-theme-name=/c\gtk-icon-theme-name=${gtkIcon}" $confDir/gtk-3.0/settings.ini
+sed -i "/^gtk-theme-name=/c\gtk-theme-name=${gtkTheme}" "${confDir}/gtk-3.0/settings.ini"
+sed -i "/^gtk-icon-theme-name=/c\gtk-icon-theme-name=${gtkIcon}" "${confDir}/gtk-3.0/settings.ini"
 
 # gtk4
 if [ -d /run/current-system/sw/share/themes ] ; then

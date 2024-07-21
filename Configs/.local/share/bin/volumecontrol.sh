@@ -7,7 +7,7 @@ source "$scrDir/globalcontrol.sh"
 # define functions
 
 print_error() {
-    cat <<"EOF"
+    cat <<EOF
     ./volumecontrol.sh -[device] <actions>
     ...valid device are...
         i   -- input device
@@ -22,19 +22,19 @@ EOF
 }
 
 notify_vol() {
-    angle="$(((($vol + 2) / 5) * 5))"
+    angle=$((((vol + 2) / 5) * 5))
     ico="${icoDir}/vol/vol-${angle}.svg"
-    bar=$(seq -s "." $(($vol / 15)) | sed 's/[0-9]//g')
-    notify-send -a "t2" -r 91190 -t 800 -i "${ico}" "${vol}${bar}" "${nsink}" -h string:x-canonical-private-synchronous:test
+    bar=$(seq -s "." $((vol / 15)) | sed 's/[0-9]//g')
+    notify-send -a "t2" -r 91190 -t 800 -i "${ico}" "${vol}${bar}" "${nsink}" #-h string:x-canonical-private-synchronous:test
 }
 
 notify_mute() {
     mute=$(pamixer "${srce}" --get-mute | cat)
     [ "${srce}" == "--default-source" ] && dvce="mic" || dvce="speaker"
     if [ "${mute}" == "true" ]; then
-        notify-send -a "t2" -r 91190 -t 800 -i "${icoDir}/vol/muted-${dvce}.svg" "muted" "${nsink}" -h string:x-canonical-private-synchronous:test
+        notify-send -a "t2" -r 91190 -t 800 -i "${icoDir}/vol/muted-${dvce}.svg" "muted" "${nsink}" #-h string:x-canonical-private-synchronous:test
     else
-        notify-send -a "t2" -r 91190 -t 800 -i "${icoDir}/vol/unmuted-${dvce}.svg" "unmuted" "${nsink}" -h string:x-canonical-private-synchronous:test
+        notify-send -a "t2" -r 91190 -t 800 -i "${icoDir}/vol/unmuted-${dvce}.svg" "unmuted" "${nsink}" #-h string:x-canonical-private-synchronous:test
     fi
 }
 
@@ -88,7 +88,8 @@ while getopts iop:s DeviceOpt; do
         ;;
     s)
         default_sink="$(pamixer --get-default-sink | awk -F '"' 'END{print $(NF - 1)}')"
-        export selected_sink="$(select_output "${@}" | rofi -dmenu -select "${default_sink}" -config "${confDir}/rofi/notification.rasi")"
+        selected_sink="$(select_output "${@}" | rofi -dmenu -select "${default_sink}" -config "${confDir}/rofi/notification.rasi")"
+        export selected_sink
         select_output "$selected_sink"
         exit
         ;;

@@ -4,7 +4,7 @@
 #|-/ /--| Prasanth Rangan          |-/ /--|#
 #|/ /---+--------------------------+/ /---|#
 
-cat << "EOF"
+cat << EOF
 
 -------------------------------------------------
         .
@@ -93,7 +93,7 @@ EOF
     cust_pkg=$1
     cp "${scrDir}/custom_hypr.lst" "${scrDir}/install_pkg.lst"
 
-    if [ -f "${cust_pkg}" ] && [ ! -z "${cust_pkg}" ]; then
+    if [ -f "${cust_pkg}" ] && [ -n "${cust_pkg}" ]; then
         cat "${cust_pkg}" >> "${scrDir}/install_pkg.lst"
     fi
 

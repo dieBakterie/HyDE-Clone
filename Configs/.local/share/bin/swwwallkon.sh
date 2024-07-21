@@ -10,33 +10,34 @@ tgtPath="$(dirname "${hydeThemeDir}")"
 get_themes
 
 # evaluate options
-while getopts "t:w:" option ; do
+while getopts "t:w:" option; do
     case $option in
-
-        t ) # set theme
-            for x in "${!thmList[@]}" ; do
-                if [ "${thmList[x]}" == "$OPTARG" ] ; then
-                    setTheme="${thmList[x]}"
-                    break
-                fi
-            done
-            [ -z "${setTheme}" ] && echo "Error: '$OPTARG' theme not available..." && exit 1
-            ;;
-
-        w ) # set wallpaper
-            if [ -f "$OPTARG" ] && file --mime-type "$OPTARG" | grep -q 'image/' ; then
-                setWall="$OPTARG"
-            else
-                echo "Error: '$OPTARG' is not an image file..."
-                exit 1
+        t)
+        # set theme
+        for x in "${!thmList[@]}"; do
+            if [ "${thmList[x]}" == "$OPTARG" ]; then
+                setTheme="${thmList[x]}"
+                break
             fi
-            ;;
+        done
+        [ -z "${setTheme}" ] && echo "Error: '$OPTARG' theme not available..." && exit 1
+        ;;
 
-        * ) # refresh menu
-            unset setTheme
-            unset setWall
-            ;;
+        w)
+        # set wallpaper
+        if [ -f "$OPTARG" ] && file --mime-type "$OPTARG" | grep -q 'image/'; then
+            setWall="$OPTARG"
+        else
+            echo "Error: '$OPTARG' is not an image file..."
+            exit 1
+        fi
+        ;;
 
+        *)
+        # refresh menu
+        unset setTheme
+        unset setWall
+        ;;
     esac
 done
 

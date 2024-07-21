@@ -18,13 +18,15 @@ mon_x_res=$(( mon_x_res * 100 / mon_scale ))
 
 # generate config
 case "${themeSelect}" in
-2) # adapt to style 2
+2)
+    # adapt to style 2
     elm_width=$(( (20 + 12) * rofiScale * 2 ))
     max_avail=$(( mon_x_res - (4 * rofiScale) ))
     col_count=$(( max_avail / elm_width ))
     r_override="window{width:100%;background-color:#00000003;} listview{columns:${col_count};} element{border-radius:${elem_border}px;background-color:@main-bg;} element-icon{size:20em;border-radius:${icon_border}px 0px 0px ${icon_border}px;}"
     thmbExtn="quad" ;;
-*) # default to style 1
+*)
+    # default to style 1
     elm_width=$(( (23 + 12 + 1) * rofiScale * 2 ))
     max_avail=$(( mon_x_res - (4 * rofiScale) ))
     col_count=$(( max_avail / elm_width ))

@@ -27,7 +27,7 @@ get_hashmap()
         fi
 
         while read -r hash image ; do
-            wallHash+=("${hash}")
+            wallHash+=("${hash}") 
             wallList+=("${image}")
         done <<< "${hashMap}"
     done
@@ -102,8 +102,10 @@ export enableWallDcol
 
 # hypr vars
 if printenv HYPRLAND_INSTANCE_SIGNATURE &> /dev/null; then
-    export hypr_border="$(hyprctl -j getoption decoration:rounding | jq '.int')"
-    export hypr_width="$(hyprctl -j getoption general:border_size | jq '.int')"
+    hypr_border="$(hyprctl -j getoption decoration:rounding | jq '.int')"
+    export hypr_border
+    hypr_width="$(hyprctl -j getoption general:border_size | jq '.int')"
+    export hypr_width
 fi
 
 # extra fns

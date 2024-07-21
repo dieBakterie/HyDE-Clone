@@ -12,14 +12,14 @@ elem_border=$(( hypr_border * 2 ))
 icon_border=$(( elem_border - 3 ))
 r_override="element{border-radius:${elem_border}px;} element-icon{border-radius:${icon_border}px;}"
 
-fn_steam() { 
-# check steam mount paths
-SteamPaths=$(grep '"path"' "$SteamLib" | awk -F '"' '{print $4}')
-ManifestList=$(find "$SteamPaths"/steamapps/ -type f -name "appmanifest_*.acf" 2>/dev/null)
+fn_steam() {
+    # check steam mount paths
+    SteamPaths=$(grep '"path"' "$SteamLib" | awk -F '"' '{print $4}')
+    ManifestList=$(find "$SteamPaths"/steamapps/ -type f -name "appmanifest_*.acf" 2>/dev/null)
 
-# read intalled games
-GameList=$(echo "$ManifestList" | while read acf
-do
+    # read intalled games
+    GameList=$(echo "$ManifestList" | while read acf
+    do
     appid=$(grep '"appid"' "$acf" | cut -d '"' -f 4)
     if [ -f "${SteamThumb}/${appid}"_library_600x900.jpg ] ; then
         game=$(grep '"name"' "$acf" | cut -d '"' -f 4)
@@ -27,43 +27,39 @@ do
     else
         continue
     fi
-done | sort)
+    done | sort)
 
-# launch rofi menu
-RofiSel=$( echo "$GameList" | while read acf
-do
-    appid=$(echo "$acf" | cut -d '|' -f 2)
+    # launch rofi menu
+    RofiSel=$( echo "$GameList" | while read acf
+    do
+        appid=$(echo "$acf" | cut -d '|' -f 2)
     game=$(echo "$acf" | cut -d '|' -f 1)
     echo -en "$game\x00icon\x1f${SteamThumb}/${appid}_library_600x900.jpg\n"
-done | rofi -dmenu -theme-str "${r_override}" -config "$RofiConf")
+    done | rofi -dmenu -theme-str "${r_override}" -config "$RofiConf")
 
-# launch game
-if [ -n "$RofiSel" ] ; then
-    launchid=$(echo "$GameList" | grep "$RofiSel" | cut -d '|' -f 2)
-    ${steamlaunch} -applaunch "${launchid} [gamemoderun %command%]" &
-    # dunstify "t1" -a "Launching ${RofiSel}..." -i ${SteamThumb}/${launchid}_header.jpg -r 91190 -t 2200
-    notify-send -a "t1" -i "${SteamThumb}/${launchid}_header.jpg" "Launching ${RofiSel}..."
-
-fi
+    # launch game
+    if [ -n "$RofiSel" ] ; then
+        launchid=$(echo "$GameList" | grep "$RofiSel" | cut -d '|' -f 2)
+        ${steamlaunch} -applaunch "${launchid} [gamemoderun %command%]" &
+        notify-send -a "t1" -i "${SteamThumb}/${launchid}_header.jpg" "Launching ${RofiSel}..."
+    fi
 }
 
 fn_lutris() {
-[ ! -e "${icon_path}" ] && icon_path="${HOME}/.local/share/lutris/coverart"
-[ ! -e "${icon_path}" ] && icon_path="${HOME}/.cache/lutris/coverart"
-meta_data="/tmp/hyde-$(id -u)-lutrisgames.json"
+    [ ! -e "${icon_path}" ] && icon_path="${HOME}/.local/share/lutris/coverart"
+    [ ! -e "${icon_path}" ] && icon_path="${HOME}/.cache/lutris/coverart"
+    meta_data="/tmp/hyde-$(id -u)-lutrisgames.json"
 
-# retrieve the list of games from Lutris in JSON format
-if [ ! -s "${meta_data}" ] || [ $(find "$icon_path" -type f -mmin -120 | wc -l) -eq 0 ]; then
+    # retrieve the list of games from Lutris in JSON format
+    if [ ! -s "${meta_data}" ] || [ "$(find "$icon_path" -type f -mmin -120 | wc -l)" -eq 0 ]; then
     notify-send -a "t1" "Please wait... " -t 4000
-
     eval "${run_lutris}" -j -l 2> /dev/null| jq --arg icons "$icon_path/" --arg prefix ".jpg" '.[] |= . + {"select": (.name + "\u0000icon\u001f" + $icons + .slug + $prefix)}' > "${meta_data}"
-
     [ ! -s "${meta_data}" ] && notify-send -a "t1" "Cannot Fetch Lutris Games!" && exit 1
-fi
+    fi
 
-CHOICE=$(jq -r '.[].select' "${meta_data}" | rofi -dmenu -p Lutris  -theme-str "${r_override}" -config "${RofiConf}" )
-[ -z "$CHOICE" ] && exit 0
-	SLUG=$(jq -r --arg choice "$CHOICE" '.[] | select(.name == $choice).slug' "${meta_data}"  )
+	CHOICE=$(jq -r '.[].select' "${meta_data}" | rofi -dmenu -p Lutris  -theme-str "${r_override}" -config "${RofiConf}" )
+    [ -z "$CHOICE" ] && exit 0
+    SLUG=$(jq -r --arg choice "$CHOICE" '.[] | select(.name == $choice).slug' "${meta_data}"  )
     notify-send -a "t1" -i "${icon_path}/${SLUG}.jpg" "Launching ${CHOICE}..."
 	exec xdg-open "lutris:rungame/${SLUG}"
 }

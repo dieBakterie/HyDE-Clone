@@ -127,13 +127,13 @@ get_battery_info() {
         total_percentage=$((total_percentage + battery_percentage))
         battery_count=$((battery_count + 1))
     done
-    battery_percentage=$((total_percentage / battery_count)) #? For Multiple Battery
+    battery_percentage=$((total_percentage / battery_count)) #? for Multiple Battery
 }
 
 # handle when status changes
 fn_status_change() {
     get_battery_info
-    #! Add these two lines at the beginning of the function
+    #! add these two lines at the beginning of the function
     local executed_low=false
     local executed_unplug=false
 

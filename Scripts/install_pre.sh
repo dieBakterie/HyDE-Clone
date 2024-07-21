@@ -60,9 +60,9 @@ if pkg_installed systemd && nvidia_detect && [ $(bootctl status 2> /dev/null | a
     if [ $(ls -l /boot/loader/entries/*.conf.t2.bkp 2> /dev/null | wc -l) -ne $(ls -l /boot/loader/entries/*.conf 2> /dev/null | wc -l) ]; then
         echo "nvidia detected, adding nvidia_drm.modeset=1 to boot option..."
         find /boot/loader/entries/ -type f -name "*.conf" | while read imgconf; do
-            sudo cp ${imgconf} ${imgconf}.t2.bkp
-            sdopt=$(grep -w "^options" ${imgconf} | sed 's/\b quiet\b//g' | sed 's/\b splash\b//g' | sed 's/\b nvidia_drm.modeset=.\b//g')
-            sudo sed -i "/^options/c${sdopt} quiet splash nvidia_drm.modeset=1" ${imgconf}
+            sudo cp "${imgconf}" "${imgconf}.t2.bkp"
+            sdopt=$(grep -w "^options" "${imgconf}" | sed 's/\b quiet\b//g' | sed 's/\b splash\b//g' | sed 's/\b nvidia_drm.modeset=.\b//g')
+            sudo sed -i "/^options/c${sdopt} quiet splash nvidia_drm.modeset=1" "${imgconf}"
         done
     else
         echo -e "\033[0;33m[SKIP]\033[0m systemd-boot is already configured..."

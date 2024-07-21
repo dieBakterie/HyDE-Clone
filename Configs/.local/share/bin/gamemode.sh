@@ -7,7 +7,7 @@ source "${scrDir}/globalcontrol.sh"
 # hyprland gamemode
 HYPRGAMEMODE=$(hyprctl getoption animations:enabled | sed -n '1p' | awk '{print $2}')
 
-# Waybar performance
+# waybar performance
 FILE="${confDir}/waybar/style.css"
 
 sed -i 's/\/\* \(.*animation:.*\) \*\//\1/g' "$FILE"

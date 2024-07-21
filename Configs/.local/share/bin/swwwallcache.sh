@@ -52,25 +52,29 @@ export -f fn_wallcache_force
 # evaluate options
 while getopts "w:t:f" option ; do
     case $option in
-    w ) # generate cache for input wallpaper
+    w )
+        # generate cache for input wallpaper
         if [ -z "${OPTARG}" ] || [ ! -f "${OPTARG}" ] ; then
             echo "Error: Input wallpaper \"${OPTARG}\" not found!"
             exit 1
         fi
         cacheIn="${OPTARG}"
         ;;
-    t ) # generate cache for input theme
+    t )
+        # generate cache for input theme
         cacheIn="$(dirname "${hydeThemeDir}")/${OPTARG}"
         if [ ! -d "${cacheIn}" ] ; then
             echo "Error: Input theme \"${OPTARG}\" not found!"
             exit 1
         fi
         ;;
-    f ) # full cache rebuild
+    f )
+        # full cache rebuild
         cacheIn="$(dirname "${hydeThemeDir}")"
         mode="_force"
         ;;
-    * ) # invalid option
+    * )
+        # invalid option
         echo "... invalid option ..."
         echo "$(basename "${0}") -[option]"
         echo "w : generate cache for input wallpaper"

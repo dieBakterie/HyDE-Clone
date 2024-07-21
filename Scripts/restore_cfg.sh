@@ -29,7 +29,7 @@ else
     mkdir -p "${BkpDir}"
 fi
 
-cat "${CfgLst}" | while read lst; do
+cat <"${CfgLst}" | while read lst; do
 
     ovrWrte=$(echo "${lst}" | awk -F '|' '{print $1}')
     bkpFlag=$(echo "${lst}" | awk -F '|' '{print $2}')

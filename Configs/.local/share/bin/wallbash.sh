@@ -133,7 +133,7 @@ if [ "${sortMode}" == "auto" ] ; then
 fi
 
 echo "dcol_mode=\"${sortMode}\"" >> "${wallbashOut}"
-dcolHex=($(echo  -e "${dcolRaw[@]:0:$wallbashColors}" | tr ' ' '\n' | awk -F ',' '{print $2}' | sort ${colSort}))
+dcolHex=($(echo -e "${dcolRaw[@]:0:$wallbashColors}" | tr ' ' '\n' | awk -F ',' '{print $2}' | sort ${colSort}))
 greyCheck=$(convert "${wallbashRaw}" -colorspace HSL -channel g -separate +channel -format "%[fx:mean]" info:)
 
 if (( $(awk 'BEGIN {print ('"$greyCheck"' < 0.12)}') )); then
@@ -141,7 +141,7 @@ if (( $(awk 'BEGIN {print ('"$greyCheck"' < 0.12)}') )); then
 fi
 
 # loop for derived colors
-for (( i=0; i<${wallbashColors}; i++ )) ; do
+for (( i=0; i<wallbashColors; i++ )) ; do
 
     # generate missing primary colors
 
@@ -166,7 +166,7 @@ for (( i=0; i<${wallbashColors}; i++ )) ; do
     echo "dcol_pry$((i + 1))_rgba=\"$( rgba_convert "${dcolHex[i]}" )\"" >> "${wallbashOut}"
 
     # generate primary text colors
-    nTxt=$(rgb_negative ${dcolHex[i]})
+    nTxt=$(rgb_negative "${dcolHex[i]}")
 
     if fx_brightness "xc:#${dcolHex[i]}" ; then
         modBri=$txtDarkBri
@@ -182,7 +182,7 @@ for (( i=0; i<${wallbashColors}; i++ )) ; do
     xHue=$(magick xc:"#${dcolHex[i]}" -colorspace HSB -format "%c" histogram:info: | awk -F '[hsb(,]' '{print $2}')
     acnt=1
 
-    echo -e "${wallbashCurve}" | sort -n ${colSort} | while read -r xBri xSat
+    echo -e "${wallbashCurve}" | sort -n "${colSort}" | while read -r xBri xSat
     do
         acol=$(magick xc:"hsb(${xHue},${xSat}%,${xBri}%)" -depth 8 -format "%c" histogram:info: | sed -n 's/^[ ]*\(.*\):.*[#]\([0-9a-fA-F]*\) .*$/\2/p')
         echo "dcol_$((i + 1))xa${acnt}=\"${acol}\"" >> "${wallbashOut}"

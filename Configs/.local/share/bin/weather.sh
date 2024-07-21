@@ -6,8 +6,6 @@
 scrDir="$(dirname "$(realpath "$0")")"
 source "$scrDir/globalcontrol.sh"
 
-# define functions
-
 cache_file="${cacheDir}/wttr_cache.txt"
 
 if [ ! -d "$(dirname "${cacheDir}")" ]; then

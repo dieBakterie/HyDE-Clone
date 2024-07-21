@@ -35,7 +35,7 @@ mkdir -p "$swpy_dir"
 echo -e "[Default]\nsave_dir=$save_dir\nsave_filename_format=$save_file" >"$swpy_dir/config"
 
 print_error() {
-	cat <<"EOF"
+	cat <<EOF
     ./screenshot.sh <action>
     ...valid actions are...
         p  : print all screens

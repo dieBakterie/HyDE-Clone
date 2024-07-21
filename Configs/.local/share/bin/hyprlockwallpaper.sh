@@ -84,19 +84,23 @@ get_hashmap "${wallPathArray[@]}"
 # evaluate options
 while getopts "nps:" option ; do
     case $option in
-    n ) # set next wallpaper
+    n )
+        # set next wallpaper
         Wall_Change n
         ;;
-    p ) # set previous wallpaper
+    p )
+        # set previous wallpaper
         Wall_Change p
         ;;
-    s ) # set input wallpaper
+    s )
+        # set input wallpaper
         if [ -n "${OPTARG}" ] && [ -f "${OPTARG}" ] ; then
             get_hashmap "${OPTARG}"
         fi
         Wall_Cache
         ;;
-    * ) # invalid option
+    * )
+        # invalid option
         echo "... invalid option ..."
         echo "$(basename "${0}") -[option]"
         echo "n : set next wall"

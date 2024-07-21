@@ -11,7 +11,7 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-cat "${scrDir}/restore_fnt.lst" | while read lst; do
+cat <"${scrDir}/restore_fnt.lst" | while read lst; do
 
     fnt=$(echo "$lst" | awk -F '|' '{print $1}')
     tgt=$(echo "$lst" | awk -F '|' '{print $2}')
