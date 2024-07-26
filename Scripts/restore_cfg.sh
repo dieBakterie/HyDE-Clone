@@ -78,6 +78,7 @@ done
 
 if [ -z "${ThemeOverride}" ]; then
     if nvidia_detect && [ "$(grep -c '^# █▄ █ █ █ █ █▀▄ █ ▄▀█' "${HOME}/.config/hypr/configs/environments.conf")" -eq 0 ]; then
-        cat "${CfgDir}/.config/hypr/nvidia.conf" >>"${HOME}/.config/hypr/configs/environments.conf"
+        sed '$ {/^$/d;}' "${CfgDir}/.config/hypr/nvidia.conf" >> "${HOME}/.config/hypr/configs/environments.conf"
+        # cat "${CfgDir}/.config/hypr/nvidia.conf" >>"${HOME}/.config/hypr/configs/environments.conf"
     fi
 fi

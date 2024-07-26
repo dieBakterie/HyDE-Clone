@@ -153,7 +153,7 @@ EOF
                 	sed -i "s|^\(exec-once = \)[^ ]*\( #.*\)|\1${myNotdMd} # start ${myNotd} notification daemon|" "$file"
             	else
                 	# Add new exec-once line
-                	echo -e "\nexec-once = ${myNotdMd} # start ${myNotd} notification daemon" >> "$file"
+                	echo -en "\nexec-once = ${myNotdMd} # start ${myNotd} notification daemon" >> "$file"
             	fi
         	fi
     	}
@@ -255,7 +255,7 @@ EOF
                     	sed -i "s|^\(exec-once = \)[^ ]*\( #.*\)|\1${myIdleMd} # start ${myIdle} idle manager|" "$file"
                 	else
                     	# Add new exec-once line
-                    	echo -e "\nexec-once = ${myIdleMd} # start ${myIdle} idle manager" >> "$file"
+                    	echo -en "\nexec-once = ${myIdleMd} # start ${myIdle} idle manager" >> "$file"
                 	fi
             	fi
         	}
@@ -296,7 +296,7 @@ EOF
 
             	if [[ -z "$shader_line" ]]; then
                 	# Add new shader line if # Night Light section not found
-                	echo -e "\n\n# Night Light\nexec-once = ${myShader} auto # start ${myShader} shader" >> "$file"
+                	echo -en "\n\n# Night Light\nexec-once = ${myShader} auto # start ${myShader} shader" >> "$file"
             	elif [[ "$current_shader" != "$myShader" ]]; then
                 	# Update existing shader line
                 	sed -i "s|^\(exec-once = \)[^ ]*\( auto # start [^ ]* shader\)|\1${myShader} auto # start ${myShader} shader|" "$file"
@@ -306,7 +306,7 @@ EOF
         	update_keybindings() {
             	local file=$1
             	if ! grep -q "# Night light" "$file"; then
-                	echo -e "\n\n# Night light\nbindd = Ctrl , P, Enable Vibrance Hyprshade Shader, exec, hyprshade on vibrance\nbindd = Ctrl, L, Enable blue light filter, exec, hyprshade on blue-light-filter" >> "$file"
+                	echo -en "\n\n# Night light\nbindd = Ctrl , P, Enable Vibrance Hyprshade Shader, exec, hyprshade on vibrance\nbindd = Ctrl, L, Enable blue light filter, exec, hyprshade on blue-light-filter" >> "$file"
             	fi
         	}
 
