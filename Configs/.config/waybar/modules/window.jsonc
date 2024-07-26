@@ -7,14 +7,18 @@
             "${USER}@${set_sysname}:(.*)": "$1 ",
             "(.*)GitHub": "$1 ", // GitHub custom icon
             "(.*)GitLab": "$1 ", // GitLab custom icon
+            "(.*)Bitbucket": "$1 ", // Bitbucket custom icon
+            "(.*)Discord": "$1  ", // Discord custom icon
+            "(.*)Vesktop": "$1  ", // Vesktop custom icon
+            "(.*)Vencord": "$1  ", // Vencord custom icon
             "(.*)YouTube(.*)": "$1YouTube ", // YouTube custom icon
             "(.*) - YouTube(.*)": "$1 ", // YouTube Music custom icon
             "(.*)Mozilla Firefox": "$1 󰈹", // Firefox icon for other sites
-            // "(.*) – Mozilla Firefox": "$1 󰈹",
+            // "(.*) – Mozilla Firefox": "$1 󰈹", // Firefox icon
             "(.*) - Visual Studio Code": "$1 󰨞", // Visual Studio Code icon
-            "(.*)Visual Studio Code": "$1 󰨞",
+            "(.*)Visual Studio Code": "$1 󰨞", // Visual Studio Code icon
             "(.*) - Code - OSS": "$1 󰨞", // Visual Studio Code icon
-            "(.*)Code - OSS": "Code 󰨞",
+            "(.*)Code - OSS": "Code 󰨞", // Visual Studio Code icon
             "(.*) — Dolphin": "$1 󰉋", // Dolphin file manager icon
             "(.*)Datei hochladen": "$1 Datei hochladen 󰉋", // File manager icon
             "(.*)Spotify": "$1 󰓇", // Spotify icon
