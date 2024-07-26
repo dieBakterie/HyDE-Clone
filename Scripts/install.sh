@@ -123,56 +123,87 @@ EOF
         esac
     fi
 
-    if ! chk_list "myLock" "${lckList[@]}"; then
-        echo -e "Select lock screen:\n[1] swaylock-effects-git\n[2] hyprlock\n[3] hyprlock-git"
-        prompt_timer 120 "Enter option number"
+	if ! chk_list "myNotd" "${ntdList[@]}"; then
+    	echo -e "Select Notification Daemon or Center:\n[1] dunst\n[2] dunst-git\n[3] swaync\n[4] swaync-git"
+    	prompt_timer 120 "Enter option number"
 
-        case "${promptIn}" in
-            1) export myLock="swaylock-effects-git" ;;
-            2) export myLock="hyprlock" ;;
-            3) export myLock="hyprlock-git" ;;
-            *) echo -e "...Invalid option selected..." ; exit 1 ;;
-        esac
-        echo -e "\n\033[0;32m[userprefs]\033[0m Lockscreen: ${myLock}"
-        echo "${myLock}" >> "${scrDir}/install_pkg.lst"
-        myLock=$(echo "${myLock}" | sed -E 's/-.*$//')
-        sed -i "s/^\(\$lockScreen = \).*/\1$myLock/" "${cloneDir}/Configs/.config/hypr/hyprland.conf"
-        sed -i "s/^\(\$lockScreen = \).*/\1$myLock/" "${cloneDir}/Configs/.config/hypr/hypridle.conf"
-    fi
+    	case "${promptIn}" in
+        	1) export myNotd="dunst" ;;
+        	2) export myNotd="dunst-git" ;;
+        	3) export myNotd="swaync" ;;
+        	4) export myNotd="swaync-git" ;;
+        	*) echo -e "...Invalid option selected..." ; exit 1 ;;
+    	esac
+    	echo -e "\n\033[0;32m[userprefs]\033[0m Notification Center or daemon: ${myNotd}"
+    	echo "${myNotd}" >> "${scrDir}/install_pkg.lst"
 
-    if ! chk_list "myIdle" "${idlList[@]}"; then
-        echo -e "Select idle manager:\n[1] swayidle\n[2] hypridle\n[3] hypridle-git\n[4] none"
-        prompt_timer 120 "Enter option number"
+    	# remove -git from myNotd for exec-once command
+    	myNotdMd="${myNotd}"
+    	if [[ "${myNotd}" == *"-git" ]]; then
+        	myNotdMd=$(echo "${myNotd}" | sed -E 's/-git$//')
+    	fi
 
-        case "${promptIn}" in
-            1) export myIdle="swayidle" ;;
-            2) export myIdle="hypridle" ;;
-            3) export myIdle="hypridle-git" ;;
-            4) export myIdle="" ;;
-            *) echo -e "...Invalid option selected..." ; exit 1 ;;
-        esac
-        echo -e "\n\033[0;32m[userprefs]\033[0m Idle manager: ${myIdle}"
-        echo "${myIdle}" >> "${scrDir}/install_pkg.lst"
-        myIdle=$(echo "${myIdle}" | sed -E 's/-.*$//')
-        sed -i "s/^\(\$idleManager = \).*/\1$myIdle/" "${cloneDir}/Configs/.config/hypr/configs/launchs.conf"
-    fi
+    	update_exec_once() {
+        	local file=$1
+        	local current_notd; current_notd=$(grep -E '^exec-once = [^ ]+' "$file" | awk -F ' = ' '{print $2}' | awk '{print $1}')
 
-    if ! chk_list "myNotd" "${ntdList[@]}"; then
-        echo -e "Select Notification Daemon or Center:\n[1] dunst\n[2] dunst-git\n[3] swaync\n[4] swaync-git"
-        prompt_timer 120 "Enter option number"
+        	if [[ "$current_notd" != "$myNotdMd" ]]; then
+            	if grep -q -E "^exec-once = [^ ]+ #" "$file"; then
+                	# Update existing exec-once line
+                	sed -i "s|^\(exec-once = \)[^ ]*\( #.*\)|\1${myNotdMd} # start ${myNotd} notification daemon|" "$file"
+            	else
+                	# Add new exec-once line
+                	echo -e "\nexec-once = ${myNotdMd} # start ${myNotd} notification daemon" >> "$file"
+            	fi
+        	fi
+    	}
 
-        case "${promptIn}" in
-            1) export myNotd="dunst" ;;
-            2) export myNotd="dunst-git" ;;
-            3) export myNotd="swaync" ;;
-            4) export myNotd="swaync-git" ;;
-            *) echo -e "...Invalid option selected..." ; exit 1 ;;
-        esac
-        echo -e "\n\033[0;32m[userfprefs]\033[0m Notification Daemon or Center: ${myNotd}"
-        echo "${myNotd}" >> "${scrDir}/install_pkg.lst"
-        myNotd=$(echo "${myNotd}" | sed -E 's/-.*$//')
-        sed -i "s/^\(\$notificationDaemon = \).*/\1$myNotd/" "${cloneDir}/Configs/.config/hypr/configs/launchs.conf"
-    fi
+    	# Update or add exec-once line in the configuration file
+    	update_exec_once "${cloneDir}/Configs/.config/hypr/launchs.conf"
+	fi
+
+	if ! chk_list "myLock" "${lckList[@]}"; then
+    	echo -e "Select lock screen:\n[1] swaylock-effects-git\n[2] hyprlock\n[3] hyprlock-git"
+    	prompt_timer 120 "Enter option number"
+
+    	case "${promptIn}" in
+        	1) export myLock="swaylock-effects-git" ;;
+        	2) export myLock="hyprlock" ;;
+        	3) export myLock="hyprlock-git" ;;
+        	*) echo -e "...Invalid option selected..." ; exit 1 ;;
+    	esac
+    	echo -e "\n\033[0;32m[userprefs]\033[0m Lockscreen: ${myLock}"
+    	echo "${myLock}" >> "${scrDir}/install_pkg.lst"
+
+    	# remove -git or -effects-git from myLock
+    	myLockMd="${myLock}"
+    	if [[ "${myLock}" == *"-git" || "${myLock}" == *"-effects-git" ]]; then
+        	myLockMd=$(echo "${myLock}" | sed -E 's/-.*$//')
+    	fi
+
+    	# Function to update the lock screen in a file if they do not match
+    	update_lock_screen() {
+        	local file=$1
+        	local current_value
+        	# shellcheck disable=SC2016
+        	current_value=$(grep '^\$lockScreen =' "$file" | awk -F ' = ' '{print $2}' | awk '{print $1}')
+        	if [ "$current_value" != "$myLockMd" ]; then
+            	sed -i "s/^\(\$lockScreen = \)[^ ]*\( # set lock screen to \)[^ ]*/\1${myLockMd} \2${myLock}/" "$file"
+        	fi
+    	}
+
+    	# Get the current lock screen value from the files
+    	# shellcheck disable=SC2016
+    	current_lock_hyprland=$(grep '^\$lockScreen =' "${cloneDir}/Configs/.config/hypr/hyprland.conf" | awk -F ' = ' '{print $2}' | awk '{print $1}')
+    	# shellcheck disable=SC2016
+    	current_lock_hypridle=$(grep '^\$lockScreen =' "${cloneDir}/Configs/.config/hypr/hypridle.conf" | awk -F ' = ' '{print $2}' | awk '{print $1}')
+
+    	# Only update if the current value is different from the new value
+    	if [[ "${current_lock_hyprland}" != "${myLockMd}" ]] || [[ "${current_lock_hypridle}" != "${myLockMd}" ]]; then
+        	update_lock_screen "${cloneDir}/Configs/.config/hypr/hyprland.conf"
+        	update_lock_screen "${cloneDir}/Configs/.config/hypr/hypridle.conf"
+    	fi
+	fi
 
     if ! chk_list "myShell" "${shlList[@]}"; then
         echo -e "Select shell:\n[1] zsh\n[2] fish"
@@ -186,6 +217,108 @@ EOF
         echo -e "\n\033[0;32m[userprefs]\033[0m Shell: ${myShell}"
         echo "${myShell}" >> "${scrDir}/install_pkg.lst"
     fi
+
+	if ! chk_list "myIdle" "${idlList[@]}"; then
+    	echo -e "Select idle manager:\n[1] swayidle\n[2] swayidle-git\n[3] hypridle\n[4] hypridle-git\n[5] No Idle Manager"
+    	prompt_timer 120 "Enter option number"
+
+    	case "${promptIn}" in
+        	1) export myIdle="swayidle" ;;
+        	2) export myIdle="swayidle-git" ;;
+        	3) export myIdle="hypridle" ;;
+        	4) export myIdle="hypridle-git" ;;
+        	5) export myIdle="" ;;
+        	*) echo -e "...Invalid option selected..." ; exit 1 ;;
+    	esac
+
+    	# skip if user selects "" as idle manager
+    	if [ "${myIdle}" == "" ]; then
+        	echo -e "\n\033[0;32m[userprefs]\033[0m Idle Manager: No Idle Manager selected, skipping!" ; exit 1
+    	else
+        	echo -e "\n\033[0;32m[userprefs]\033[0m Idle Manager: ${myIdle}"
+        	echo "${myIdle}" >> "${scrDir}/install_pkg.lst"
+
+        	# remove -git from myIdle for exec-once command
+        	myIdleMd="${myIdle}"
+        	if [[ "${myIdle}" == *"-git" ]]; then
+            	myIdleMd=$(echo "${myIdle}" | sed -E 's/-git$//')
+        	fi
+
+        	update_exec_once() {
+            	local file=$1
+            	local current_idle
+            	current_idle=$(grep -E '^exec-once = [^ ]+' "$file" | awk -F ' = ' '{print $2}' | awk '{print $1}')
+
+            	if [[ "$current_idle" != "$myIdleMd" ]]; then
+                	if grep -q -E "^exec-once = [^ ]+ #" "$file"; then
+                    	# Update existing exec-once line
+                    	sed -i "s|^\(exec-once = \)[^ ]*\( #.*\)|\1${myIdleMd} # start ${myIdle} idle manager|" "$file"
+                	else
+                    	# Add new exec-once line
+                    	echo -e "\nexec-once = ${myIdleMd} # start ${myIdle} idle manager" >> "$file"
+                	fi
+            	fi
+        	}
+
+        	# Update or add exec-once line in the configuration file
+        	update_exec_once "${cloneDir}/Configs/.config/hypr/launchs.conf"
+    	fi
+	fi
+
+	if ! chk_list "myShader" "${shdList[@]}"; then
+    	echo -e "Select shader:\n[1] hyprshade\n[2] hyprshade-git\n[3] wl-gammarelay-rs\n[4] No Shader"
+    	prompt_timer 120 "Enter option number"
+
+    	case "${promptIn}" in
+	        1) export myShader="hyprshade" ;;
+    	    2) export myShader="hyprshade-git" ;;
+        	3) export myShader="wl-gammarelay-rs" ;;
+        	4) export myShader="" ;;
+        	*) echo -e "...Invalid option selected..." ; exit 1 ;;
+    	esac
+
+    	# skip if user selects "" as shader
+    	if [ "${myShader}" == "" ]; then
+	        echo -e "\n\033[0;32m[userprefs]\033[0m Shader: No Shader selected, skipping!" ; exit 1
+	    else
+    	    echo -e "\n\033[0;32m[userprefs]\033[0m Shader: ${myShader}"
+	        echo "${myShader}" >> "${scrDir}/install_pkg.lst"
+
+        	# remove -git from myShader for exec-once command
+	        if [[ "${myShader}" == *"-git" ]]; then
+            	myShader=$(echo "${myShader}" | sed -E 's/-git$//')
+        	fi
+
+        	update_shader_config() {
+            	local file=$1
+            	local shader_line; shader_line=$(grep -E 'exec-once = [^ ]+ auto # start [^ ]+ shader' "$file")
+            	local current_shader; current_shader=$(echo "$shader_line" | awk '{print $3}')
+
+            	if [[ -z "$shader_line" ]]; then
+                	# Add new shader line if # Night Light section not found
+                	echo -e "\n\n# Night Light\nexec-once = ${myShader} auto # start ${myShader} shader" >> "$file"
+            	elif [[ "$current_shader" != "$myShader" ]]; then
+                	# Update existing shader line
+                	sed -i "s|^\(exec-once = \)[^ ]*\( auto # start [^ ]* shader\)|\1${myShader} auto # start ${myShader} shader|" "$file"
+            	fi
+       		}
+
+        	update_keybindings() {
+            	local file=$1
+            	if ! grep -q "# Night light" "$file"; then
+                	echo -e "\n\n# Night light\nbindd = Ctrl , P, Enable Vibrance Hyprshade Shader, exec, hyprshade on vibrance\nbindd = Ctrl, L, Enable blue light filter, exec, hyprshade on blue-light-filter" >> "$file"
+            	fi
+        	}
+
+        	# Update or add shader config in the configuration file
+        	update_shader_config "${cloneDir}/Configs/.config/hypr/configs/launchs.conf"
+
+        	# Update keybindings if hyprshade is selected
+        	if [[ "${myShader}" == "hyprshade" ]]; then
+            	update_keybindings "${cloneDir}/Configs/.config/hypr/configs/keybindings.conf"
+        	fi
+    	fi
+	fi
 
     #--------------------------------#
     # install packages from the list #

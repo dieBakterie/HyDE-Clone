@@ -11,10 +11,11 @@ cloneDir="$(dirname "${scrDir}")"
 confDir="${XDG_CONFIG_HOME:-$HOME/.config}"
 cacheDir="$HOME/.cache/hyde"
 aurList=(yay paru)
-shlList=(zsh fish)
-lckList=(swaylock-effects-git hyprlock hyprlock-git)
 ntdList=(dunst dunst-git swaync swaync-git)
-idlList=(swayidle hypridle hypridle-git)
+lckList=(swaylock-effects-git hyprlock hyprlock-git)
+shlList=(zsh fish)
+idlList=(swayidle swayidle-git hypridle hypridle-git)
+shdList=(hyprshade hyprshade-git wl-gammarelay-rs)
 
 pkg_installed() {
     local PkgIn=$1
