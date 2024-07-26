@@ -10,11 +10,6 @@ find . \( -name "*.sh" -o -name "*.zsh" -o -name "*.zshrc" -o -name "*.py" -o -n
         chmod +x "$file"
     fi
 
-    # Wenn die Datei keine .json oder .jsonc Datei ist, entferne alle letzten leeren Zeilen
-    if [[ "${file##*.}" != "json" && "${file##*.}" != "jsonc" ]]; then
-        sed -i ':a;N;$!ba;s/\n*$//' "$file"
-    fi
-
     echo "Bearbeitet: $file"
 done
 
