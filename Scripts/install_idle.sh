@@ -20,10 +20,10 @@ esac
 
 # skip if user selects "" as idle manager
 if [ "${myIdle}" == "" ]; then
-    echo -e "\n\033[0;32m[userprefs]\033[0m Idle Manager: No Idle Manager selected, skipping!"
-    exit 1
+    echo -e "\n\033[0;32m[SKIP]\033[0m Idle Manager: No Idle Manager selected, skipping!"
+    exit 0
 else
-    echo -e "\n\033[0;32m[userprefs]\033[0m Idle Manager: ${myIdle}"
+    echo -e "\n\033[0;32m[IDLEMANAGER]\033[0m Idle Manager: ${myIdle}"
     echo "${myIdle}" >>"${scrDir}/install_pkg.lst"
 
     # remove -git from myIdle for exec-once command

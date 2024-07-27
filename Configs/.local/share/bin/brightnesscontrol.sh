@@ -8,7 +8,7 @@ source "$scrDir/globalcontrol.sh"
 # define functions
 
 print_error() {
-cat << "EOF"
+    cat <<"EOF"
     ./brightnesscontrol.sh <action>
     ...valid actions are...
         i -- <i>ncrease brightness [+5%]
@@ -30,22 +30,23 @@ get_brightness() {
 }
 
 case $1 in
-i) 
+i)
     # increase the backlight
-    if [[ $(get_brightness) -lt 10 ]] ; then
+    if [[ $(get_brightness) -lt 10 ]]; then
         # increase the backlight by 1% if less than 10%
         brightnessctl set +1%
     else
         # increase the backlight by 5% otherwise
         brightnessctl set +5%
     fi
-    send_notification ;;
+    send_notification
+    ;;
 d)
     # decrease the backlight
-    if [[ $(get_brightness) -le 1 ]] ; then
+    if [[ $(get_brightness) -le 1 ]]; then
         # avoid 0% brightness
         brightnessctl set 1%
-    elif [[ $(get_brightness) -le 10 ]] ; then
+    elif [[ $(get_brightness) -le 10 ]]; then
         # decrease the backlight by 1% if less than 10%
         brightnessctl set 1%-
     else

@@ -70,5 +70,13 @@ Y|Y|${HOME}/.local/share|dolphin|dolphin
 Y|Y|${HOME}/.local/share/kxmlgui5|dolphin|dolphin
 Y|Y|${HOME}/.local/share/kio/servicemenus|hydewallpaper.desktop|dolphin
 Y|Y|${HOME}/.config|libinput-gestures.conf|libinput-gestures
-Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways|discord.dcol|hyprland armcord discord vencord vesktop webcord
-Y|Y|${HOME}/.local/share/bin|wallbashdiscord.sh|hyprland armcord discord vencord vesktop webcord
+Y|Y|${HOME}/.local/share/bin|wallbashdiscord.sh|hyprland armcord
+Y|Y|${HOME}/.local/share/bin|wallbashdiscord.sh|hyprland discord
+Y|Y|${HOME}/.local/share/bin|wallbashdiscord.sh|hyprland vencord
+Y|Y|${HOME}/.local/share/bin|wallbashdiscord.sh|hyprland vesktop
+Y|Y|${HOME}/.local/share/bin|wallbashdiscord.sh|hyprland webcord
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways|discord.dcol|hyprland armcord
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways|discord.dcol|hyprland discord
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways|discord.dcol|hyprland vencord
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways|discord.dcol|hyprland vesktop
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways|discord.dcol|hyprland webcord
