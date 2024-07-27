@@ -12,8 +12,8 @@ inputFile="${CfgDir}/.config/hypr/nvidia.conf"
 outputFile="${CfgDir}/.config/hypr/configs/environments.conf"
 
 if [ "$(grep -c '^# █▄ █ █ █ █ █▀▄ █ ▄▀█' "${HOME}/.config/hypr/configs/environments.conf")" -eq 0 ]; then
-# Entfernt die letzte leere Zeile aus der Eingabedatei und hängt den Inhalt an die Ausgabedatei an
-sed '$ {/^$/d;}' "$inputFile" >> "$outputFile"
+    # Entfernt die letzte leere Zeile aus der Eingabedatei und hängt den Inhalt an die Ausgabedatei an
+    sed '$ {/^$/d;}' "$inputFile" >>"$outputFile"
 
-echo "Fertig! Inhalt von nvidia.conf wurde ohne zusätzliche leere Zeile zu environments.conf hinzugefügt."
+    echo "Fertig! Inhalt von nvidia.conf wurde ohne zusätzliche leere Zeile zu environments.conf hinzugefügt."
 fi

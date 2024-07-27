@@ -26,7 +26,7 @@ if pkg_installed firefox; then
     FoxRel=$(find ~/.mozilla/firefox -maxdepth 1 -type d -name "*.default-release" | head -1)
 
     if [ -z "${FoxRel}" ]; then
-        firefox &> /dev/null &
+        firefox &>/dev/null &
         sleep 1
         FoxRel=$(find ~/.mozilla/firefox -maxdepth 1 -type d -name "*.default-release" | head -1)
     else

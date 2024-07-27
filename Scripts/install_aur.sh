@@ -23,7 +23,7 @@ if [ -d "$HOME/Clone" ]; then
     rm -rf "$HOME/Clone/${aurhlpr}"
 else
     mkdir "$HOME/Clone"
-    echo -e "[Desktop Entry]\nIcon=default-folder-git" > "$HOME/Clone/.directory"
+    echo -e "[Desktop Entry]\nIcon=default-folder-git" >"$HOME/Clone/.directory"
     echo "~/Clone directory created..."
 fi
 

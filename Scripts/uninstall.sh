@@ -4,7 +4,7 @@
 #|-/ /--| Prasanth Rangan               |-/ /--|#
 #|/ /---+-------------------------------+/ /---|#
 
-cat << EOF
+cat <<EOF
 
 -------------------------------------------------
         .
@@ -24,7 +24,7 @@ EOF
 read promptIn
 [ "${promptIn}" == "DONT HYDE" ] || exit 0
 
-cat << "EOF"
+cat <<"EOF"
 
          _         _       _ _
  _ _ ___|_|___ ___| |_ ___| | |
@@ -41,7 +41,7 @@ if [ $? -ne 0 ]; then
 fi
 
 CfgLst="${scrDir}/restore_cfg.lst"
-if [ ! -f "${CfgLst}" ] ; then
+if [ ! -f "${CfgLst}" ]; then
     echo "ERROR: '${CfgLst}' does not exist..."
     exit 1
 fi
@@ -49,14 +49,14 @@ fi
 BkpDir="${HOME}/.config/cfg_backups/$(date +'%y%m%d_%Hh%Mm%Ss')_remove"
 mkdir -p "${BkpDir}"
 
-cat <"${CfgLst}" | while read lst ; do
+cat <"${CfgLst}" | while read lst; do
     pth=$(echo "${lst}" | awk -F '|' '{print $3}')
     pth=$(eval echo "${pth}")
     cfg=$(echo "${lst}" | awk -F '|' '{print $4}')
 
     echo "${cfg}" | xargs -n 1 | while read -r cfg_chk; do
         [[ -z "${pth}" ]] && continue
-        if [ -d "${pth}/${cfg_chk}" ] || [ -f "${pth}/${cfg_chk}" ] ; then
+        if [ -d "${pth}/${cfg_chk}" ] || [ -f "${pth}/${cfg_chk}" ]; then
             tgt=$(echo "${pth}" | sed "s+^${HOME}++g")
             if [ ! -d "${BkpDir}${tgt}" ]; then
                 mkdir -p "${BkpDir}${tgt}"

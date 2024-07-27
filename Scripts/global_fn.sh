@@ -20,7 +20,7 @@ shdList=(hyprshade hyprshade-git wl-gammarelay-rs)
 pkg_installed() {
     local PkgIn=$1
 
-    if pacman -Qi "${PkgIn}" &> /dev/null; then
+    if pacman -Qi "${PkgIn}" &>/dev/null; then
         return 0
     else
         return 1
@@ -43,7 +43,7 @@ chk_list() {
 pkg_available() {
     local PkgIn=$1
 
-    if pacman -Si "${PkgIn}" &> /dev/null; then
+    if pacman -Si "${PkgIn}" &>/dev/null; then
         return 0
     else
         return 1
@@ -53,7 +53,7 @@ pkg_available() {
 aur_available() {
     local PkgIn=$1
 
-    if ${aurhlpr} -Si "${PkgIn}" &> /dev/null; then
+    if ${aurhlpr} -Si "${PkgIn}" &>/dev/null; then
         return 0
     else
         return 1
@@ -69,12 +69,12 @@ nvidia_detect() {
         return 0
     fi
     if [ "${1}" == "--drivers" ]; then
-        while read -r -d ' ' nvcode ; do
+        while read -r -d ' ' nvcode; do
             awk -F '|' -v nvc="${nvcode}" 'substr(nvc,1,length($3)) == $3 {split(FILENAME,driver,"/"); print driver[length(driver)],"\nnvidia-utils"}' "${scrDir}"/.nvidia/nvidia*dkms
-        done <<< "${dGPU[@]}"
+        done <<<"${dGPU[@]}"
         return 0
     fi
-    if grep -iq nvidia <<< "${dGPU[@]}"; then
+    if grep -iq nvidia <<<"${dGPU[@]}"; then
         return 0
     else
         return 1

@@ -19,7 +19,7 @@ find "${cloneDir}" -type l | while read slink; do
     ln -fs "$HOME/${fixd_slink}" "$HOME/${linkd_file}"
 done
 
-if printenv HYPRLAND_INSTANCE_SIGNATURE &> /dev/null; then
+if printenv HYPRLAND_INSTANCE_SIGNATURE &>/dev/null; then
     echo "reloading hyprland..."
     hyprctl reload
 fi
