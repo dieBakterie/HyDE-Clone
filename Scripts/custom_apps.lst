@@ -13,28 +13,16 @@ steam                                                  # gaming platform
 gamemode                                               # daemon and library for game optimisations
 mangohud                                               # system performance overlay
 gamescope                                              # micro-compositor for gaming
+vesktop-bin                                            # discord with vencord pre-installed
 
 # --------------------------------------------------- // Music
 # cava                                                 # audio visualizer
-spotify                                                # proprietary music streaming service
-spicetify-cli                                          # cli to customize spotify client
+# spotify                                              # proprietary music streaming service
+# spicetify-cli                                        # cli to customize spotify client
+youtube-music-bin                                      # proprietary music streaming service
 
 # --------------------------------------------------- // Apps
 # neovim                                               # vim based text editor
-
-# --------------------------------------------------- // Silos
-# silos                                                # silos Browser
-# silo-gmail                                           # Gmail App
-# silo-google-calendar                                 # Google Calendar
-# silo-google-maps                                     # Google Maps
-# silo-google-photos                                   # Google Photos
-# silo-gsuite                                          # Google Documents, Drive...
-# silo-netflix                                         # Netflix
-# silo-office365                                       # Office365
-# silo-primevideo                                      # Prime Video
-# silo-teams                                           # Microsoft Teams
-# silo-twitch                                          # Twitch client
-# silo-youtube                                         # YouTube client
 
 # --------------------------------------------------- // Scratchpads
 pyprland                                               # for advanced scratchpads

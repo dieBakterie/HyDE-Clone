@@ -91,7 +91,25 @@ if ! pkg_installed flatpak; then
     else
         echo -e "\033[0;33m[SKIP]\033[0m installing flatpaks..."
     fi
-
 else
     echo -e "\033[0;33m[SKIP]\033[0m flatpak is already installed..."
+
+fi
+
+# silos
+if ! pkg_installed silos; then
+
+    echo -e "\033[0;32m[SILOS]\033[0m silos application list..."
+    awk -F '#' '$1 != "" {print "["++count"]", $1}' "${scrDir}/.extra/custom_silo.lst"
+    prompt_timer 60 "Install these silos? [Y/n]"
+    silopt=${promptIn,,}
+    if [ "${silopt}" = "y" ]; then
+        echo -e "\033[0;32m[SILOS]\033[0m installing silos..."
+        "${scrDir}/.extra/install_silo.sh"
+    else
+        echo -e "\033[0;33m[SKIP]\033[0m installing silos..."
+    fi
+else
+    echo -e "\033[0;33m[SKIP]\033[0m silos is already installed..."
+
 fi
