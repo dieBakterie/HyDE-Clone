@@ -1,12 +1,12 @@
 # --------------------------------------------------- // Silos
-# silo-gmail                                           # Gmail App
-# silo-google-calendar                                 # Google Calendar
-# silo-google-maps                                     # Google Maps
-# silo-google-photos                                   # Google Photos
-# silo-gsuite                                          # Google Documents, Drive...
-# silo-netflix                                         # Netflix
-# silo-office365                                       # Office365
-# silo-primevideo                                      # Prime Video
-# silo-teams                                           # Microsoft Teams
-# silo-twitch                                          # Twitch client
-# silo-youtube                                         # YouTube client
+silo-gmail                                             # Gmail App
+org-google-calendar                                    # Google Calendar
+silo-google-maps                                       # Google Maps
+silo-google-photos                                     # Google Photos
+silo-gsuite                                            # Google Documents, Drive...
+silo-netflix                                           # Netflix
+silo-office365                                         # Office365
+silo-primevideo                                        # Prime Video
+silo-teams                                             # Microsoft Teams
+silo-twitch                                            # Twitch client
+silo-youtube                                           # YouTube client
