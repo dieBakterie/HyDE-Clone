@@ -59,10 +59,10 @@ else
     }
 
     # Update or add shader config in the configuration file
-    update_shader_config "${cloneDir}/Configs/.config/hypr/configs/launchs.conf"
+    update_shader_config "${cloneDir}/Configs/.config/hypr/config/launchs.conf"
 
     # Add keybindings for myShader
     if [[ "${myShader}" == "hyprshade" || "${myShader}" == "wl-gammarelay-rs" ]]; then
-        update_keybindings "${cloneDir}/Configs/.config/hypr/configs/keybindings.conf"
+        update_keybindings "${cloneDir}/Configs/.config/hypr/config/keybindings.conf"
     fi
 fi

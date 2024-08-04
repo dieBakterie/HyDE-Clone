@@ -5,7 +5,7 @@ source "${scrDir}/globalcontrol.sh"
 pkgChk=("io.missioncenter.MissionCenter" "htop" "btop" "top")
 
 for sysMon in "${!pkgChk[@]}"; do
-    [ "${sysMon}" -gt 0 ] && term=$(cat <"${confDir}/hypr/configs/keybindings.conf" | grep ^"$term" | cut -d '=' -f2)
+    [ "${sysMon}" -gt 0 ] && term=$(cat <"${confDir}/hypr/config/keybindings.conf" | grep ^"$term" | cut -d '=' -f2)
     if pkg_installed "${pkgChk[sysMon]}" ; then
         pkill -x "${pkgChk[sysMon]}" || ${term} "${pkgChk[sysMon]}" &
         break

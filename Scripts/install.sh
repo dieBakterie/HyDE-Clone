@@ -171,7 +171,7 @@ EOF
         }
 
         # Update or add exec-once line in the configuration file
-        update_exec_once "${cloneDir}/Configs/.config/hypr/launchs.conf"
+        update_exec_once "${cloneDir}/Configs/.config/hypr/config/launchs.conf"
     fi
 
     # Install the user-selected idle manager or skip if none was chosen

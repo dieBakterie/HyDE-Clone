@@ -1,6 +1,6 @@
-Y|Y|${HOME}|.zshrc .p10k.zsh|zsh oh-my-zsh-git zsh-theme-powerlevel10k pokemon-colorscripts-git
-Y|Y|${HOME}/.config/Code/User|settings.json|visual-studio-code-bin
-Y|Y|${HOME}/.config/Code - OSS/User|settings.json|code
+N|Y|${HOME}|.zshrc .p10k.zsh|zsh oh-my-zsh-git zsh-theme-powerlevel10k pokemon-colorscripts-git
+N|Y|${HOME}/.config/Code/User|settings.json|visual-studio-code-bin
+N|Y|${HOME}/.config/Code - OSS/User|settings.json|code
 Y|Y|${HOME}/.config|fish|fish
 Y|Y|${HOME}/.config|dunst|dunst
 Y|Y|${HOME}/.config|swaync|swaync
@@ -23,8 +23,10 @@ Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways/notification|hyprdots.dcol muted-mic
 Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways/notification|dunst.dcol|dunst
 Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways/notification|swaync.dcol|swaync
 Y|Y|${HOME}/.config/hypr|hyprland.conf themes plugins|hyprland
-Y|Y|${HOME}/.config/hypr/configs|animations.conf inputs.conf launchs.conf layouts.conf misc.conf windowrules.conf workspacerules.conf|hyprland
-Y|Y|${HOME}/.config/hypr/configs|keybindings.conf monitors.conf submaps.conf workspaces.conf|hyprland
+Y|Y|${HOME}/.config/hypr/config|animations.conf inputs.conf devices.conf gestures.conf launchs.conf layouts.conf misc.conf windowrules.conf workspacerules.conf|hyprland
+Y|Y|${HOME}/.config/hypr/config|keybindings.conf monitors.conf submaps.conf workspaces.conf|hyprland
+N|Y|${HOME}/.config/hypr/custom|hyprland
+Y|Y|${HOME}/.config/hypr|hyprshade.toml|hyprshade
 Y|Y|${HOME}/.config/hypr|pyprland.toml|pyprland
 Y|Y|${HOME}/.config/hypr|hypridle.conf|hypridle
 Y|Y|${HOME}/.local/share/bin|wallbashdunst.sh notifications.py|hyprland dunst
