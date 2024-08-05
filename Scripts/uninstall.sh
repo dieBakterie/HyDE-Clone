@@ -67,7 +67,7 @@ cat <"${CfgLst}" | while read lst; do
     done
 done
 
-[ -d "$HOME/.config/hyde" ] && rm -rf "$HOME/.config/hyde"
+# [ -d "$HOME/.config/hyde" ] && rm -rf "$HOME/.config/hyde"
 [ -d "$HOME/.cache/hyde" ] && rm -rf "$HOME/.cache/hyde"
 
 echo -e "\n

@@ -280,7 +280,7 @@ EOF
     while IFS='"' read -r null1 themeName null2 themeRepo; do
         themeNameQ+=("${themeName//\"/}")
         themeRepoQ+=("${themeRepo//\"/}")
-        themePath="${confDir}/hyde/themes/${themeName}"
+        themePath="${confDir}/hypr/hyde/themes/${themeName}"
         [ -d "${themePath}" ] || mkdir -p "${themePath}"
         [ -f "${themePath}/.sort" ] || echo "${#themeNameQ[@]}" >"${themePath}/.sort"
     done <"${scrDir}/themepatcher.lst"

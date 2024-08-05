@@ -1,7 +1,7 @@
 # █ █ █▄█ █▀█ █▀█ █   █▀█ █▀▀ █▄▀
 # █▀█  █  █▀▀ █▀▄ █▄▄ █▄█ █▄▄ █ █
 
-source = ~/.config/hyprlock/colors.conf # source colors from wallbash
+source = ~/.config/hypr/themes/hyprecosystem_colors.conf # source colors from wallbash
 $wallpaper =
 $artFile = $cacheDir/mpris.png # music thumbnail
 

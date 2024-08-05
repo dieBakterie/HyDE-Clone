@@ -12,7 +12,7 @@ scrDir="$(dirname "$(realpath "$0")")"
 source "$scrDir/globalcontrol.sh"
 
 keyconfDir="$confDir/hypr"
-kb_hint_conf=("$keyconfDir/hyprland.conf" "$keyconfDir/configs/keybindings.conf")
+kb_hint_conf=("$keyconfDir/hyprland.conf" "$keyconfDir/config/keybindings.conf")
 tmpMapDir="/tmp"
 tmpMap="$tmpMapDir/hyde-keybinds.jq"
 keycodeFile="${hydeConfDir}/keycode.kb"

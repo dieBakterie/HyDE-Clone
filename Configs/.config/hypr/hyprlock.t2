@@ -3,7 +3,7 @@
 
 # This config is being used by default
 
-source = ~/.config/hyprlock/colors.conf # source colors from wallbash
+source = ~/.config/hypr/themes/hyprecosystem_colors.conf # source colors from wallbash
 $wallpaper =
 
 # functions

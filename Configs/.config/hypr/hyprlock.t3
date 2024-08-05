@@ -1,8 +1,8 @@
 # █ █ █▄█ █▀█ █▀█ █   █▀█ █▀▀ █▄▀
 # █▀█  █  █▀▀ █▀▄ █▄▄ █▄█ █▄▄ █ █
 
-source = ~/.config/hyprlock/colors.conf # for custom color
-$wallpaper = /home/bakterie/.config/hyde/themes/Catppuccin Mocha/wallpapers/1 rain_world.png
+source = ~/.config/hypr/themes/hyprecosystem_colors.conf # for custom color
+$wallpaper = /home/bakterie/.config/hypr/hyde/themes/Catppuccin Mocha/wallpapers/1 rain_world.png
 
 # GENERAL
 general {
