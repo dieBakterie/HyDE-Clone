@@ -3,6 +3,13 @@
 #|--/ /-| Idle installation script |--/ /-|#
 #|-/ /--| Prasanth Rangan          |-/ /--|#
 #|/ /---+--------------------------+/ /---|#
+scrDir="$(dirname "$(realpath "$0")")"
+source "${scrDir}/global_fn.sh"
+if [ $? -ne 0 ]; then
+    echo "Error: unable to source global_fn.sh..."
+    exit 1
+fi
+
 echo -e "Select idle manager:\n[1] swayidle\n[2] swayidle-git\n[3] hypridle\n[4] hypridle-git\n[5] No Idle Manager"
 prompt_timer 120 "Enter option number"
 

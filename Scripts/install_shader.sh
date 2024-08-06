@@ -3,6 +3,14 @@
 #|--/ /-| Shader installation script |--/ /-|#
 #|-/ /--| Prasanth Rangan            |-/ /--|#
 #|/ /---+----------------------------+/ /---|#
+
+scrDir="$(dirname "$(realpath "$0")")"
+source "${scrDir}/global_fn.sh"
+if [ $? -ne 0 ]; then
+    echo "Error: unable to source global_fn.sh..."
+    exit 1
+fi
+
 echo -e "Select shader:\n[1] hyprshade\n[2] hyprshade-git\n[3] wl-gammarelay-rs\n[4] No Shader"
 prompt_timer 120 "Enter option number"
 
@@ -66,3 +74,4 @@ else
         update_keybindings "${cloneDir}/Configs/.config/hypr/config/keybindings.conf"
     fi
 fi
+
