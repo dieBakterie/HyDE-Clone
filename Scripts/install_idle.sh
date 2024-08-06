@@ -42,7 +42,7 @@ else
     update_exec_once() {
         local file=$1
         local current_idle
-        current_idle=$(grep -E '^exec-once = [^ ]+' "$file" | awk -F ' = ' '{print $2}' | awk '{print $1}')
+        current_idle=$(grep -E '^exec-once = $idlemanager # start idle manager' "$file" | awk -F ' = ' '{print $2}' | awk '{print $1}')
 
         if [[ "$current_idle" != "$myIdleMd" ]]; then
             if grep -q -E "^exec-once = [^ ]+ #" "$file"; then

@@ -222,7 +222,7 @@ EOF
         fi
 
         # Update the lockscreen in hypridle.conf only if myIdle is set
-        if [[ ${myIdle} != "" ]]; then
+        if [[ ${myIdleMd} == "hypridle" ]]; then
             # shellcheck disable=SC2016
             current_lock_hypridle=$(grep '^\$lockScreen =' "${cloneDir}/Configs/.config/hypr/hypridle.conf" | awk -F ' = ' '{print $2}' | awk '{print $1}')
             if [[ "${current_lock_hypridle}" != "${myLockMd}" ]]; then
