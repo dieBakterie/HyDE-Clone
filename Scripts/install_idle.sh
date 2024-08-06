@@ -56,5 +56,5 @@ else
     }
 
     # Update or add exec-once line in the configuration file
-    update_exec_once "${cloneDir}/Configs/.config/hypr/configs/launchs.conf"
+    update_exec_once "${cloneDir}/Configs/.config/hypr/config/launchs.conf"
 fi
