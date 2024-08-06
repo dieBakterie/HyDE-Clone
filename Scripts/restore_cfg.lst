@@ -4,24 +4,24 @@ N|Y|${HOME}/.config/Code - OSS/User|settings.json|code
 Y|Y|${HOME}/.config|fish|fish
 Y|Y|${HOME}/.config|dunst|dunst
 Y|Y|${HOME}/.config|swaync|swaync
-Y|Y|${HOME}/.config/hypr/hyde|hyde.conf keycode.kb|hyprland
-Y|Y|${HOME}/.config/hypr/hyde/wallbash/Wall-Dcol|hypr.dcol|hyprland
-Y|Y|${HOME}/.config/hypr/hyde/wallbash/Wall-Dcol|rofi.dcol|rofi
-Y|Y|${HOME}/.config/hypr/hyde/wallbash/Wall-Dcol|waybar.dcol|waybar
-Y|Y|${HOME}/.config/hypr/hyde/wallbash/Wall-Dcol|kitty.dcol|kitty
-Y|Y|${HOME}/.config/hypr/hyde/wallbash/Wall-Dcol|kvantum|kvantum
-Y|Y|${HOME}/.config/hypr/hyde/wallbash/Wall-Dcol/gtk|gtk3.dcol|gtk3
-Y|Y|${HOME}/.config/hypr/hyde/wallbash/Wall-Dcol/gtk|gtk4.dcol|gtk4
-Y|Y|${HOME}/.config/hypr/hyde/wallbash/Wall-Ways|hypr.dcol|hyprland
-Y|Y|${HOME}/.config/hypr/hyde/wallbash/Wall-Ways|palette qtct.dcol|qt5ct
-Y|Y|${HOME}/.config/hypr/hyde/wallbash/Wall-Ways|palette qtct.dcol|qt6ct
-Y|Y|${HOME}/.config/hypr/hyde/wallbash/Wall-Ways|cava.dcol|cava
-Y|Y|${HOME}/.config/hypr/hyde/wallbash/Wall-Ways|spotify.dcol|spotify spicetify-cli
-Y|Y|${HOME}/.config/hypr/hyde/wallbash/Wall-Ways|code.dcol|visual-studio-code-bin
-Y|Y|${HOME}/.config/hypr/hyde/wallbash/Wall-Ways|code.dcol|code
-Y|Y|${HOME}/.config/hypr/hyde/wallbash/Wall-Ways/notification|hyprdots.dcol muted-mic.dcol muted-speaker.dcol unmuted-mic.dcol unmuted-speaker.dcol vol-0.dcol vol-5.dcol vol-10.dcol vol-15.dcol vol-20.dcol vol-25.dcol vol-30.dcol vol-35.dcol vol-40.dcol vol-45.dcol vol-50.dcol vol-55.dcol vol-60.dcol vol-65.dcol vol-70.dcol vol-75.dcol vol-80.dcol vol-85.dcol vol-90.dcol vol-95.dcol vol-100.dcol|hyprland playerctl libnotify
-Y|Y|${HOME}/.config/hypr/hyde/wallbash/Wall-Ways/notification|dunst.dcol|dunst
-Y|Y|${HOME}/.config/hypr/hyde/wallbash/Wall-Ways/notification|swaync.dcol|swaync
+Y|Y|${HOME}/.config/hyde|hyde.conf keycode.kb|hyprland
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Dcol|hypr.dcol|hyprland
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Dcol|rofi.dcol|rofi
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Dcol|waybar.dcol|waybar
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Dcol|kitty.dcol|kitty
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Dcol|kvantum|kvantum
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Dcol/gtk|gtk3.dcol|gtk3
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Dcol/gtk|gtk4.dcol|gtk4
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways|hypr.dcol|hyprland
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways|palette qtct.dcol|qt5ct
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways|palette qtct.dcol|qt6ct
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways|cava.dcol|cava
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways|spotify.dcol|spotify spicetify-cli
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways|code.dcol|visual-studio-code-bin
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways|code.dcol|code
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways/notification|hyprdots.dcol muted-mic.dcol muted-speaker.dcol unmuted-mic.dcol unmuted-speaker.dcol vol-0.dcol vol-5.dcol vol-10.dcol vol-15.dcol vol-20.dcol vol-25.dcol vol-30.dcol vol-35.dcol vol-40.dcol vol-45.dcol vol-50.dcol vol-55.dcol vol-60.dcol vol-65.dcol vol-70.dcol vol-75.dcol vol-80.dcol vol-85.dcol vol-90.dcol vol-95.dcol vol-100.dcol|hyprland playerctl libnotify
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways/notification|dunst.dcol|dunst
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways/notification|swaync.dcol|swaync
 Y|Y|${HOME}/.config/hypr|hyprland.conf themes plugins|hyprland
 Y|Y|${HOME}/.config/hypr/config|animations.conf inputs.conf devices.conf gestures.conf launchs.conf layouts.conf misc.conf windowrules.conf workspacerules.conf|hyprland
 Y|Y|${HOME}/.config/hypr/config|keybindings.conf monitors.conf submaps.conf workspaces.conf|hyprland
@@ -72,5 +72,5 @@ Y|Y|${HOME}/.local/share|dolphin|dolphin
 Y|Y|${HOME}/.local/share/kxmlgui5|dolphin|dolphin
 Y|Y|${HOME}/.local/share/kio/servicemenus|hydewallpaper.desktop|dolphin
 Y|Y|${HOME}/.config|libinput-gestures.conf|libinput-gestures
-Y|Y|${HOME}/.config/hypr/hyde/wallbash/Wall-Ways|discord.dcol|hyprland armcord discord vencord vesktop webcord
+Y|Y|${HOME}/.config/hyde/wallbash/Wall-Ways|discord.dcol|hyprland armcord discord vencord vesktop webcord
 Y|Y|${HOME}/.local/share/bin|wallbashdiscord.sh|hyprland armcord discord vencord vesktop webcord

@@ -2,7 +2,7 @@
 
 # hyde envs
 export confDir="${XDG_CONFIG_HOME:-$HOME/.config}"
-export hydeConfDir="${confDir}/hypr/hyde"
+export hydeConfDir="${confDir}/hyde"
 export cacheDir="$HOME/.cache/hyde"
 export thmbDir="${cacheDir}/thumbs"
 export dcolDir="${cacheDir}/dcols"
