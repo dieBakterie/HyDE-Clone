@@ -73,4 +73,3 @@ else
         update_keybindings "${cloneDir}/Configs/.config/hypr/config/keybindings.conf"
     fi
 fi
-
