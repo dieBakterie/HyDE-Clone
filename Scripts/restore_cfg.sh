@@ -15,7 +15,7 @@ CfgLst="${1:-"${scrDir}/restore_cfg.lst"}"
 CfgDir="${2:-${cloneDir}/Configs}"
 ThemeOverride="${3:-}"
 
-if [ ! -f "${CfgLst}" ] || [ ! -d "${CfgDir}" ]; then
+if [ ! -f "${CfgLst}" ]; then
     echo "ERROR: '${CfgLst}' or '${CfgDir}' does not exist..."
     exit 1
 fi

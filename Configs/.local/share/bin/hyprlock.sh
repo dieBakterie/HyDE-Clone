@@ -6,8 +6,6 @@
 scrDir="$(dirname "$(realpath "$0")")"
 source "$scrDir/globalcontrol.sh"
 
-# define functions
-
 # locks screen depending on player status
 fn_hyprlock() {
     local player_status
@@ -42,33 +40,14 @@ main() {
 
     while [[ $# -gt 0 ]]; do
         case $1 in
-            -h | --help)
+            -h|--help)
                 ask_help
                 exit 0
                 ;;
-            -l | --lock)
+            -l|--lock)
                 lock=true
                 ;;
             -*)
-                # iterate over combined short options
-                for ((i = 1; i < ${#1}; i++)); do
-                    case ${1:i:1} in
-                        l)
-                            lock=true
-                            ;;
-                        h)
-                            ask_help
-                            exit 0
-                            ;;
-                        *)
-                            echo "Invalid option: -${1:i:1}"
-                            ask_help
-                            exit 1
-                            ;;
-                    esac
-                done
-                ;;
-            *)
                 echo "Invalid option: $1"
                 ask_help
                 exit 1

@@ -91,8 +91,8 @@ Revert back bootloader/pacman/sddm settings manually from these backups
 /usr/share/sddm/themes                  # remove sddm themes from here
 
 Uninstall the packages manually that are no longer required based on these list
-${scrDir}/custom_hypr.lst
-${scrDir}/custom_apps.lst
-${scrDir}/.extra/custom_flat.lst
-${scrDir}/.extra/custom_silo.lst
+${scrDir}/custom_hypr.lst               # remove packages from this list
+${scrDir}/custom_apps.lst               # remove packages from this list
+${scrDir}/.extra/custom_flat.lst        # remove packages from this list
+${scrDir}/.extra/custom_silo.lst        # remove packages from this list
 "

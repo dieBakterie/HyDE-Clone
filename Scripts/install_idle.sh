@@ -3,6 +3,7 @@
 #|--/ /-| Idle installation script |--/ /-|#
 #|-/ /--| Prasanth Rangan          |-/ /--|#
 #|/ /---+--------------------------+/ /---|#
+
 scrDir="$(dirname "$(realpath "$0")")"
 source "${scrDir}/global_fn.sh"
 if [ $? -ne 0 ]; then
@@ -34,9 +35,8 @@ else
     echo "${myIdle}" >>"${scrDir}/install_pkg.lst"
 
     # remove -git from myIdle for exec-once command
-    myIdleMd="${myIdle}"
     if [[ "${myIdle}" == *"-git" ]]; then
-        myIdleMd=$(echo "${myIdle}" | sed -E 's/-git$//')
+        myIdle=$(echo "${myIdle}" | sed -E 's/-git$//')
     fi
 
     update_exec_once() {
@@ -44,13 +44,13 @@ else
         local current_idle
         current_idle=$(grep -E '^exec-once = [^ ]+ # start idle manager' "$file" | awk -F ' = ' '{print $2}' | awk '{print $1}')
 
-        if [[ "$current_idle" != "$myIdleMd" ]]; then
+        if [ "${current_idle}" != "${myIdle}" ]; then
             if grep -q -E "^exec-once = [^ ]+ #" "$file"; then
                 # Update existing exec-once line
-                sed -i "s|^\(exec-once = \)[^ ]*\( #.*\)|\1${myIdleMd} # start ${myIdle} idle manager|" "$file"
+                sed -i "s|^\(exec-once = \)[^ ]*\( #.*\)|\1${myIdle} # start idle manager|" "$file"
             else
                 # Add new exec-once line
-                echo -en "\nexec-once = ${myIdleMd} # start ${myIdle} idle manager" >>"$file"
+                echo -en "\nexec-once = ${myIdle} # start idle manager" >>"$file"
             fi
         fi
     }

@@ -21,6 +21,7 @@ def signal_handler(sig, frame):
     # loop.quit()
     sys.exit(0)
 
+
 class PlayerManager:
     def __init__(self, selected_player=None):
         self.manager = Playerctl.PlayerManager()
@@ -146,28 +147,29 @@ class PlayerManager:
 def parse_arguments():
     parser = argparse.ArgumentParser()
 
-    # increase verbosity with every occurrence of -v
+    # Increase verbosity with every occurrence of -v
     parser.add_argument("-v", "--verbose", action="count", default=0)
 
-    # define for which player we"re listening
+    # Define for which player we"re listening
     parser.add_argument("--player")
 
     parser.add_argument("--enable-logging", action="store_true")
 
     return parser.parse_args()
 
+
 def main():
     arguments = parse_arguments()
 
-    # initialize logging
+    # Initialize logging
     if arguments.enable_logging:
         logfile = os.path.join(os.path.dirname(
             os.path.realpath(__file__)), "media-player.log")
         logging.basicConfig(filename=logfile, level=logging.DEBUG,
                             format="%(asctime)s %(name)s %(levelname)s:%(lineno)d %(message)s")
 
-    # logging is set by default to WARN and higher.
-    # with every occurrence of -v it's lowered by one
+    # Logging is set by default to WARN and higher.
+    # With every occurrence of -v it's lowered by one
     logger.setLevel(max((3 - arguments.verbose) * 10, 0))
 
     logger.info("Creating player manager")
@@ -175,6 +177,7 @@ def main():
         logger.info(f"Filtering for player: {arguments.player}")
     player = PlayerManager(arguments.player)
     player.run()
+
 
 if __name__ == "__main__":
     main()

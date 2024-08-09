@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # hyde envs
 export confDir="${XDG_CONFIG_HOME:-$HOME/.config}"
@@ -90,7 +90,7 @@ case "${enableWallDcol}" in
     *) enableWallDcol=0 ;;
 esac
 
-if [ -z "${hydeTheme}" ] || [ ! -d "${hydeConfDir}/themes/${hydeTheme}" ] ; then
+if [[ -z "${hydeTheme}" || ! -d "${hydeConfDir}/themes/${hydeTheme}" ]] ; then
     get_themes
     hydeTheme="${thmList[0]}"
 fi

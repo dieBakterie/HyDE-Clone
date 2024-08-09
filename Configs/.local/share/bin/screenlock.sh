@@ -7,8 +7,6 @@ scrDir="$(dirname "$(realpath "$0")")"
 source "$scrDir/globalcontrol.sh"
 export -f pkg_installed
 
-# define functions
-
 # locks the screen depending on lockscreen package
 fn_lockscreen() {
     if pkg_installed "swaylock-effects-git"; then

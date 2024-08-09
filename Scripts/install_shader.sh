@@ -3,6 +3,7 @@
 #|--/ /-| Shader installation script |--/ /-|#
 #|-/ /--| Prasanth Rangan            |-/ /--|#
 #|/ /---+----------------------------+/ /---|#
+
 scrDir="$(dirname "$(realpath "$0")")"
 source "${scrDir}/global_fn.sh"
 if [ $? -ne 0 ]; then
@@ -25,7 +26,7 @@ case "${promptIn}" in
 esac
 
 # skip if user selects "" as shader
-if [ "${myShader}" == "" ]; then
+if [[ "${myShader}" == "" ]]; then
     echo -e "\n\033[0;32m[SKIP]\033[0m Shader: No Shader selected, skipping!"
     exit 0
 else
@@ -42,9 +43,9 @@ else
 
         if [[ "${myShader}" == "wl-gammarelay-rs" ]]; then
             if ! grep -q "exec-once = wl-gammarelay-rs # start wl-gammarelay-rs" "$file"; then
-                echo -e "\n\nexec-once = wl-gammarelay-rs # start wl-gammarelay-rs" >>"$file"
+                echo -en "\n\nexec-once = wl-gammarelay-rs # start wl-gammarelay-rs" >>"$file"
             fi
-        elif [[ "${myShader}" == "hyprshade" || "${myShader}" == "hyprshade-git" ]]; then
+        elif [[ "${myShader}" == "hyprshade" ]]; then
             if ! grep -q "# Night Light" "$file"; then
                 echo -en "\n\n# Night Light\nexec-once = dbus-update-activation-environment --systemd HYPRLAND_INSTANCE_SIGNATURE\nexec = hyprshade auto" >>"$file"
             fi
@@ -58,9 +59,9 @@ else
             if ! grep -q "# Night light" "$file"; then
                 echo -en "\n\n# Night light\nbindd = Ctrl , P, Enable Vibrance Hyprshade Shader, exec, hyprshade on vibrance\nbindd = Ctrl, L, Enable blue light filter, exec, hyprshade on blue-light-filter" >>"$file"
             fi
-        elif [ "${myShader}" == "wl-gammarelay-rs" ]; then
-            if ! grep -q "# wl-gammarelay-rs start"; then
-                echo -en "\n\nbind = , F6, exec, busctl --user --call rs.wl-gammarelay / rs.wl.gammarelay UpdateTemperature n -500\nbind = , F4, exec, busctl --user --call rs.wl-gammarelay / rs.wl.gammarelay UpdateTemperature n +500"
+        elif [[ "${myShader}" == "wl-gammarelay-rs" ]]; then
+            if ! grep -q "# wl-gammarelay-rs start" "$file"; then
+                echo -en "\n\nbind = , F6, exec, busctl --user --call rs.wl-gammarelay / rs.wl.gammarelay UpdateTemperature n -500\nbind = , F4, exec, busctl --user --call rs.wl-gammarelay / rs.wl.gammarelay UpdateTemperature n +500" >>"$file"
             fi
         fi
     }

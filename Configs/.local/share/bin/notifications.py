@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-
 import subprocess
 import json
 import sys

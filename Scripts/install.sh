@@ -149,23 +149,24 @@ EOF
         echo "${myNotd}" >>"${scrDir}/install_pkg.lst"
 
         # remove -git from myNotd for exec-once command
-        myNotdMd="${myNotd}"
         if [[ "${myNotd}" == *"-git" ]]; then
-            myNotdMd=$(echo "${myNotd}" | sed -E 's/-git$//')
+            myNotd=$(echo "${myNotd}" | sed -E 's/-git$//')
         fi
 
         update_exec_once() {
             local file=$1
             local current_notd
-            current_notd=$(grep -E '^exec-once = [^ ]+' "$file" | awk -F ' = ' '{print $2}' | awk '{print $1}')
 
-            if [[ "$current_notd" != "$myNotdMd" ]]; then
-                if grep -q -E "^exec-once = [^ ]+ #" "$file"; then
-                    # Update existing exec-once line
-                    sed -i "s|^\(exec-once = \)[^ ]*\( #.*\)|\1${myNotdMd} # start ${myNotd} notification daemon|" "$file"
+            # Searches for the exec-once line that starts the current notification daemon
+            current_notd=$(grep -E '^\s*exec-once\s*=\s*[^\s]+ # start notification daemon' "$file" | awk -F '=' '{print $2}' | awk '{print $1}')
+
+            if [[ "${current_notd}" != "${myNotd}" ]]; then
+                if grep -q -E '^\s*exec-once\s*=\s*[^\s]+ # start notification daemon' "$file"; then
+                    # Update existing exec-once line specific to the notification daemon
+                    sed -i "s|^\(\s*exec-once\s*=\s*\)[^\s]*\(\s*# start notification daemon\)|\1${myNotd}\2|" "$file"
                 else
-                    # Add new exec-once line
-                    echo -en "\nexec-once = ${myNotdMd} # start ${myNotd} notification daemon" >>"$file"
+                    # Add new exec-once line if no matching line was found
+                    echo -en "\nexec-once = ${myNotd} # start notification daemon" >>"$file"
                 fi
             fi
         }
@@ -179,8 +180,7 @@ EOF
         "${scrDir}/install_idle.sh"
     fi
 
-    # Install and configure the selected lock screen
-    # (Note: The idle manager was already installed earlier, if selected)
+    # Install and configure the selected lock screen with idle manager, if selected earlier
     if ! chk_list "myLock" "${lckList[@]}"; then
         echo -e "Select lock screen:\n[1] swaylock-effects-git\n[2] hyprlock\n[3] hyprlock-git"
         prompt_timer 120 "Enter option number"
@@ -198,34 +198,32 @@ EOF
         echo "${myLock}" >>"${scrDir}/install_pkg.lst"
 
         # remove -git or -effects-git from myLock
-        myLockMd="${myLock}"
         if [[ "${myLock}" == *"-git" || "${myLock}" == *"-effects-git" ]]; then
-            myLockMd=$(echo "${myLock}" | sed -E 's/-.*$//')
+            myLock=$(echo "${myLock}" | sed -E 's/-.*$//')
         fi
 
         # Function to update the lock screen in a file if they do not match
         update_lock_screen() {
             local file=$1
-            local current_value
-            # shellcheck disable=SC2016
-            current_value=$(grep '^\$lockScreen =' "$file" | awk -F ' = ' '{print $2}' | awk '{print $1}')
-            if [ "$current_value" != "$myLockMd" ]; then
-                sed -i "s/^\(\$lockScreen = \)[^ ]*\( # set lock screen to \)[^ ]*/\1${myLockMd} \2${myLock}/" "$file"
+            local current_lock
+
+            # Searches for the lockScreen variable in the file
+            current_lock=$(grep -E '^\s*\$lockScreen\s*=\s*[^\s]+ # set lock screen' "$file" | awk -F '=' '{print $2}' | awk '{print $1}')
+            if [[ "${current_lock}" != "${myLock}" ]]; then
+                sed -i "s|^\(\s*\$lockScreen\s*=\s*\)[^\s]*\(\s*# set lock screen\)|\1${myLock}\2|" "$file"
             fi
         }
 
         # Always update the lockscreen in hyprland.conf
-        # shellcheck disable=SC2016
-        current_lock_hyprland=$(grep '^\$lockScreen =' "${cloneDir}/Configs/.config/hypr/hyprland.conf" | awk -F ' = ' '{print $2}' | awk '{print $1}')
-        if [[ "${current_lock_hyprland}" != "${myLockMd}" ]]; then
+        current_lock_hyprland=$(grep -E '^\s*\$lockScreen\s*=\s*[^\s]+ # set lock screen' "${cloneDir}/Configs/.config/hypr/hyprland.conf" | awk -F '=' '{print $2}' | awk '{print $1}')
+        if [[ "${current_lock_hyprland}" != "${myLock}" ]]; then
             update_lock_screen "${cloneDir}/Configs/.config/hypr/hyprland.conf"
         fi
 
-        # Update the lockscreen in hypridle.conf only if myIdle is set
-        if [[ ${myIdleMd} == "hypridle" ]]; then
-            # shellcheck disable=SC2016
-            current_lock_hypridle=$(grep '^\$lockScreen =' "${cloneDir}/Configs/.config/hypr/hypridle.conf" | awk -F ' = ' '{print $2}' | awk '{print $1}')
-            if [[ "${current_lock_hypridle}" != "${myLockMd}" ]]; then
+        # Update the lockscreen in hypridle.conf only if myIdle is set to hypridle
+        if [[ "${myIdle}" == "hypridle" ]]; then
+            current_lock_hypridle=$(grep -E '^\s*\$lockScreen\s*=\s*[^\s]+ # set lock screen' "${cloneDir}/Configs/.config/hypr/hypridle.conf" | awk -F '=' '{print $2}' | awk '{print $1}')
+            if [[ "${current_lock_hypridle}" != "${myLock}" ]]; then
                 update_lock_screen "${cloneDir}/Configs/.config/hypr/hypridle.conf"
             fi
         fi

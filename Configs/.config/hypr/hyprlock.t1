@@ -7,7 +7,7 @@ $artFile = $cacheDir/mpris.png # music thumbnail
 
 # functions
 $fn_greet=echo "Good $(date +%H | awk '{if ($1 < 10) print "morning"; else if ($1 < 13) print "noon"; else if ($1 < 18) print "afternoon"; else if ($1 < 22) print "evening"; else print "night"}'), $(echo ${USER} | tr '[:lower:]' '[:upper:]')"
-$fn_splash=echo "$(hyprlock.sh --thumbnail || hyprctl splash)"
+$fn_splash=echo "$(hyprctlock.sh --artUrl || hyprctl splash)"
 
 # we can also source a specific hypprlock.conf file
 source = ~/.config/hyprlock/presets/hyprlock_no_music.conf
