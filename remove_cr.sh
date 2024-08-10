@@ -8,6 +8,7 @@ find . \( -name "*.sh" -o -name "*.zsh" -o -name "*.zshrc" -o -name "*.py" -o -n
     # Wenn die Datei eine .sh, .zsh, .zshrc oder .py Datei ist, setze die Ausführungsberechtigung
     if [[ "${file##*.}" = "sh" || "${file##*.}" = "zsh" || "${file##*.}" = "zshrc" || "${file##*.}" = "py" ]]; then
         chmod +x "$file"
+        echo "Ausführungsberechtigung gesetzt: $file"
     fi
 
     echo "Bearbeitet: $file"

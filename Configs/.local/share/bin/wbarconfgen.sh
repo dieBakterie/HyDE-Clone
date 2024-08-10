@@ -63,10 +63,11 @@ if [ $i_size -lt 12 ] ; then
     export i_size="12"
 fi
 
-export i_theme="$(
+i_theme="$(
 { grep -q "^[[:space:]]*\$ICON-THEME\s*=" "${hydeThemeDir}/hypr.theme" && grep "^[[:space:]]*\$ICON-THEME\s*=" "${hydeThemeDir}/hypr.theme" | cut -d '=' -f2 | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' ;} ||
 grep 'gsettings set org.gnome.desktop.interface icon-theme' "${hydeThemeDir}/hypr.theme" | awk -F "'" '{print $((NF - 1))}'
 )"
+export i_theme
 export i_task=$(( w_height*6/10 ))
 if [ $i_task -lt 16 ] ; then
     export i_task="16"
@@ -91,7 +92,7 @@ gen_mod()
     mod="${mod// /"\",\""}"
 
     echo -e "\t\"modules-${pos}\": [\"custom/padd\",\"${mod}\",\"custom/padd\"]," >> "$conf_file"
-    write_mod=$(echo $write_mod $mod)
+    write_mod="$write_mod $mod" #write_mod=$(echo $write_mod $mod)
 }
 
 # write positions for modules
@@ -115,7 +116,7 @@ cat "$modules_dir/footer.jsonc" >> "$conf_file"
 "$scrDir/wbarstylegen.sh"
 
 # restart waybar
-if [ "$reload_flag" == "1" ] ; then
+if [[ "$reload_flag" == "1" ]] ; then
     killall waybar
     waybar --config "${waybar_dir}/config.jsonc" --style "${waybar_dir}/style.css" > /dev/null 2>&1 &
 fi
