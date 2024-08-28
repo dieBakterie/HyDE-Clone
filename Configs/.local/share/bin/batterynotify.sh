@@ -5,7 +5,7 @@
 undock=false
 scrDir="$(dirname "$(realpath "$0")")"
 source "$scrDir/globalcontrol.sh"
-batterynotify_conf="${hydeConfDir}/hyde.conf" # shared with hyde configuration
+batterynotify_conf="${wormwitchConfDir}/wormwitch.conf" # shared with wormwitch configuration
 config_info() {
     cat <<EOF
 
@@ -110,9 +110,9 @@ fn_status() {
         fi
         ;;
     *)
-        if [[ ! -f "/tmp/hyde.batterynotify.status.fallback.$battery_status-$$" ]]; then
-            echo "Status: '==>> ""$battery_status"" <<==' Script on Fallback mode,Unknown power supply status. Please copy this line and raise an issue to the Github Repo. Also run 'ls /tmp/hyde.batterynotify' to see the list of lock files.*"
-            touch "/tmp/hyde.batterynotify.status.fallback.$battery_status-$$"
+        if [[ ! -f "/tmp/wormwitch.batterynotify.status.fallback.$battery_status-$$" ]]; then
+            echo "Status: '==>> ""$battery_status"" <<==' Script on Fallback mode,Unknown power supply status. Please copy this line and raise an issue to the Github Repo. Also run 'ls /tmp/wormwitch.batterynotify' to see the list of lock files.*"
+            touch "/tmp/wormwitch.batterynotify.status.fallback.$battery_status-$$"
         fi
         fn_percentage
         ;;
@@ -160,7 +160,7 @@ fn_status_change() {
 
 # main function
 main() {
-    rm -fr /tmp/hyde.batterynotify* # cleaning the lock file
+    rm -fr /tmp/wormwitch.batterynotify* # cleaning the lock file
     battery_full_threshold=${battery_full_threshold:-100}
     battery_critical_threshold=${battery_critical_threshold:-5}
     unplug_charger_threshold=${unplug_charger_threshold:-80}

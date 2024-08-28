@@ -119,7 +119,7 @@ EOF
     #----------------#
     if ! chk_list "aurhlpr" "${aurList[@]}"; then # install selected aur helper
         echo -e "Available aur helpers:\n[1] yay\n[2] paru"
-        prompt_timer 120 "Enter option number"
+        prompt "Enter option number"
 
         case "${promptIn}" in
         1) export getAur="yay" ;;
@@ -131,48 +131,9 @@ EOF
         esac
     fi
 
-    if ! chk_list "myNotd" "${ntdList[@]}"; then # install and setup selected notification daemon/center
-        echo -e "Select Notification Daemon or Center:\n[1] dunst\n[2] dunst-git\n[3] swaync\n[4] swaync-git"
-        prompt_timer 120 "Enter option number"
-
-        case "${promptIn}" in
-        1) export myNotd="dunst" ;;
-        2) export myNotd="dunst-git" ;;
-        3) export myNotd="swaync" ;;
-        4) export myNotd="swaync-git" ;;
-        *)
-            echo -e "...Invalid option selected..."
-            exit 1
-            ;;
-        esac
-        echo -e "\n\033[0;32m[userprefs]\033[0m Notification Center or daemon: ${myNotd}"
-        echo "${myNotd}" >>"${scrDir}/install_pkg.lst"
-
-        # remove -git from myNotd for exec-once command
-        if [[ "${myNotd}" == *"-git" ]]; then
-            myNotd=$(echo "${myNotd}" | sed -E 's/-git$//')
-        fi
-
-        update_exec_once() {
-            local file=$1
-            local current_notd
-
-            # Searches for the exec-once line that starts the current notification daemon
-            current_notd=$(grep -E '^\s*exec-once\s*=\s*[^\s]+ # start notification daemon' "$file" | awk -F '=' '{print $2}' | awk '{print $1}')
-
-            if [[ "${current_notd}" != "${myNotd}" ]]; then
-                if grep -q -E '^\s*exec-once\s*=\s*[^\s]+ # start notification daemon' "$file"; then
-                    # Update existing exec-once line specific to the notification daemon
-                    sed -i "s|^\(\s*exec-once\s*=\s*\)[^\s]*\(\s*# start notification daemon\)|\1${myNotd}\2|" "$file"
-                else
-                    # Add new exec-once line if no matching line was found
-                    echo -en "\nexec-once = ${myNotd} # start notification daemon" >>"$file"
-                fi
-            fi
-        }
-
-        # Update or add exec-once line in the configuration file
-        update_exec_once "${cloneDir}/Configs/.config/hypr/config/launchs.conf"
+    # install and setup selected notification daemon/center or skip if none was chosen
+    if ! chk_list "myNotd" "${ntdList[@]}"; then
+        "${scrDir}/install_notification.sh"
     fi
 
     # Install the user-selected idle manager or skip if none was chosen
@@ -182,68 +143,12 @@ EOF
 
     # Install and configure the selected lock screen with idle manager, if selected earlier
     if ! chk_list "myLock" "${lckList[@]}"; then
-        echo -e "Select lock screen:\n[1] swaylock-effects-git\n[2] hyprlock\n[3] hyprlock-git"
-        prompt_timer 120 "Enter option number"
-
-        case "${promptIn}" in
-        1) export myLock="swaylock-effects-git" ;;
-        2) export myLock="hyprlock" ;;
-        3) export myLock="hyprlock-git" ;;
-        *)
-            echo -e "...Invalid option selected..."
-            exit 1
-            ;;
-        esac
-        echo -e "\n\033[0;32m[userprefs]\033[0m Lockscreen: ${myLock}"
-        echo "${myLock}" >>"${scrDir}/install_pkg.lst"
-
-        # remove -git or -effects-git from myLock
-        if [[ "${myLock}" == *"-git" || "${myLock}" == *"-effects-git" ]]; then
-            myLock=$(echo "${myLock}" | sed -E 's/-.*$//')
-        fi
-
-        # Function to update the lock screen in a file if they do not match
-        update_lock_screen() {
-            local file=$1
-            local current_lock
-
-            # Searches for the lockScreen variable in the file
-            current_lock=$(grep -E '^\s*\$lockScreen\s*=\s*[^\s]+ # set lock screen' "$file" | awk -F '=' '{print $2}' | awk '{print $1}')
-            if [[ "${current_lock}" != "${myLock}" ]]; then
-                sed -i "s|^\(\s*\$lockScreen\s*=\s*\)[^\s]*\(\s*# set lock screen\)|\1${myLock}\2|" "$file"
-            fi
-        }
-
-        # Always update the lockscreen in hyprland.conf
-        current_lock_hyprland=$(grep -E '^\s*\$lockScreen\s*=\s*[^\s]+ # set lock screen' "${cloneDir}/Configs/.config/hypr/hyprland.conf" | awk -F '=' '{print $2}' | awk '{print $1}')
-        if [[ "${current_lock_hyprland}" != "${myLock}" ]]; then
-            update_lock_screen "${cloneDir}/Configs/.config/hypr/hyprland.conf"
-        fi
-
-        # Update the lockscreen in hypridle.conf only if myIdle is set to hypridle
-        if [[ "${myIdle}" == "hypridle" ]]; then
-            current_lock_hypridle=$(grep -E '^\s*\$lockScreen\s*=\s*[^\s]+ # set lock screen' "${cloneDir}/Configs/.config/hypr/hypridle.conf" | awk -F '=' '{print $2}' | awk '{print $1}')
-            if [[ "${current_lock_hypridle}" != "${myLock}" ]]; then
-                update_lock_screen "${cloneDir}/Configs/.config/hypr/hypridle.conf"
-            fi
-        fi
+        "${scrDir}/install_lockscreen.sh"
     fi
 
-    # Install the selected shell
+    # Install the selected shell or skip if none was chosen
     if ! chk_list "myShell" "${shlList[@]}"; then
-        echo -e "Select shell:\n[1] zsh\n[2] fish"
-        prompt_timer 120 "Enter option number"
-
-        case "${promptIn}" in
-        1) export myShell="zsh" ;;
-        2) export myShell="fish" ;;
-        *)
-            echo -e "...Invalid option selected..."
-            exit 1
-            ;;
-        esac
-        echo -e "\n\033[0;32m[userprefs]\033[0m Shell: ${myShell}"
-        echo "${myShell}" >>"${scrDir}/install_pkg.lst"
+        "${scrDir}/install_shell.sh"
     fi
 
     # Install the user-selected shader or skip if none was chosen
@@ -278,7 +183,7 @@ EOF
     while IFS='"' read -r null1 themeName null2 themeRepo; do
         themeNameQ+=("${themeName//\"/}")
         themeRepoQ+=("${themeRepo//\"/}")
-        themePath="${confDir}/hyde/themes/${themeName}"
+        themePath="${confDir}/wormwitch/themes/${themeName}"
         [ -d "${themePath}" ] || mkdir -p "${themePath}"
         [ -f "${themePath}/.sort" ] || echo "${#themeNameQ[@]}" >"${themePath}/.sort"
     done <"${scrDir}/themepatcher.lst"

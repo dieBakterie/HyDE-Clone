@@ -22,8 +22,8 @@ col_count=$(( max_avail / elm_width ))
 r_override="window{width:100%;} listview{columns:${col_count};spacing:5em;} element{border-radius:${elem_border}px;orientation:vertical;} element-icon{size:28em;border-radius:0em;} element-text{padding:1em;}"
 
 # launch rofi menu
-currentWall="$(basename "$(readlink "${hydeThemeDir}/wall.set")")"
-wallPathArray=("${hydeThemeDir}")
+currentWall="$(basename "$(readlink "${wormwitchThemeDir}/wall.set")")"
+wallPathArray=("${wormwitchThemeDir}")
 wallPathArray+=("${wallAddCustomPath[@]}")
 get_hashmap "${wallPathArray[@]}"
 rofiSel=$(parallel --link echo -en "\$(basename "{1}")"'\\x00icon\\x1f'"${thmbDir}"'/'"{2}"'.sqre\\n' ::: "${wallList[@]}" ::: "${wallHash[@]}" | rofi -dmenu -theme-str "${r_scale}" -theme-str "${r_override}" -config "${rofiConf}" -select "${currentWall}")

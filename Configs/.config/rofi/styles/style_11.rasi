@@ -47,7 +47,7 @@ inputbar {
     children:                    [ "entry" ];
     expand:                      false;
     background-color:            @main-bg;
-    background-image:            url("~/.cache/hyde/wall.quad", width);
+    background-image:            url("~/.cache/wormwitch/wall.quad", width);
     border-radius:               1em 0em 0em 1em;
 }
 entry {

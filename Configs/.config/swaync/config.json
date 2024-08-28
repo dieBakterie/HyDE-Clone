@@ -2,89 +2,87 @@
   "$schema": "/etc/xdg/swaync/configSchema.json",
   "positionX": "right",
   "positionY": "bottom",
-  "control-center-margin-top": 10,
-  "control-center-margin-bottom": 10,
-  "control-center-margin-right": 10,
-  "control-center-margin-left": 10,
+  "cssPriority": "application",
+  "control-center-width": 380,
+  "control-center-height": 1000,
+  "control-center-margin-top": 2,
+  "control-center-margin-bottom": 2,
+  "control-center-margin-right": 1,
+  "control-center-margin-left": 0,
   "notification-icon-size": 64,
-  "notification-body-image-height": 100,
+  "notification-window-width": 600,
+  "notification-body-image-height": 200,
   "notification-body-image-width": 200,
-  "timeout": 3,
-  "timeout-low": 2,
+  "timeout": 10,
+  "timeout-low": 5,
   "timeout-critical": 0,
   "fit-to-screen": false,
-  "control-center-width": 450,
-  "control-center-height": 800,
-  "notification-window-width": 440,
   "keyboard-shortcuts": true,
   "image-visibility": "when-available",
   "transition-time": 200,
-  "hide-on-clear": true,
-  "hide-on-action": true,
   "script-fail-notify": true,
-  "widgets": ["title", "notifications", "mpris", "volume", "buttons-grid"],
+  "hide-on-clear": false,
+  "hide-on-action": true,
+  "notification-visibility": {
+    "example-name": {
+      "state": "muted",
+      "urgency": "Low",
+      "app-name": "Spotify"
+    }
+  },
+  "widgets": [
+    "buttons-grid",
+    "volume",
+    "backlight",
+    "mpris",
+    "dnd",
+    "title",
+    "notifications"
+  ],
   "widget-config": {
     "title": {
-      "text": "Notification Center",
+      "text": "Notifications",
       "clear-all-button": true,
       "button-text": "󰆴 Clear All"
     },
-    "label": {
-      "max-lines": 1,
-      "text": "Notification Center"
+    "dnd": {
+      "text": "Do Not Disturb"
     },
     "mpris": {
       "image-size": 96,
-      "image-radius": 7
+      "image-radius": 12
+    },
+    "backlight": {
+      "label": " 󰃟  ",
+      "device": "intel_backlight",
+      "min": 10
     },
     "volume": {
-      "label": "󰕾"
+      "label": " 󰕾 "
     },
     "buttons-grid": {
       "actions": [
         {
-          "label": "󰐥",
-          "command": "systemctl poweroff"
+          "label": " 󱛆  ",
+          "command": "nm-connection-editor"
         },
         {
-          "label": "󰜉",
-          "command": "systemctl reboot"
+          "label": "  ",
+          "command": "blueman-manager"
         },
         {
-          "label": "󰍃",
-          "command": "hyprctl dispatch exit"
+          "label": " 󰃛 ",
+          "command": "hyprshade toggle bluefilter"
         },
         {
           "label": "",
           "command": "obs"
+        },
+        {
+          "label": "  ",
+          "command": "sh -c ~/.local/share/bin/logoutlaunch.sh"
         }
       ]
-    }
-  },
-  "notification-visibility": {
-    "critical": {
-      "state": "enabled",
-      "app-name": ".*",
-      "summary": ".*",
-      "body": ".*",
-      "urgency": "Critical",
-      "category": ".*"
-    },
-    "low": {
-      "state": "enabled",
-      "app-name": "t1",
-      "summary": ".*",
-      "body": ".*",
-      "urgency": "Low",
-      "category": ".*"
-    },
-    "normal": {
-      "state": "enabled",
-      "app-name": "t2",
-      "summary": ".*",
-      "body": ".*",
-      "urgency": "Normal",
-      "category": ".*"
     }
   }
 }

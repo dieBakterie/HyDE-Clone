@@ -1,29 +1,60 @@
 #!/usr/bin/env bash
 #|---/ /+------------------+---/ /|#
 #|--/ /-| Global functions |--/ /-|#
-#|-/ /--| Prasanth Rangan  |-/ /--|#
+#|-/ /--| derDelphin       |-/ /--|#
 #|/ /---+------------------+/ /---|#
 
 set -e
 
 scrDir="$(dirname "$(realpath "$0")")"
+source "${scrDir}/get_distro.sh"
 cloneDir="$(dirname "${scrDir}")"
 confDir="${XDG_CONFIG_HOME:-$HOME/.config}"
-cacheDir="$HOME/.cache/hyde"
-aurList=(yay paru)
-ntdList=(dunst dunst-git swaync swaync-git)
-idlList=(swayidle swayidle-git hypridle hypridle-git)
-lckList=(swaylock-effects-git hyprlock hyprlock-git)
-shlList=(zsh fish)
-shdList=(hyprshade hyprshade-git wl-gammarelay-rs)
+cacheDir="$HOME/.cache/wormwitch"
+
+#------------------------#
+# detect distro and pkgs #
+#------------------------#
+if [[ $ID_LIKE == "arch" ]]; then
+    aurList=(yay paru)
+    ntdList=(dunst swaync)
+    idlList=(swayidle hypridle hypridle-git)
+    lckList=(swaylock-effects-git hyprlock hyprlock-git)
+    shlList=(zsh fish bash)
+    shdList=(hyprshade hyprshade-git wl-gammarelay-rs)
+
+elif [[ $ID == "nixos" ]]; then
+    ntdList=(dunst swaynotificationcenter)
+    idlList=(swayidle hypridle)
+    lckList=(swaylock-effects hyprlock)
+    shlList=(zsh fish bash)
+    shdList=(hyprshade wl-gammarelay-rs)
+
+fi
 
 pkg_installed() {
     local PkgIn=$1
 
-    if pacman -Qi "${PkgIn}" &>/dev/null; then
-        return 0
-    else
-        return 1
+    if [[ ${ID} == "nixos" ]]; then
+        if nix-store -q --references /var/run/current-system/sw \
+            | grep -vE '(-man|-doc|-info)$' \
+            | cut -d'-' -f2- \
+            | sed -E 's/-[0-9]+(\.[0-9]+)*.*$//' \
+            | grep -w "^${PkgIn}$" &> /dev/null; then
+            return 0
+
+        else
+            return 1
+        fi
+
+    elif [[ ${ID_LIKE} == "arch" ]]; then
+        if pacman -Qi "${PkgIn}" &> /dev/null; then
+            return 0
+
+        else
+            return 1
+        fi
+
     fi
 }
 
@@ -43,56 +74,85 @@ chk_list() {
 pkg_available() {
     local PkgIn=$1
 
-    if pacman -Si "${PkgIn}" &>/dev/null; then
-        return 0
-    else
-        return 1
+    if [[ ${ID} == "nixos" ]]; then
+        if echo -en <(nix-env -f '<nixpkgs>' -qaP -A "${PkgIn}" --no-name &>/dev/null); then
+            return 0
+        else
+            return 1
+
+        fi
+
+    elif [[ ${ID_LIKE} == "arch" ]]; then
+        if pacman -Si "${PkgIn}" &> /dev/null; then
+            return 0
+
+        else
+            return 1
+        fi
+
     fi
 }
 
 aur_available() {
     local PkgIn=$1
 
-    if ${aurhlpr} -Si "${PkgIn}" &>/dev/null; then
+    if ${aurhlpr} -Si "${PkgIn}" &> /dev/null; then
         return 0
+
     else
         return 1
+
     fi
 }
 
 nvidia_detect() {
-    readarray -t dGPU < <(lspci -k | grep -E "(VGA|3D)" | awk -F ': ' '{print $NF}')
-    if [ "${1}" == "--verbose" ]; then
-        for indx in "${!dGPU[@]}"; do
-            echo -e "\033[0;32m[gpu$indx]\033[0m detected // ${dGPU[indx]}"
-        done
-        return 0
-    fi
-    if [ "${1}" == "--drivers" ]; then
-        while read -r -d ' ' nvcode; do
-            awk -F '|' -v nvc="${nvcode}" 'substr(nvc,1,length($3)) == $3 {split(FILENAME,driver,"/"); print driver[length(driver)],"\nnvidia-utils"}' "${scrDir}"/.nvidia/nvidia*dkms
-        done <<<"${dGPU[@]}"
-        return 0
-    fi
-    if grep -iq nvidia <<<"${dGPU[@]}"; then
-        return 0
-    else
-        return 1
+    if [[ $ID == "nixos" ]]; then
+        local dGPU=($(nix-shell -p pciutils --run "lspci -k | grep -E '(VGA|3D)' | awk -F ': ' '{print $NF}'"))
+        if [ "${1}" == "--verbose" ]; then
+            for indx in "${!dGPU[@]}"; do
+                echo -e "\033[0;32m[gpu$indx]\033[0m detected // ${dGPU[indx]}"
+            done
+            return 0
+        fi
+        if [ "${1}" == "--drivers" ]; then
+            while read -r -d ' ' nvcode; do
+                nix-shell -p awk --run "awk -F '|' -v nvc=\"${nvcode}\" 'substr(nvc,1,length(\$3)) == \$3 {print \"nvidia-\" \$3 \"-dkms\"}'"
+            done <<<"${dGPU[@]}"
+            return 0
+        fi
+        if grep -iq nvidia <<<"${dGPU[@]}"; then
+            return 0
+        else
+            return 1
+        fi
+
+    elif [[ $ID_LIKE == "arch" ]]; then
+        readarray -t dGPU < <(lspci -k | grep -E "(VGA|3D)" | awk -F ': ' '{print $NF}')
+        if [ "${1}" == "--verbose" ]; then
+            for indx in "${!dGPU[@]}"; do
+                echo -e "\033[0;32m[gpu$indx]\033[0m detected // ${dGPU[indx]}"
+            done
+            return 0
+        fi
+        if [ "${1}" == "--drivers" ]; then
+            while read -r -d ' ' nvcode; do
+                awk -F '|' -v nvc="${nvcode}" 'substr(nvc,1,length($3)) == $3 {split(FILENAME,driver,"/"); print driver[length(driver)],"\nnvidia-utils"}' "${scrDir}"/.nvidia/nvidia*dkms
+            done <<<"${dGPU[@]}"
+            return 0
+        fi
+        if grep -iq nvidia <<<"${dGPU[@]}"; then
+            return 0
+        else
+            return 1
+        fi
     fi
 }
 
-prompt_timer() {
-    set +e
+prompt() {
     unset promptIn
-    local timsec=$1
-    local msg=$2
-    while [[ ${timsec} -ge 0 ]]; do
-        echo -ne "\r :: ${msg} (${timsec}s) : "
-        read -t 1 -n 1 promptIn
-        [ $? -eq 0 ] && break
-        ((timsec--))
-    done
+    local msg=$1
+    echo -ne "\r :: ${msg} : "
+    read promptIn
     export promptIn
     echo ""
-    set -e
 }
