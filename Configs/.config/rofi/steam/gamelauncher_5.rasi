@@ -22,7 +22,7 @@ window {
     border:                      0px;
     border-radius:               0px;
     border-color:                transparent;
-    background-image:            url("~/.config/rofi/assets/steamdeck_holographic.png", width);
+    background-image:            url("~/.local/share/wormwitch/assets/rofi/steamdeck_holographic.png", width);
     background-color:            transparent;
 }
 mainbox {

@@ -23,7 +23,7 @@ window {
     border-radius:               0em;
     border-color:                #00000003;
     background-color:            @main-bg;
-    background-image:            url("~/.config/rofi/assets/wallbash_mode.png", width);
+    background-image:            url("~/.local/share/wormwitch/assets/rofi/wallbash_mode.png", width);
 }
 mainbox {
     enabled:                     true;
