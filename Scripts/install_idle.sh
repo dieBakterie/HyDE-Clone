@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #|---/ /+--------------------------+---/ /|#
 #|--/ /-| Idle installation script |--/ /-|#
-#|-/ /--| Prasanth Rangan          |-/ /--|#
+#|-/ /--| derDelphin               |-/ /--|#
 #|/ /---+--------------------------+/ /---|#
 
 scrDir="$(dirname "$(realpath "$0")")"
@@ -11,20 +11,36 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-echo -e "Select idle manager:\n[1] swayidle\n[2] swayidle-git\n[3] hypridle\n[4] hypridle-git\n[5] No Idle Manager"
-prompt_timer 120 "Enter option number"
+if [[ $ID_LIKE == "arch" ]]; then
+    echo -e "Select idle manager:\n[1] swayidle\n[2] hypridle\n[3] hypridle-git\n[4] No Idle Manager"
+    prompt "Enter option number"
 
-case "${promptIn}" in
-1) export myIdle="swayidle" ;;
-2) export myIdle="swayidle-git" ;;
-3) export myIdle="hypridle" ;;
-4) export myIdle="hypridle-git" ;;
-5) export myIdle="" ;;
-*)
+    case "${promptIn}" in
+    1) export myIdle="swayidle" ;;
+    2) export myIdle="hypridle" ;;
+    3) export myIdle="hypridle-git" ;;
+    4) export myIdle="" ;;
+    *)
     echo -e "...Invalid option selected..."
     exit 1
     ;;
 esac
+
+elif [[ $ID == "nixos" ]]; then
+    echo -e "Select idle manager:\n[1] swayidle\n[2] hypridle\n[3] No Idle Manager"
+    prompt "Enter option number"
+
+    case "${promptIn}" in
+    1) export myIdle="swayidle" ;;
+    2) export myIdle="hypridle" ;;
+    3) export myIdle="" ;;
+    *)
+    echo -e "...Invalid option selected..."
+    exit 1
+    ;;
+esac
+
+fi
 
 # skip if user selects "" as idle manager
 if [ "${myIdle}" == "" ]; then
@@ -34,9 +50,11 @@ else
     echo -e "\n\033[0;32m[IDLEMANAGER]\033[0m Idle Manager: ${myIdle}"
     echo "${myIdle}" >>"${scrDir}/install_pkg.lst"
 
-    # remove -git from myIdle for exec-once command
-    if [[ "${myIdle}" == *"-git" ]]; then
-        myIdle=$(echo "${myIdle}" | sed -E 's/-git$//')
+    if [[ $ID_LIKE == "arch" ]]; then
+        # remove -git from myIdle for exec-once command
+        if [[ "${myIdle}" == *"-git" ]]; then
+            myIdle=$(echo "${myIdle}" | sed -E 's/-git$//')
+        fi
     fi
 
     update_exec_once() {

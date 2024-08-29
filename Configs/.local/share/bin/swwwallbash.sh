@@ -224,11 +224,11 @@ export -f fn_wallbash
 # switch theme <//> wall based colors
 if [ "${enableWallDcol}" -eq 0 ] && [[ "${reload_flag}" -eq 1 ]]; then
 
-    echo ":: deploying ${hydeTheme} colors :: ${dcol_mode} wallpaper detected"
-    mapfile -d '' -t deployList < <(find "${hydeThemeDir}" -type f -name "*.theme" -print0)
+    echo ":: deploying ${wormwitchTheme} colors :: ${dcol_mode} wallpaper detected"
+    mapfile -d '' -t deployList < <(find "${wormwitchThemeDir}" -type f -name "*.theme" -print0)
 
     while read -r pKey; do
-        fKey="$(find "${hydeThemeDir}" -type f -name "$(basename "${pKey%.dcol}.theme")")"
+        fKey="$(find "${wormwitchThemeDir}" -type f -name "$(basename "${pKey%.dcol}.theme")")"
         [ -z "${fKey}" ] && deployList+=("${pKey}")
     done < <(find "${wallbashDir}/Wall-Dcol" -type f -name "*.dcol")
 
@@ -243,8 +243,8 @@ fi
 
 #  theme mode: detects the color-scheme set in hypr.theme and falls back if nothing is parsed.
 if [ "${enableWallDcol}" -eq 0 ]; then
-    colorScheme="$({ grep -q "^[[:space:]]*\$COLOR-SCHEME\s*=" "${hydeThemeDir}/hypr.theme" && grep "^[[:space:]]*\$COLOR-SCHEME\s*=" "${hydeThemeDir}/hypr.theme" | cut -d '=' -f2 | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'; } || 
-                    grep 'gsettings set org.gnome.desktop.interface color-scheme' "${hydeThemeDir}/hypr.theme" | awk -F "'" '{print $((NF - 1))}')"    colorScheme=${colorScheme:-$(gsettings get org.gnome.desktop.interface color-scheme)}
+    colorScheme="$({ grep -q "^[[:space:]]*\$COLOR-SCHEME\s*=" "${wormwitchThemeDir}/hypr.theme" && grep "^[[:space:]]*\$COLOR-SCHEME\s*=" "${wormwitchThemeDir}/hypr.theme" | cut -d '=' -f2 | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'; } || 
+                    grep 'gsettings set org.gnome.desktop.interface color-scheme' "${wormwitchThemeDir}/hypr.theme" | awk -F "'" '{print $((NF - 1))}')"    colorScheme=${colorScheme:-$(gsettings get org.gnome.desktop.interface color-scheme)}
     # should be declared explicitly so we can easily debug
     grep -q "dark" <<<"${colorScheme}" && enableWallDcol=2
     grep -q "light" <<<"${colorScheme}" && enableWallDcol=3

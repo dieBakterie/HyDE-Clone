@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #|---/ /+--------------------------------+---/ /|#
-#|--/ /-| Script to restore hyde configs |--/ /-|#
+#|--/ /-| Script to restore wormwitch configs |--/ /-|#
 #|-/ /--| Prasanth Rangan                |-/ /--|#
 #|/ /---+--------------------------------+/ /---|#
 

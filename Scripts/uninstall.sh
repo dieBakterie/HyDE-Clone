@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-#|---/ /+-------------------------------+---/ /|#
-#|--/ /-| Script to remove HyDE configs |--/ /-|#
-#|-/ /--| Prasanth Rangan               |-/ /--|#
-#|/ /---+-------------------------------+/ /---|#
+#|---/ /+------------------------------------+---/ /|#
+#|--/ /-| Script to remove WORMWITCH configs |--/ /-|#
+#|-/ /--| Prasanth Rangan                    |-/ /--|#
+#|/ /---+------------------------------------+/ /---|#
 
 cat <<EOF
 
@@ -16,13 +16,13 @@ cat <<EOF
 
 -------------------------------------------------
 
-.: WARNING :: This will remove all config files related to HyDE :.
+.: WARNING :: This will remove all config files related to WORMWITCH :.
 
-please type "DONT HYDE" to continue...
+please type "DONT WORMWITCH" to continue...
 EOF
 
 read promptIn
-[ "${promptIn}" == "DONT HYDE" ] || exit 0
+[ "${promptIn}" == "DONT WORMWITCH" ] || exit 0
 
 cat <<"EOF"
 
@@ -67,15 +67,15 @@ cat <"${CfgLst}" | while read lst; do
     done
 done
 
-[ -d "$HOME/.config/hyde" ] && rm -rf "$HOME/.config/hyde"
-[ -d "$HOME/.cache/hyde" ] && rm -rf "$HOME/.cache/hyde"
+[ -d "$HOME/.config/wormwitch" ] && rm -rf "$HOME/.config/wormwitch"
+[ -d "$HOME/.cache/wormwitch" ] && rm -rf "$HOME/.cache/wormwitch"
 
 echo -e "\n
 -------------------------------------------------------
 .: Manual action required to complete uninstallation :.
 -------------------------------------------------------
 
-Remove HyDE related backups/icons/fonts/themes manually from these paths
+Remove WORMWITCH related backups/icons/fonts/themes manually from these paths
 $HOME/.config/cfg_backups               # remove all previous backups
 $HOME/.local/share/fonts                # remove fonts from here
 $HOME/.icons                            # remove icons from here

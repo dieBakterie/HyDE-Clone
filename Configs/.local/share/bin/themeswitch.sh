@@ -3,7 +3,7 @@
 # set variables
 scrDir="$(dirname "$(realpath "$0")")"
 source "${scrDir}/globalcontrol.sh"
-[ -z "${hydeTheme}" ] && echo "ERROR: unable to detect theme" && exit 1
+[ -z "${wormwitchTheme}" ] && echo "ERROR: unable to detect theme" && exit 1
 get_themes
 
 # define functions
@@ -12,7 +12,7 @@ Theme_Change()
 {
     local x_switch="$1"
     for i in "${!thmList[@]}" ; do
-        if [ "${thmList[i]}" == "${hydeTheme}" ] ; then
+        if [ "${thmList[i]}" == "${wormwitchTheme}" ] ; then
             if [ "${x_switch}" == 'n' ] ; then
                 setIndex=$(( (i + 1) % ${#thmList[@]} ))
             elif [ "${x_switch}" == 'p' ] ; then
@@ -55,23 +55,23 @@ done
 
 # update control file
 if ! $(echo "${thmList[@]}" | grep -wq "${themeSet}") ; then
-    themeSet="${hydeTheme}"
+    themeSet="${wormwitchTheme}"
 fi
 
-set_conf "hydeTheme" "${themeSet}"
+set_conf "wormwitchTheme" "${themeSet}"
 echo ":: applying theme :: \"${themeSet}\""
 export reload_flag=1
 source "${scrDir}/globalcontrol.sh"
 
 # hypr
-sed '1d' "${hydeThemeDir}/hypr.theme" > "${confDir}/hypr/themes/theme.conf"
+sed '1d' "${wormwitchThemeDir}/hypr.theme" > "${confDir}/hypr/themes/theme.conf"
 gtkTheme="$(
-{ grep -q "^[[:space:]]*\$GTK-THEME\s*=" "${hydeThemeDir}/hypr.theme" && grep "^[[:space:]]*\$GTK-THEME\s*=" "${hydeThemeDir}/hypr.theme" | cut -d '=' -f2 | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' ;} || 
-grep 'gsettings set org.gnome.desktop.interface gtk-theme' "${hydeThemeDir}/hypr.theme" | awk -F "'" '{print $((NF - 1))}'
+{ grep -q "^[[:space:]]*\$GTK-THEME\s*=" "${wormwitchThemeDir}/hypr.theme" && grep "^[[:space:]]*\$GTK-THEME\s*=" "${wormwitchThemeDir}/hypr.theme" | cut -d '=' -f2 | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' ;} || 
+grep 'gsettings set org.gnome.desktop.interface gtk-theme' "${wormwitchThemeDir}/hypr.theme" | awk -F "'" '{print $((NF - 1))}'
 )"
 gtkIcon="$(
-{ grep -q "^[[:space:]]*\$ICON-THEME\s*=" "${hydeThemeDir}/hypr.theme" && grep "^[[:space:]]*\$ICON-THEME\s*=" "${hydeThemeDir}/hypr.theme" | cut -d '=' -f2 | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' ;} ||  
-grep 'gsettings set org.gnome.desktop.interface icon-theme' "${hydeThemeDir}/hypr.theme" | awk -F "'" '{print $((NF - 1))}'
+{ grep -q "^[[:space:]]*\$ICON-THEME\s*=" "${wormwitchThemeDir}/hypr.theme" && grep "^[[:space:]]*\$ICON-THEME\s*=" "${wormwitchThemeDir}/hypr.theme" | cut -d '=' -f2 | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' ;} ||  
+grep 'gsettings set org.gnome.desktop.interface icon-theme' "${wormwitchThemeDir}/hypr.theme" | awk -F "'" '{print $((NF - 1))}'
 )"
 
 # qtct
@@ -104,15 +104,15 @@ fi
 
 # swaync
 #! only for alternative version needed
-# if pkg_installed swaync ; then
-#     style_css="${confDir}/swaync/style.css"
+if pkg_installed swaync || pkg_installed swaynotificationcenter; then
+     style_css="${confDir}/swaync/style.css"
 
-#     # convert themeSet to the format used in style.css
-#     theme_file=$(echo "$gtkTheme" | tr '[:upper:]' '[:lower:]' | tr '-' '_')
+     # convert themeSet to the format used in style.css
+     theme_file=$(echo "$gtkTheme" | tr '[:upper:]' '[:lower:]' | tr '-' '_')
 
-#     # replaces the @import-Statement with the desired theme
-#     sed -i "s|@import \"\.\/themes\/[^\"]*\.css\"|@import \"\.\/themes\/${theme_file}.css\"|g" "${style_css}"
-# fi
+     # replaces the @import-Statement with the desired theme
+     sed -i "s|@import \"\.\/themes\/[^\"]*\.css\"|@import \"\.\/themes\/${theme_file}.css\"|g" "${style_css}"
+ fi
 
 # wallpaper
-"${scrDir}/swwwallpaper.sh" -s "$(readlink "${hydeThemeDir}/wall.set")"
+"${scrDir}/swwwallpaper.sh" -s "$(readlink "${wormwitchThemeDir}/wall.set")"

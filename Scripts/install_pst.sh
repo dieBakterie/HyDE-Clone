@@ -82,7 +82,7 @@ if ! pkg_installed flatpak; then
 
     echo -e "\033[0;32m[FLATPAK]\033[0m flatpak application list..."
     awk -F '#' '$1 != "" {print "["++count"]", $1}' "${scrDir}/.extra/custom_flat.lst"
-    prompt_timer 60 "Install these flatpaks? [Y/n]"
+    prompt "Install these flatpaks? [Y/n]"
     fpkopt=${promptIn,,}
 
     if [ "${fpkopt}" = "y" ]; then
@@ -101,7 +101,7 @@ if ! pkg_installed silos; then
 
     echo -e "\033[0;32m[SILOS]\033[0m silos application list..."
     awk -F '#' '$1 != "" {print "["++count"]", $1}' "${scrDir}/.extra/custom_silo.lst"
-    prompt_timer 60 "Install these silos? [Y/n]"
+    prompt "Install these silos? [Y/n]"
     silopt=${promptIn,,}
     if [ "${silopt}" = "y" ]; then
         echo -e "\033[0;32m[SILOS]\033[0m installing silos..."
