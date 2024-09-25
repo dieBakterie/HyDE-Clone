@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #|---/ /+------------------------------------+---/ /|#
-#|--/ /-| Script to remove WORMWITCH configs |--/ /-|#
+#|--/ /-| Script to remove LYCR configs |--/ /-|#
 #|-/ /--| Prasanth Rangan                    |-/ /--|#
 #|/ /---+------------------------------------+/ /---|#
 
@@ -16,13 +16,13 @@ cat <<EOF
 
 -------------------------------------------------
 
-.: WARNING :: This will remove all config files related to WORMWITCH :.
+.: WARNING :: This will remove all config files related to LYCR :.
 
-please type "DONT WORMWITCH" to continue...
+please type "DONT LYCR" to continue...
 EOF
 
 read promptIn
-[ "${promptIn}" == "DONT WORMWITCH" ] || exit 0
+[ "${promptIn}" == "DONT LYCR" ] || exit 0
 
 cat <<"EOF"
 
@@ -67,15 +67,15 @@ cat <"${CfgLst}" | while read lst; do
     done
 done
 
-[ -d "$HOME/.config/wormwitch" ] && rm -rf "$HOME/.config/wormwitch"
-[ -d "$HOME/.cache/wormwitch" ] && rm -rf "$HOME/.cache/wormwitch"
+[ -d "$HOME/.config/lycr" ] && rm -rf "$HOME/.config/lycr"
+[ -d "$HOME/.cache/lycr" ] && rm -rf "$HOME/.cache/lycr"
 
 echo -e "\n
 -------------------------------------------------------
 .: Manual action required to complete uninstallation :.
 -------------------------------------------------------
 
-Remove WORMWITCH related backups/icons/fonts/themes manually from these paths
+Remove LYCR related backups/icons/fonts/themes manually from these paths
 $HOME/.config/cfg_backups               # remove all previous backups
 $HOME/.local/share/fonts                # remove fonts from here
 $HOME/.icons                            # remove icons from here

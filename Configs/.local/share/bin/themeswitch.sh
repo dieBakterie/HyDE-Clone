@@ -3,7 +3,7 @@
 # set variables
 scrDir="$(dirname "$(realpath "$0")")"
 source "${scrDir}/globalcontrol.sh"
-[ -z "${wormwitchTheme}" ] && echo "ERROR: unable to detect theme" && exit 1
+[ -z "${lycrTheme}" ] && echo "ERROR: unable to detect theme" && exit 1
 get_themes
 
 # define functions
@@ -12,7 +12,7 @@ Theme_Change()
 {
     local x_switch="$1"
     for i in "${!thmList[@]}" ; do
-        if [ "${thmList[i]}" == "${wormwitchTheme}" ] ; then
+        if [ "${thmList[i]}" == "${lycrTheme}" ] ; then
             if [ "${x_switch}" == 'n' ] ; then
                 setIndex=$(( (i + 1) % ${#thmList[@]} ))
             elif [ "${x_switch}" == 'p' ] ; then
@@ -55,23 +55,23 @@ done
 
 # update control file
 if ! $(echo "${thmList[@]}" | grep -wq "${themeSet}") ; then
-    themeSet="${wormwitchTheme}"
+    themeSet="${lycrTheme}"
 fi
 
-set_conf "wormwitchTheme" "${themeSet}"
+set_conf "lycrTheme" "${themeSet}"
 echo ":: applying theme :: \"${themeSet}\""
 export reload_flag=1
 source "${scrDir}/globalcontrol.sh"
 
 # hypr
-sed '1d' "${wormwitchThemeDir}/hypr.theme" > "${confDir}/hypr/themes/theme.conf"
+sed '1d' "${lycrThemeDir}/hypr.theme" > "${confDir}/hypr/themes/theme.conf"
 gtkTheme="$(
-{ grep -q "^[[:space:]]*\$GTK-THEME\s*=" "${wormwitchThemeDir}/hypr.theme" && grep "^[[:space:]]*\$GTK-THEME\s*=" "${wormwitchThemeDir}/hypr.theme" | cut -d '=' -f2 | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' ;} || 
-grep 'gsettings set org.gnome.desktop.interface gtk-theme' "${wormwitchThemeDir}/hypr.theme" | awk -F "'" '{print $((NF - 1))}'
+{ grep -q "^[[:space:]]*\$GTK-THEME\s*=" "${lycrThemeDir}/hypr.theme" && grep "^[[:space:]]*\$GTK-THEME\s*=" "${lycrThemeDir}/hypr.theme" | cut -d '=' -f2 | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' ;} || 
+grep 'gsettings set org.gnome.desktop.interface gtk-theme' "${lycrThemeDir}/hypr.theme" | awk -F "'" '{print $((NF - 1))}'
 )"
 gtkIcon="$(
-{ grep -q "^[[:space:]]*\$ICON-THEME\s*=" "${wormwitchThemeDir}/hypr.theme" && grep "^[[:space:]]*\$ICON-THEME\s*=" "${wormwitchThemeDir}/hypr.theme" | cut -d '=' -f2 | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' ;} ||  
-grep 'gsettings set org.gnome.desktop.interface icon-theme' "${wormwitchThemeDir}/hypr.theme" | awk -F "'" '{print $((NF - 1))}'
+{ grep -q "^[[:space:]]*\$ICON-THEME\s*=" "${lycrThemeDir}/hypr.theme" && grep "^[[:space:]]*\$ICON-THEME\s*=" "${lycrThemeDir}/hypr.theme" | cut -d '=' -f2 | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' ;} ||  
+grep 'gsettings set org.gnome.desktop.interface icon-theme' "${lycrThemeDir}/hypr.theme" | awk -F "'" '{print $((NF - 1))}'
 )"
 
 # qtct
@@ -115,4 +115,4 @@ if pkg_installed swaync || pkg_installed swaynotificationcenter; then
  fi
 
 # wallpaper
-"${scrDir}/swwwallpaper.sh" -s "$(readlink "${wormwitchThemeDir}/wall.set")"
+"${scrDir}/swwwallpaper.sh" -s "$(readlink "${lycrThemeDir}/wall.set")"

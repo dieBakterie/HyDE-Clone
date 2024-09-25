@@ -74,7 +74,7 @@ if [[ -z $1 || -z $2 ]]; then
     exit 1
 fi
 
-dcolDir="${confDir}/wormwitch/wallbash/Wall-Dcol"
+dcolDir="${confDir}/lycr/wallbash/Wall-Dcol"
 [ ! -d "${dcolDir}" ] && print_prompt "[ERROR]" "${dcolDir} do not exist!" && exit 1
 
 # set parameters
@@ -129,7 +129,7 @@ print_prompt "Patching" -g " --// ${Fav_Theme} //-- " "from " -b "${Theme_Dir}\n
 Fav_Theme_Dir="${Theme_Dir}/Configs/.config/hyde/themes/${Fav_Theme}"
 [ ! -d "${Fav_Theme_Dir}" ] && print_prompt -r "[ERROR] " "'${Fav_Theme_Dir}'" -y " Do not Exist" && exit 1
 
-config=$(find "${dcolDir}" -type f -name "*.dcol" | awk -v favTheme="${Fav_Theme}" -F 'Wall-Dcol/' '{gsub(/\.dcol$/, ".theme"); print ".config/wormwitch/themes/" favTheme "/" $2}')
+config=$(find "${dcolDir}" -type f -name "*.dcol" | awk -v favTheme="${Fav_Theme}" -F 'Wall-Dcol/' '{gsub(/\.dcol$/, ".theme"); print ".config/lycr/themes/" favTheme "/" $2}')
 restore_list=""
 
 while IFS= read -r fchk; do
@@ -190,7 +190,7 @@ for indx in ${!prefix[@]}; do
 done
 
 # populate wallpaper
-Fav_Theme_Walls="${confDir}/wormwitch/themes/${Fav_Theme}/wallpapers"
+Fav_Theme_Walls="${confDir}/lycr/themes/${Fav_Theme}/wallpapers"
 [ ! -d "${Fav_Theme_Walls}" ] && mkdir -p "${Fav_Theme_Walls}"
 while IFS= read -r walls; do
     cp -f "${walls}" "${Fav_Theme_Walls}"

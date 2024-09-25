@@ -48,7 +48,7 @@ fn_steam() {
 fn_lutris() {
     [ ! -e "${icon_path}" ] && icon_path="${HOME}/.local/share/lutris/coverart"
     [ ! -e "${icon_path}" ] && icon_path="${HOME}/.cache/lutris/coverart"
-    meta_data="/tmp/wormwitch-$(id -u)-lutrisgames.json"
+    meta_data="/tmp/lycr-$(id -u)-lutrisgames.json"
 
     # retrieve the list of games from Lutris in JSON format
     if [ ! -s "${meta_data}" ] || [ "$(find "$icon_path" -type f -mmin -120 | wc -l)" -eq 0 ]; then

@@ -183,7 +183,7 @@ EOF
     while IFS='"' read -r null1 themeName null2 themeRepo; do
         themeNameQ+=("${themeName//\"/}")
         themeRepoQ+=("${themeRepo//\"/}")
-        themePath="${confDir}/wormwitch/themes/${themeName}"
+        themePath="${confDir}/lycr/themes/${themeName}"
         [ -d "${themePath}" ] || mkdir -p "${themePath}"
         [ -f "${themePath}/.sort" ] || echo "${#themeNameQ[@]}" >"${themePath}/.sort"
     done <"${scrDir}/themepatcher.lst"

@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-# wormwitch envs
+# lycr envs
 export confDir="${XDG_CONFIG_HOME:-$HOME/.config}"
-export wormwitchConfDir="${confDir}/wormwitch"
-export cacheDir="$HOME/.cache/wormwitch"
+export lycrConfDir="${confDir}/lycr"
+export cacheDir="$HOME/.cache/lycr"
 export thmbDir="${cacheDir}/thumbs"
 export dcolDir="${cacheDir}/dcols"
 export hashMech="sha1sum"
@@ -67,7 +67,7 @@ get_themes()
         [ -f "${thmDir}/.sort" ] && thmSortS+=("$(head -1 "${thmDir}/.sort")") || thmSortS+=("0")
         thmListS+=("$(basename "${thmDir}")")
         thmWallS+=("$(readlink "${thmDir}/wall.set")")
-    done < <(find "${wormwitchConfDir}/themes" -mindepth 1 -maxdepth 1 -type d)
+    done < <(find "${lycrConfDir}/themes" -mindepth 1 -maxdepth 1 -type d)
 
     while IFS='|' read -r sort theme wall ; do
         thmSort+=("${sort}")
@@ -83,21 +83,21 @@ get_themes()
     fi
 }
 
-[ -f "${wormwitchConfDir}/wormwitch.conf" ] && source "${wormwitchConfDir}/wormwitch.conf"
+[ -f "${lycrConfDir}/lycr.conf" ] && source "${lycrConfDir}/lycr.conf"
 
 case "${enableWallDcol}" in
     0|1|2|3) ;;
     *) enableWallDcol=0 ;;
 esac
 
-if [[ -z "${wormwitchTheme}" || ! -d "${wormwitchConfDir}/themes/${wormwitchTheme}" ]] ; then
+if [[ -z "${lycrTheme}" || ! -d "${lycrConfDir}/themes/${lycrTheme}" ]] ; then
     get_themes
-    wormwitchTheme="${thmList[0]}"
+    lycrTheme="${thmList[0]}"
 fi
 
-export wormwitchTheme
-export wormwitchThemeDir="${wormwitchConfDir}/themes/${wormwitchTheme}"
-export wallbashDir="${wormwitchConfDir}/wallbash"
+export lycrTheme
+export lycrThemeDir="${lycrConfDir}/themes/${lycrTheme}"
+export wallbashDir="${lycrConfDir}/wallbash"
 export enableWallDcol
 
 # hypr vars
@@ -148,12 +148,12 @@ set_conf()
 {
     local varName="${1}"
     local varData="${2}"
-    touch "${wormwitchConfDir}/wormwitch.conf"
+    touch "${lycrConfDir}/lycr.conf"
 
-    if [ "$(grep -c "^${varName}=" "${wormwitchConfDir}/wormwitch.conf")" -eq 1 ] ; then
-        sed -i "/^${varName}=/c${varName}=\"${varData}\"" "${wormwitchConfDir}/wormwitch.conf"
+    if [ "$(grep -c "^${varName}=" "${lycrConfDir}/lycr.conf")" -eq 1 ] ; then
+        sed -i "/^${varName}=/c${varName}=\"${varData}\"" "${lycrConfDir}/lycr.conf"
     else
-        echo "${varName}=\"${varData}\"" >> "${wormwitchConfDir}/wormwitch.conf"
+        echo "${varName}=\"${varData}\"" >> "${lycrConfDir}/lycr.conf"
     fi
 }
 

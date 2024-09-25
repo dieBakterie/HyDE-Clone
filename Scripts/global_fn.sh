@@ -10,7 +10,7 @@ scrDir="$(dirname "$(realpath "$0")")"
 source "${scrDir}/get_distro.sh"
 cloneDir="$(dirname "${scrDir}")"
 confDir="${XDG_CONFIG_HOME:-$HOME/.config}"
-cacheDir="$HOME/.cache/wormwitch"
+cacheDir="$HOME/.cache/lycr"
 
 #------------------------#
 # detect distro and pkgs #

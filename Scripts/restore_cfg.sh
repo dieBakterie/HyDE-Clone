@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #|---/ /+--------------------------------+---/ /|#
-#|--/ /-| Script to restore wormwitch configs |--/ /-|#
+#|--/ /-| Script to restore lycr configs |--/ /-|#
 #|-/ /--| Prasanth Rangan                |-/ /--|#
 #|/ /---+--------------------------------+/ /---|#
 

@@ -13,13 +13,13 @@ if [ "${1}" == "--verbose" ] || [ "${1}" == "-v" ] ; then
         3) wallbashStatus="enabled // light mode --forced";;
     esac
 
-    echo -e "\n\ncurrent theme :: \"${wormwitchTheme}\" :: \"$(readlink "${wormwitchThemeDir}/wall.set")\""
+    echo -e "\n\ncurrent theme :: \"${lycrTheme}\" :: \"$(readlink "${lycrThemeDir}/wall.set")\""
     echo -e "wallbash status :: ${enableWallDcol} :: ${wallbashStatus}\n"
     get_themes
 
     for x in "${!thmList[@]}" ; do
         echo -e "\nTheme $((x + 1)) :: \${thmList[${x}]}=\"${thmList[x]}\" :: \${thmWall[${x}]}=\"${thmWall[x]}\"\n"
-        get_hashmap "$(dirname "${wormwitchThemeDir}")/${thmList[x]}" --verbose
+        get_hashmap "$(dirname "${lycrThemeDir}")/${thmList[x]}" --verbose
         echo -e "\n"
     done
 

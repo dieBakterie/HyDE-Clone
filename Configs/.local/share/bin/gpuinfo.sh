@@ -4,7 +4,7 @@
 
 # set variables
 scrDir="$(dirname "$(realpath "$0")")"
-gpuQ="/tmp/wormwitch-${UID}-gpuinfo-query"
+gpuQ="/tmp/lycr-${UID}-gpuinfo-query"
 
 tired=false
 [[ " $* " =~ " tired " ]] && ! grep -q "tired" "${gpuQ}" && echo "tired=true" >>"${gpuQ}"

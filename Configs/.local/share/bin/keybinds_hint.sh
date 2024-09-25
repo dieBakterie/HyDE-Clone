@@ -14,12 +14,12 @@ source "$scrDir/globalcontrol.sh"
 keyconfDir="$confDir/hypr"
 kb_hint_conf=("$keyconfDir/hyprland.conf" "$keyconfDir/config/keybindings.conf")
 tmpMapDir="/tmp"
-tmpMap="$tmpMapDir/wormwitch-keybinds.jq"
-keycodeFile="${wormwitchConfDir}/keycode.kb"
-modmaskFile="${wormwitchConfDir}/modmask.kb"
-keyFile="${wormwitchConfDir}/key.kb"
-categoryFile="${wormwitchConfDir}/category.kb"
-dispatcherFile="${wormwitchConfDir}/dispatcher.kb"
+tmpMap="$tmpMapDir/lycr-keybinds.jq"
+keycodeFile="${lycrConfDir}/keycode.kb"
+modmaskFile="${lycrConfDir}/modmask.kb"
+keyFile="${lycrConfDir}/key.kb"
+categoryFile="${lycrConfDir}/category.kb"
+dispatcherFile="${lycrConfDir}/dispatcher.kb"
 
 roDir="$confDir/rofi"
 roconf="$roDir/clipboard.rasi"
@@ -39,7 +39,7 @@ Options:
 Example:
  $(basename "$0") -j -p -d '>' -f custom_file.txt -w 80 -h 90
 
-Users can also add global overrides inside ${wormwitchConfDir}/wormwitch.conf
+Users can also add global overrides inside ${lycrConfDir}/lycr.conf
 Available overrides:
  kb_hint_delim=">"                         ﯦ add a custom custom delimeter
  kb_hint_conf=("file1.conf" "file2.conf")  ﯦ add a custom keybinds.conf path (add it like an array)
@@ -47,7 +47,7 @@ Available overrides:
  kb_hint_height="35em"                     ﯦ custom height supports [ 'em' '%' 'px' ]
  kb_hint_line=13                           ﯦ adjust how many lines are listed
 
-Users can also add key overrides inside ${wormwitchConfDir}
+Users can also add key overrides inside ${lycrConfDir}
 List of file overrides:
  ${keycodeFile} => keycode
  ${modmaskFile} => modmask
@@ -158,7 +158,7 @@ comments=$(substitute_vars "$initialized_comments" | awk -F'#' \
 # echo "$comments"
 
 cat <<OVERRIDES >$tmpMap
-# wormwitch-keybinds.jq
+# lycr-keybinds.jq
 #! this is Our Translator for some binds  #🦆
 def executables_mapping: {  #? derived from .args to parse scripts to be Readable
 #? auto Generated Comment Conversion
@@ -260,7 +260,7 @@ OVERRIDES
 #? basically we are using jq to handle json data and outputs a pretty and friendly output
 jsonData="$(
   hyprctl binds -j | jq -L "$tmpMapDir" -c '
-include "wormwitch-keybinds";
+include "lycr-keybinds";
 
   #? funtions to Convert modmask into Keys, there should be a better math for this but I am lazy
   #? also we can just map it manually too
